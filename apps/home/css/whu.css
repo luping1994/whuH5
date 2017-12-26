@@ -33,3 +33,7 @@
     -webkit-align-items: center;
     align-items: center;
 }
+
+.whu-year-arrow:before{
+    content: url("../image/ic_arrow_down.png");
+}
