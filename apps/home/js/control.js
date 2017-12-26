@@ -70,8 +70,8 @@ var zhaoming = new Vue({
     el: '#kongtiao',
     data: {
         accountList: [
-            {id: 0, type: "accountInfo", name: '账户余额', value: "-90元", iconclass: "whu-icon-yuer"},
-            {id: 1, type: "accountInfo", name: '剩余补贴', value: "1444度", iconclass: "whu-icon-yuer"},
+            {id: 0, type: "accountInfo", name: '账户余额', value: "--元", iconclass: "whu-icon-yuer"},
+            {id: 1, type: "accountInfo", name: '剩余补贴', value: "--度", iconclass: "whu-icon-yuer"},
             {id: 2, type: "accountInfo", name: '账户状态', value: "余额不足", iconclass: "whu-icon-yuer"}
         ],
         yongdiandatas: [
@@ -82,13 +82,13 @@ var zhaoming = new Vue({
             {id: 0, name: "信息学部-10舍东-101"}
         ],
         dianliangxinxi: [
-            {id: 0, type: "dianya", name: '电压', value: "235V", iconclass: "whu-icon-yuer"},
-            {id: 1, type: "dianliu", name: '电流', value: "0.00A", iconclass: "whu-icon-yuer"},
-            {id: 2, type: "gonglv", name: '功率', value: "0.00W", iconclass: "whu-icon-yuer"},
-            {id: 4, type: "gonglvyinshu", name: '功率因数', value: "1.00", iconclass: "whu-icon-yuer"},
-            {id: 5, type: "dayUse", name: '本日已用电量', value: "0.00kW·h", iconclass: "whu-icon-yuer"},
-            {id: 6, type: "monthUse", name: '本月已用电量', value: "0.00kW·h", iconclass: "whu-icon-yuer"},
-            {id: 7, type: "totalUse", name: '总用电量', value: "0.00kW·h", iconclass: "whu-icon-yuer"}
+            {id: 0, type: "dianya", name: '电压', value: "--V", iconclass: "whu-icon-yuer"},
+            {id: 1, type: "dianliu", name: '电流', value: "--A", iconclass: "whu-icon-yuer"},
+            {id: 2, type: "gonglv", name: '功率', value: "--W", iconclass: "whu-icon-yuer"},
+            {id: 4, type: "gonglvyinshu", name: '功率因数', value: "--", iconclass: "whu-icon-yuer"},
+            {id: 5, type: "dayUse", name: '本日已用电量', value: "--kW·h", iconclass: "whu-icon-yuer"},
+            {id: 6, type: "monthUse", name: '本月已用电量', value: "--kW·h", iconclass: "whu-icon-yuer"},
+            {id: 7, type: "totalUse", name: '总用电量', value: "--kW·h", iconclass: "whu-icon-yuer"}
         ],
         students: [
             {id: 0, type: "student", name: '张三', value: "计算机学院", iconclass: "whu-icon-yuer"},
