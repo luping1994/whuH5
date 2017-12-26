@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>资费记录</title>
+    <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/loaders.min.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <script src="./mobileframework/widget/js/mobile.js"></script>
+    <link href="./mobileframework/mobile.css" rel="stylesheet">
+    <script type="text/javascript" src="../../plugin.apis/cordova.js"></script>
+    <script type="text/javascript" src="../../plugin.apis/webView.js"></script>
+    <script type="text/javascript" src="../../common/js/public.js"></script>
+
+    <script type="text/javascript" src="js/config.js"></script>
+
+    <script src="js/public.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+
+
+    <link href="aui/css/aui.css" rel="stylesheet">
+    <link href="css/whu.css" rel="stylesheet">
+    <link href="css/weui.css" rel="stylesheet">
+
+    <link href="css/swiper.css" rel="stylesheet">
+    <script type="text/javascript" src="js/swiper.js"></script>
+
+
+    <script type="text/javascript" src="aui/script/aui-tab.js"></script>
+    <script type="text/javascript" src="aui/script/aui-pull-refresh.js"></script>
+    <link rel="stylesheet" type="text/css" href="aui/css/aui-pull-refresh.css"/>
+
+</head>
+<body>
+<div class="aui-content-padded">
+    <section class="aui-grid aui-margin-b-15" style="position: fixed;top: 0;right: 0;left: 0;background-color: #50A0D2">
+        <div class="aui-row">
+            <div class="aui-col-xs-4 " style="border-right: dashed 2px #fff;">
+                <div id="year" class="whu-charge-header" >2017年</div>
+                <div class="aui-grid-label" style="color: #FFFFFF;">12月</div>
+            </div>
+            <div class="aui-col-xs-4" style="border-right: dashed 2px #fff;">
+                <div id="ruzhang" class="whu-charge-header">本月入账</div>
+                <div class="aui-grid-label" style="color: #FFFFFF;">0.00元</div>
+            </div>
+            <div class="aui-col-xs-4" >
+                <div id="chuzhang" class="whu-charge-header">本月出账</div>
+                <div class="aui-grid-label" style="color: #FFFFFF;">0.00元</div>
+            </div>
+
+        </div>
+    </section>
+
+</div>
+
+</body>
+<style>
+
+</style>
+<script>
+    var webview = new webView();
+    webview.setTitle("资费记录");
+</script>
+</html>

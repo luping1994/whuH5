@@ -1,0 +1,37 @@
+/**
+ * accordion折叠面板
+ */
+.m-accordion .m-accordion-item {
+    margin: 0;
+}
+.m-accordion .m-accordion-item .m-accordion-title {
+    padding: 0 4rem;
+    border-bottom: 1px solid #E4E4E4;
+    overflow:hidden;
+}
+.m-accordion .m-accordion-item .m-accordion-title:after {
+    content: "\f107";
+}
+.m-accordion .m-accordion-item.m-active .m-accordion-title:after {
+    content: "\f106";
+}
+.m-accordion .m-accordion-item .m-accordion-title h2 {
+    margin-top: 1rem;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.m-accordion .m-accordion-item .m-accordion-title p {
+    color: #888;
+}
+.m-accordion .m-accordion-item .m-accordion-bd {
+    padding: 0.5rem 4rem;
+    background: #F8F8F8;
+}
+.m-accordion .m-accordion-item .m-accordion-open {
+    border-bottom: 1px solid #E4E4E4;
+}
+.m-accordion .m-accordion-item .m-accordion-close {
+    display: none;
+}

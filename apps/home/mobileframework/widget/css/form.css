@@ -1,0 +1,111 @@
+.form-group label{
+	font-size: 1.1rem;
+}
+.txt-gray{
+	color: #999;
+}
+.radio+.radio, .checkbox+.checkbox {
+	margin-top: 10px;
+}
+.form-div-half{
+	width:45%;
+	display:inline-block;
+}
+.form-div-xs{
+	width:7%;
+	display:inline-block;
+}
+.select-icon{
+	width: 100%;
+	background: #fff;
+}
+.select-icon input{
+	width: 100%;
+    height: 34px;
+    border: 1px solid #E2E2E2;
+    border-radius: 6px;
+    margin: 0px auto;
+    text-indent: 0.3rem;
+    background: url("../img/select/select-icon.png") no-repeat scroll right center #FFF;
+    padding-right: 35px;
+}
+.radio label, .checkbox label{
+	padding-left: 0;
+}
+.select-s{
+	width:46%;
+	padding:0;
+	float: left;
+}
+.go-area{
+	width:8%;
+	padding:0;
+	line-height:3rem;
+	text-align:center;
+	float: left;
+}
+.m-form-inline .lab-left{
+	width:20%;
+	/*padding-top: 7px;*/
+	min-height:34px;
+	line-height:34px;
+	margin-bottom: 0;
+	text-align: center;
+	
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.m-form-inline .ipt-right{
+	width:78%;
+	float:right;
+}
+.m-form-inline .ipt-right input{
+	display: inline-block;
+	width: 100%;
+	vertical-align: middle;
+}
+.m-form-inline .form-group{
+	clear:both;
+}
+.m-form-inline .checkbox,
+.m-form-inline .radio{
+    margin: 0;
+    width: 100%;
+    height: 34px;
+	padding: 6px 12px;
+}
+/*覆盖icheck插件自带样式*/
+.icheckbox_minimal, .iradio_minimal {
+    margin-right: 3px !important;
+    vertical-align:bottom;
+}
+
+/*日期*/
+.dwbc .dwb-s{background: none repeat scroll 0% 0% #88bb63 !important;}
+.dwb-s .dwb{color:#fff !important;}
+.android-ics .dwv{border-bottom: 2px solid #5cb85c;color:#88bb63;}
+.android-ics .dw .dwwol{border-top: 2px solid #5cb85c;border-bottom: 2px solid #88bb63;}
+.dwbg .dwb-a{background:#6DB43A !important;}
+.ipt-date {
+    width: 100%;
+    height: 34px;
+    border: 1px solid #E2E2E2;
+    border-radius: 6px;
+    margin: 0px auto;
+    text-indent: 0.3rem;
+    background: url("../img/date/date-ico.png") no-repeat scroll right center #FFF;
+    padding-right: 35px;
+}
+
+/*按钮*/
+.btn-primary {
+	color: #fff;
+	background-color: #88bb63;
+	border-color: #88bb63;
+}
+.btn-primary:hover,.btn-primary.hover,.btn-primary:focus,.btn-primary.focus,.btn-primary:active,.btn-primary.active,.open>.dropdown-toggle.btn-primary{
+	color: #fff;
+	background-color: #6DB43A;
+	border-color: #6DB43A;
+}

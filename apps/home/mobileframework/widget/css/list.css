@@ -1,0 +1,156 @@
+/**
+ * list类
+ */
+.m-list {
+    position: relative;
+}
+.m-list .m-item {
+    padding: 1rem;
+    display: block;
+    text-decoration: none;
+    border-bottom: 1px solid #E3E1E2;
+}
+.m-list .m-item p {
+    color: #666;
+    font-size: 1.6rem;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 文字详情list类 */
+.m-list .m-item-detail h2 {
+    margin-top: 1rem;
+    color: #2B2B2B;
+    font-size: 2rem;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.m-list .m-item-detail p {
+    color: #666;
+    font-size: 1.6rem;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.m-list .m-item-detail span {
+    margin-right: 1rem;
+    color: #ccc;
+}
+/**
+ *  Thumbnails list类
+ */
+.m-list-thumbnail .m-item-thumbnail img {
+    float: left;
+    display: block;
+    margin-top: 1rem;
+    margin-right: 1rem;
+    height: auto;
+    max-width: 96px;
+}
+
+/**
+ * chevron-right list类
+ */
+.m-list-link .m-item {
+    padding-right: 4rem;
+}
+
+/**
+ * list-piece类
+ */
+.m-list-piece .m-item {
+    margin: 1rem 0;
+    padding-right: 1.2rem;
+    border-radius: 5px;
+    border: 1px solid #E2E2E2;
+}
+
+.m-list-piece .m-item h2 {
+    margin:0;/*dfx*/
+    padding-bottom: .5rem;
+    margin-bottom: 1rem;/*dfx*/
+    border-bottom: 1px dashed #969696;
+}
+.m-list-piece .m-item h2 img {
+    max-width: 36px;
+    vertical-align: middle;
+}
+.m-list-piece .m-item .indicate {
+    color: #E63C3C;
+}
+
+/*dfx begin*/
+/*business*/
+.m-list-piece .m-item .m-list-content .buis-over{
+}
+
+/*public color strat*/
+.m-list-piece .m-item .m-list-content .buis-color01{
+     color: #4eae60;
+}
+/*public color end*/
+
+.m-list-piece .m-item .m-list-content time{
+    font-size: 1.4rem;
+}
+
+/*person information*/
+
+
+.m-list .m-person ul{
+    margin:0;
+    padding: 0;
+    font-family: "微软雅黑";
+}
+.m-list .m-person ul li{
+    width: 100%;
+    list-style: none;
+    border-bottom: 1px solid #E2E2E2;
+    padding: 1.2rem 0rem;
+}
+
+.m-list .m-person ul li span{
+    display: inline-block;
+    font-size: 0;
+    -webkit-text-size-adjust:none;
+}
+.m-list .m-person ul li .person-title{
+    font-size: 1.6rem;
+    width:38%;
+    color: #a4a4a4;
+    padding-left: .5rem;
+}
+.m-list .m-person ul li .person-content{
+    font-size: 1.6rem;
+    width: 60%;
+    color: #333;
+}
+/*dfx end*/
+
+/**
+ * list-panel类
+ */
+.m-list-panel {
+    padding: 0.5rem 1rem;
+    border: 1px solid #E2E2E2;
+    border-radius: 5px;
+}
+.m-list-panel .m-item {
+    padding: 1rem 0;
+    border-bottom: 1px dashed #A9A9A9;
+}
+.m-list-panel .m-item:last-child {
+    border: none;
+}
+.m-list .m-item p:last-child {
+    margin-bottom: 0;
+}
+.m-list-panel .m-item .stress {
+    margin-right: 0;
+    color: #868686;
+}

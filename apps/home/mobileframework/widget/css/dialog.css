@@ -1,0 +1,12 @@
+.modal-dialog {
+	margin-top:50%;
+}
+.modal-footer{
+	text-align:center;
+}
+.margin-nobottom{
+	margin-bottom:0px;
+}
+.btn-halfWidth{
+	width:48%;
+}

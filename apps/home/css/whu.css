@@ -1,0 +1,35 @@
+.whu-header{
+    background-color: #C6E2FF;
+    color: #212121;
+    position: relative;
+    font-size: 0.6rem;
+    padding: 0.4rem 0.75rem;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+.whu-icon-yuer:before{  content: "\e6eb";}
+.whu-charge-header{
+    text-align: center;
+    color: #ffffff;
+    position: relative;
+    font-size: 0.6rem;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: block;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}

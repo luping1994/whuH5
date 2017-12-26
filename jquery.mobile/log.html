@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ϟ±덢τµµ</title>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript">
+
+//²䊏ӆº¯˽
+function move_up(div_id,class_id){
+var l_div,c_div,e_i
+$(class_id).each(function(i){
+   e_i = i;
+   if(this.id == div_id){
+    c_div = this;
+    return false;
+   }else{
+    l_div = this;
+   }
+})
+if(e_i != 0){
+   $(c_div).slideUp(100).delay(300).slideDown(600);
+   $(l_div).slideUp(100).delay(300).slideDown(600);
+}
+$(c_div).insertBefore($(l_div));
+}
+
+//²䐂ӆº¯˽
+function move_down(div_id,class_id){
+var n_div,c_div,q_i,e_i
+$(class_id).each(function(i){
+   e_i = i+1;
+   if(this.id == div_id){
+    c_div = this;
+    return false;
+   }
+})
+n_div = $(class_id).eq(e_i);
+if($(class_id).length != e_i){
+   $(c_div).slideUp(100).delay(300).slideDown(600);
+   $(n_div).slideUp(100).delay(300).slideDown(600);
+}
+$(n_div).insertBefore($(c_div));
+}
+</script>
+<style>
+.a_left{
+padding:9px;
+margin:9px;
+width:100px;
+height:100px;
+border:1px solid #c0c0c0;
+cursor:pointer;
+}
+.a_left span{
+font-size:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="a1" class="a_left"><s>111</s> <span onclick='move_up("a1",".a_left");return false;'>ʏӆ|</span><span onclick='move_down("a1",".a_left");return false;'>Ђӆ</span></div>
+<div id="a2" class="a_left"><u>222</u> <span onclick='move_up("a2",".a_left");return false;'>ʏӆ|</span><span onclick='move_down("a2",".a_left");return false;'>Ђӆ</span></div>
+<div id="a3" class="a_left"><b>333</b> <span onclick='move_up("a3",".a_left");return false;'>ʏӆ|</span><span onclick='move_down("a3",".a_left");return false;'>Ђӆ</span></div>
+<div id="a4" class="a_left"><i>444</i> <span onclick='move_up("a4",".a_left");return false;'>ʏӆ|</span><span onclick='move_down("a4",".a_left");return false;'>Ђӆ</span></div>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+.detailTable {
+	border-collapse: collapse;
+	border: solid #e3e1e1;
+	border-width: 1px 0 0 1px;
+	width: 100%;
+	text-shadow: none;
+	font-weight:bolder;
+	background: #fff;
+	width:100%;
+}
+.detailTable td {
+	border: solid #e3e1e1;
+	border-width: 0 1px 1px 0;
+	padding: 10px;
+	font-size: 10px;
+}
+.detailTable .thead td {
+	color: #fff;
+	background: #88bb63;
+	font-size: 14px;
+	padding: 5px;
+}

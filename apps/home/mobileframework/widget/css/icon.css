@@ -1,0 +1,116 @@
+/**
+ * icon
+ */
+
+/**
+ * 基本布局icon类
+ */
+.m-icon {
+  position: relative;
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+}
+/**
+ * flex布局icon类
+ */
+.m-icon-flex {
+    position: relative;
+}
+.m-icon-flex:after {
+    display: inline-block;
+    font-family:'FontAwesome';
+    speak: none;
+    font-size: inherit;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    text-rendering: auto;
+    line-height: 1;
+
+    color: #ccc;
+    font-size: 4rem;
+
+    -webkit-align-items: center;
+    align-items: center;
+
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+
+    height: 100%;
+    position: absolute;
+    right: 15px;
+    top: 0;
+}
+/**
+ * 绝对定位布局icon类（兼容低版本浏览器）
+ */
+.m-icon-pos {
+    position: relative;
+}
+.m-icon-pos:after {
+    display: inline-block;
+    font-family:'FontAwesome';
+    speak: none;
+    font-size: inherit;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    text-rendering: auto;
+    line-height: 1;
+
+    color: #ccc;
+    font-size: 4rem;
+
+    height: 100%;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    margin-top: -2rem;
+}
+
+/**
+ * 标题头标志图片icon类
+ */
+.m-icon-flag {
+    position: relative;
+}
+.m-icon-flag:before {
+    content: "";
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0.5rem;
+    width: 32px;
+    height: 64px;
+
+    background-repeat: no-repeat;
+    background-position: 0 0;
+}
+.m-icon-flag-course:before {
+    background-image: url(../../tpl/img/flag.png);
+}
+
+/**
+ * 字体图标
+ */
+.m-icon-time:before {
+    content:"\e023"
+}
+.m-icon-scan:before {
+    content:"\e105"
+}
+.m-icon-angle-right:after {
+    content: "\e080";
+}
