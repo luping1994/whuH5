@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>武汉大学公寓用电</title>
+    <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/loaders.min.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <script src="./mobileframework/widget/js/mobile.js"></script>
+    <link href="./mobileframework/mobile.css" rel="stylesheet">
+    <script type="text/javascript" src="../../plugin.apis/cordova.js"></script>
+    <script type="text/javascript" src="../../plugin.apis/webView.js"></script>
+    <script type="text/javascript" src="../../common/js/public.js"></script>
+    <script src="js/public.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+    <script src="js/newIndex.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+
+
+    <link href="aui/css/aui.css" rel="stylesheet">
+    <link href="css/whu.css" rel="stylesheet">
+    <link href="css/weui.css" rel="stylesheet">
+
+    <link href="css/swiper.css" rel="stylesheet">
+    <script type="text/javascript" src="js/swiper.js"></script>
+
+
+    <script type="text/javascript" src="aui/script/aui-tab.js"></script>
+    <script type="text/javascript" src="aui/script/aui-pull-refresh.js"></script>
+    <script type="text/javascript" src="aui/script/aui-dialog.js"></script>
+    <link rel="stylesheet" type="text/css" href="aui/css/aui-pull-refresh.css"/>
+    <style>
+        .whu-switch-off {
+            background: url("image/switch_off.svg");
+        }
+    </style>
+</head>
+
+<body>
+<div class="aui-content">
+    <!--<header class="aui-bar aui-bar-nav header" style="position: fixed">-->
+    <!--<div class="aui-tab" id="tab">-->
+    <!--<div class="aui-tab-item">照明</div>-->
+    <!--<div class="aui-tab-item">空调</div>-->
+    <!--</div>-->
+    <!--</header>-->
+    <div class="m-container swiper-container" style="margin-top: 2.2rem">
+        <section class="aui-refresh-content" id="zhaoming">
+            <div class="aui-content aui-margin-b-15">
+                <ul class="aui-list aui-list-in">
+                    <li class="whu-header">
+                        账户信息
+                    </li>
+                    <li class="aui-list-item" @click="jumpHis(item)" v-for="item in accountList">
+                        <div class="aui-list-item-label-icon">
+                            <i class="aui-iconfont whu-icon-yuer"></i>
+                        </div>
+                        <div class="aui-list-item-inner aui-list-item-arrow">
+                            <div class="aui-list-item-title">{{item.name}}</div>
+                            <div class="aui-list-item-right">{{item.value}}</div>
+                        </div>
+                    </li>
+
+                </ul>
+                <ul class="aui-list aui-list-in">
+
+                    <li class="whu-header">
+                        用电状态
+                    </li>
+                    <li class="aui-list-item">
+                        <div class="aui-list-item-label-icon">
+                            <i class="aui-iconfont aui-icon-home"></i>
+                        </div>
+                        <div class="aui-list-item-inner ">
+                            <div class="aui-list-item-title">开关状态</div>
+                            <img v-bind:src="yongdiandatas[0].value?'image/switch_on.svg':'image/switch_off.svg'"
+                                 class="aui-list-item-right" onclick="switchZhaoming()"
+                                 style="width: 2rem;height: 1.5rem;">
+                        </div>
+                    </li>
+                    <li class="aui-list-item" onclick="openControlLogPage()">
+                        <div class="aui-list-item-label-icon">
+                            <i class="aui-iconfont aui-icon-home"></i>
+                        </div>
+                        <div class="aui-list-item-inner aui-list-item-arrow">
+                            <div class="aui-list-item-title">状态描述</div>
+                            <div class="aui-list-item-right">正常</div>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="aui-list aui-list-in">
+                    <li class="whu-header">
+                        电量信息
+                    </li>
+                    <li class="aui-list-item" @click="jumpHis(item)" v-for="item in dianliangxinxi">
+                        <div class="aui-list-item-label-icon">
+                            <i class="aui-iconfont whu-icon-yuer"></i>
+                        </div>
+                        <div class="aui-list-item-inner aui-list-item-arrow">
+                            <div class="aui-list-item-title">{{item.name}}</div>
+                            <div class="aui-list-item-right">{{item.value}}</div>
+                        </div>
+                    </li>
+
+                </ul>
+                <ul class="aui-list aui-list-in">
+                    <li class="whu-header">
+                        学生信息
+                    </li>
+                    <li class="aui-list-item" @click="jumpHis(item)" v-for="item in students">
+                        <div class="aui-list-item-label-icon">
+                            <i class="aui-iconfont whu-icon-yuer"></i>
+                        </div>
+                        <div class="aui-list-item-inner aui-list-item-arrow">
+                            <div class="aui-list-item-title">{{item.name}}</div>
+                            <div class="aui-list-item-right">{{item.value}}</div>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="js/newControl.js"></script>
+<script>
+
+    //    getChannel()
+
+
+</script>
+
+
+</body>
+
+</html>

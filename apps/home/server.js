@@ -7,13 +7,13 @@ var documentRoot = 'E:\\JavaWebProject\\whu\\apps\\home';
 var server= http.createServer(function(req,res){
 
     var url = req.url;
-    //客户端输入的url，例如如果输入localhost:8888/index.html
-    //那么这里的url == /index.html
+    //客户端输入的url，例如如果输入localhost:8888/oldIndex.html
+    //那么这里的url == /oldIndex.html
 
     var file = documentRoot + url;
     console.log(url);
     console.log(file);
-    //E:/PhpProject/html5/websocket/www/index.html
+    //E:/PhpProject/html5/websocket/www/oldIndex.html
 
 
     fs.readFile( file , function(err,data){

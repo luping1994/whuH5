@@ -67,16 +67,23 @@ Vue.component('account-list', {
 });
 
 var zhaoming = new Vue({
-    el: '#kongtiao',
+    el: '#zhaoming',
     data: {
         accountList: [
             {id: 0, type: "accountInfo", name: '账户余额', value: "--元", iconclass: "whu-icon-yuer"},
             {id: 1, type: "accountInfo", name: '剩余补贴', value: "--度", iconclass: "whu-icon-yuer"},
-            {id: 2, type: "accountInfo", name: '账户状态', value: "余额不足", iconclass: "whu-icon-yuer"}
+            {id: 2, type: "accountInfo", name: '账户状态', value: "--", iconclass: "whu-icon-yuer"}
         ],
         yongdiandatas: [
-            {id: 0, name: '开关状态', value: "false", iconclass: "whu-icon-yuer"},
-            {id: 1, name: '状态描述', value: "正常", iconclass: "whu-icon-yuer"},
+            {
+                id: 0,
+                type: "switchControl",
+                name: '开关状态',
+                value: false,
+                src: "image/switch_off.svg",
+                iconclass: "whu-icon-yuer"
+            },
+            {id: 1, type: "switchControl", name: '状态描述', value: "正常", iconclass: "whu-icon-yuer"},
         ],
         sushedatas: [
             {id: 0, name: "信息学部-10舍东-101"}
@@ -91,58 +98,121 @@ var zhaoming = new Vue({
             {id: 7, type: "totalUse", name: '总用电量', value: "--kW·h", iconclass: "whu-icon-yuer"}
         ],
         students: [
-            {id: 0, type: "student", name: '张三', value: "计算机学院", iconclass: "whu-icon-yuer"},
-            {id: 1, type: "student", name: '李四', value: "计算机学院", iconclass: "whu-icon-yuer"},
-            {id: 2, type: "student", name: '王老五', value: "计算机学院", iconclass: "whu-icon-yuer"}
+            // {id: 0, type: "student", name: '张三', value: "计算机学院", iconclass: "whu-icon-yuer"},
+            // {id: 1, type: "student", name: '李四', value: "计算机学院", iconclass: "whu-icon-yuer"},
+            // {id: 2, type: "student", name: '王老五', value: "计算机学院", iconclass: "whu-icon-yuer"}
         ]
     },
     methods: {
         jumpHis: function (e) {
-            console.log(e.type)
-            switch (e.type){
+            console.log(e.type);
+            switch (e.type) {
                 case "accountInfo":
-                    // TrunPage.openWebView("ChargeRecords.html",1,"资费记录");
-                      window.location.href='ChargeRecords.html';
+                    TrunPage.openWebView("home/ChargeRecords.html", 1, "资费记录");
+                    // window.location.href='ChargeRecords.html';
                     break;
+                case "dianya":
+                case "dianliu":
+                case "gonglv":
+                case "gonglvyinshu":
+                    TrunPage.setKeyValue("hisType",e.name);
+                    TrunPage.openWebView("home/UIHistroy.html", 1, "历史数据");
+                    // window.location.href='ChargeRecords.html';
+                    break;
+                case "dayUse":
+                case "monthUse":
+                case "totalUse":
+                    TrunPage.setKeyValue("hisType",e.name);
+                    TrunPage.openWebView("home/EleHistroy.html", 1, "用电量历史数据");
+                    break;
+
             }
         }
     }
+
 });
 var kongtiao = new Vue({
-    el: '#zhaoming',
+    el: '#kongtiao',
     data: {
         accountList: [
-            {id: 0, type: "accountInfo", name: '账户余额', value: "-90元", iconclass: "whu-icon-yuer"},
-            {id: 1, type: "accountInfo", name: '剩余补贴', value: "1444度", iconclass: "whu-icon-yuer"},
-            {id: 2, type: "accountInfo", name: '账户状态', value: "余额不足", iconclass: "whu-icon-yuer"}
+            {id: 0, type: "accountInfo", name: '账户余额', value: "--元", iconclass: "whu-icon-yuer"},
+            {id: 1, type: "accountInfo", name: '剩余补贴', value: "--度", iconclass: "whu-icon-yuer"},
+            {id: 2, type: "accountInfo", name: '账户状态', value: "--", iconclass: "whu-icon-yuer"}
         ],
         yongdiandatas: [
-            {id: 0, name: '开关状态', value: "false", iconclass: "whu-icon-yuer"},
-            {id: 1, name: '状态描述', value: "正常", iconclass: "whu-icon-yuer"},
+            {id: 0, name: '开关状态', value: false, src: "image/switch_off.svg", iconclass: "whu-icon-yuer"},
+            {id: 1, name: '状态描述', value: "--", iconclass: "whu-icon-yuer"}
         ],
         sushedatas: [
             {id: 0, name: "信息学部-10舍东-101"}
         ],
         dianliangxinxi: [
-            {id: 0, type: "dianya", name: '电压', value: "235V", iconclass: "whu-icon-yuer"},
-            {id: 1, type: "dianliu", name: '电流', value: "0.00A", iconclass: "whu-icon-yuer"},
-            {id: 2, type: "gonglv", name: '功率', value: "0.00W", iconclass: "whu-icon-yuer"},
-            {id: 4, type: "gonglvyinshu", name: '功率因数', value: "1.00", iconclass: "whu-icon-yuer"},
-            {id: 5, type: "dayUse", name: '本日已用电量', value: "0.00kW·h", iconclass: "whu-icon-yuer"},
-            {id: 6, type: "monthUse", name: '本月已用电量', value: "0.00kW·h", iconclass: "whu-icon-yuer"},
-            {id: 7, type: "totalUse", name: '总用电量', value: "0.00kW·h", iconclass: "whu-icon-yuer"}
+            {id: 0, type: "dianya", name: '电压', value: "--V", iconclass: "whu-icon-yuer"},
+            {id: 1, type: "dianliu", name: '电流', value: "--A", iconclass: "whu-icon-yuer"},
+            {id: 2, type: "gonglv", name: '功率', value: "--W", iconclass: "whu-icon-yuer"},
+            {id: 4, type: "gonglvyinshu", name: '功率因数', value: "--", iconclass: "whu-icon-yuer"},
+            {id: 5, type: "dayUse", name: '本日已用电量', value: "--kW·h", iconclass: "whu-icon-yuer"},
+            {id: 6, type: "monthUse", name: '本月已用电量', value: "--kW·h", iconclass: "whu-icon-yuer"},
+            {id: 7, type: "totalUse", name: '总用电量', value: "--kW·h", iconclass: "whu-icon-yuer"}
         ],
         students: [
-            {id: 0, type: "student", name: '张三', value: "计算机学院", iconclass: "whu-icon-yuer"},
-            {id: 1, type: "student", name: '李四', value: "计算机学院", iconclass: "whu-icon-yuer"},
-            {id: 2, type: "student", name: '王老五', value: "计算机学院", iconclass: "whu-icon-yuer"}
+            // {id: 0, type: "student", name: '张三', value: "计算机学院", iconclass: "whu-icon-yuer"},
+            // {id: 1, type: "student", name: '李四', value: "计算机学院", iconclass: "whu-icon-yuer"},
+            // {id: 2, type: "student", name: '王老五', value: "计算机学院", iconclass: "whu-icon-yuer"}
         ]
     },
     methods: {
         jumpHis: function (e) {
-            console.log(e.type)
+            console.log(e.type);
+            switch (e.type) {
+                case "accountInfo":
+                    TrunPage.openWebView("home/ChargeRecords.html", 1, "资费记录");
+                    // window.location.href='ChargeRecords.html';
+                    break;
+                case "dianya":
+                case "dianliu":
+                case "gonglv":
+                case "gonglvyinshu":
+                    TrunPage.openWebView("home/UIHistroy.html", 1, "历史数据");
+                    // window.location.href='ChargeRecords.html';
+                    break;
+                case "dayUse":
+                case "monthUse":
+                case "totalUse":
+                    TrunPage.setKeyValue("hisType",e.name);
+                    TrunPage.openWebView("home/EleHistroy.html", 1, "用电量历史数据");
+                    break;
+
+            }
         }
     }
 });
+
+function switchZhaoming() {
+    var dialog = new auiDialog();
+
+    var msgs = zhaoming.yongdiandatas[0].value == false ? "是否打开照明?" : "是否关闭照明";
+    dialog.alert({
+        title: "提示",
+        msg: msgs,
+        buttons: ['取消', '确定']
+    }, function (ret) {
+        if (ret == "2") {
+            zhaoming.yongdiandatas[0].value = true;
+        }
+    })
+}
+
+function switchKongtiao() {
+    var dialog = new auiDialog();
+
+    dialog.alert({
+        title: "提示",
+        msg: '是否打开空调?',
+        buttons: ['取消', '确定']
+    }, function (ret) {
+        console.log(ret)
+    })
+}
 
 

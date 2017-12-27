@@ -49,11 +49,11 @@
             </div>
             <div class="aui-col-xs-4"
                  style="border-right: dashed 2px #fff;background-color: #50A0D2;display: inline-block;height: 4rem">
-                <div id="ruzhang" class="whu-charge-header" style="height: 40%;text-align: center">本月入账</div>
+                <div id="ruzhang" class="whu-charge-header" style="height: 40%;text-align: center">操作次数</div>
                 <div style="color: #FFFFFF;height: 60%">0.00元</div>
             </div>
             <div class="aui-col-xs-4" style="background-color: #50A0D2;display: inline-block;height: 4rem">
-                <div class="whu-charge-header" style="height: 40%;text-align: center"> 本月出账</div>
+                <div class="whu-charge-header" style="height: 40%;text-align: center"> 断电次数</div>
                 <div id="chuzhang" style="color: #FFFFFF;height: 60%">0.00元</div>
             </div>
 
@@ -61,13 +61,13 @@
 
         <div class="aui-bar aui-bar-btn" id="bar" style="width:80%;">
             <div class="aui-bar-btn-item" v-on:click="tab1Click()" v-bind:class="{'aui-active': index0 }"
-                 style="width: 33%">用电记录
+                 style="width: 33%">操作记录
             </div>
             <div class="aui-bar-btn-item" v-on:click="tab2Click()" v-bind:class="{'aui-active': index1 }"
                  style="width: 33%">全部
             </div>
             <div class="aui-bar-btn-item " v-on:click="tab3Click()" v-bind:class="{'aui-active': index2 }"
-                 style="width: 33%">充值记录
+                 style="width: 33%">断电记录
             </div>
         </div>
     </header>
@@ -76,13 +76,13 @@
             <li class="whu-header">
                 {{month}}
             </li>
-            <li class="aui-list-item" v-for="item in zifeilists">
+            <li class="aui-list-item" v-for="item in logs">
 
                 <div class="aui-list-item-inner">
                     <div class="aui-list-item-title">{{item.msg}}
                         <div class="aui-list-item-text" style="font-size: .6rem">{{item.date}}</div>
                     </div>
-                    <div class="aui-list-item-right">{{item.pay}}</div>
+                    <!--<div class="aui-list-item-right">{{item.pay}}</div>-->
                 </div>
 
 
@@ -94,7 +94,7 @@
 </div>
 
 </body>
-<script src="js/ChargeRecords.js"></script>
+<script src="js/controlLog.js"></script>
 <script>
 
 </script>
