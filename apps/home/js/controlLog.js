@@ -5,7 +5,7 @@ var AccountType = "照明";
 var currentIndex = 1;
 var token;
 var datas = [];
-var toast;
+
 var isGetRecharge=false;
 var isGetCharge=false;
 function loadPage() {
@@ -42,7 +42,7 @@ function openDataPicker() {
             time.month = result[1].label;
             time_year = result[0].value;
             time_month = result[1].value;
-            getData();
+            getDataWarp();
 
         },
         id: 'datePicker'
@@ -74,8 +74,8 @@ var zifei = new Vue({
 var tabbar = new Vue({
     el: "#bar",
     data: {
-        index0: false,
-        index1: true,
+        index0: true,
+        index1: false,
         index2: false
     },
     methods: {
@@ -102,13 +102,13 @@ var tabbar = new Vue({
     }
 });
 
-function getData() {
+function getDataWarp() {
 
     datas = [];
     var frq = 24;
     var startTime = time_year + "-" + time_month + "-" + "01";
     var endTime = time_year + "-" + time_month + "-" + getLastDay(time_year, time_month);
-    toast= new auiToast();
+    var toast;  toast= new auiToast();
     toast.loading({
         title: "正在查询信息..",
         duration: 10000
@@ -189,10 +189,7 @@ function getData(frq, startTime, endTime) {
                 console.log(json.message)
             }
 
-            isGetCharge = true;
-            if(isGetCharge&&isGetRecharge){
                 toast.hide();
-            }
             switchTabDatas(currentIndex);
 
         }

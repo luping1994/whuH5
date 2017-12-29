@@ -146,17 +146,17 @@ function getData(index) {
         startTime = endTime + " 00:00:00";
         endTime = endTime + " 23:59:59";
         frq = 1;
-        title = "本日" + name + "历史曲线";
+        title = "本日" + name + "数据";
     } else if (index == 1) {
         var temp = new Date();
         temp.setDate(today.getDate() - 7);
         startTime = temp.getFullYear() + "-" + (temp.getMonth() + 1) + "-" + temp.getDate();
-        title = "最近一周" + name + "历史曲线";
+        title = "最近一周" + name + "数据";
     } else if (index == 2) {
         var temp = new Date();
         temp.setDate(today.getDate() - 31);
         startTime = temp.getFullYear() + "-" + (temp.getMonth() + 1) + "-" + temp.getDate();
-        title = "最近一月" + name + "历史曲线";
+        title = "最近一月" + name + "数据";
     }
     $.ajax({
         url: url + 'Inquiry_HisData',

@@ -25,6 +25,7 @@
     <link href="css/weui.css" rel="stylesheet">
 
     <script type="text/javascript" src="js/weui.js"></script>
+    <script type="text/javascript" src="aui/script/aui-toast.js"></script>
 
     <script type="text/javascript" src="aui/script/aui-tab.js"></script>
 
@@ -61,14 +62,12 @@
 
         <div class="aui-bar aui-bar-btn" id="bar" style="width:80%;">
             <div class="aui-bar-btn-item" v-on:click="tab1Click()" v-bind:class="{'aui-active': index0 }"
-                 style="width: 33%">操作记录
+                 style="width: 50%">操作记录
             </div>
             <div class="aui-bar-btn-item" v-on:click="tab2Click()" v-bind:class="{'aui-active': index1 }"
-                 style="width: 33%">全部
+                 style="width: 50%">断电记录
             </div>
-            <div class="aui-bar-btn-item " v-on:click="tab3Click()" v-bind:class="{'aui-active': index2 }"
-                 style="width: 33%">断电记录
-            </div>
+
         </div>
     </header>
     <div style="margin-top: 6.3rem">

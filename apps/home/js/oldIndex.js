@@ -102,7 +102,7 @@ function getChannel(StudentID, AccountType) {
             zhaoming.accountList[2].value = json.info[0].AccountStatus + "";
 
             zhaoming.dianliangxinxi[0].value = json.info[0].U + "V";
-            zhaoming.dianliangxinxi[1].value = json.info[0].I + "V";
+            zhaoming.dianliangxinxi[1].value = json.info[0].I + "A";
             zhaoming.dianliangxinxi[2].value = json.info[0].Power + "W";
             zhaoming.dianliangxinxi[3].value = json.info[0].PowerRate + "";
             zhaoming.dianliangxinxi[4].value = json.info[0].ElecDay + "kW·h";

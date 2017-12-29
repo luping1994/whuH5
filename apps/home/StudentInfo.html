@@ -35,32 +35,37 @@
     <div class="weui-cells__title" style="background-color: #C6E2FF">学生信息</div>
     <div class="weui-cells">
         <div class="weui-cell">
-            <div class="weui-cell__hd"><img src="image/student.png" alt=""
-                                            style="width:20px;margin-right:5px;display:block"></div>
+            <div class="weui-cell__hd">
+                <i class="iconfont icon-xuehao c1 f1" style="width:20px;margin-right:.5rem;display:block"></i>
+            </div>
             <div class="weui-cell__bd">
                 <p>学号</p>
             </div>
             <div class="weui-cell__ft">{{student.StudentID}}</div>
         </div>
         <div class="weui-cell">
-            <div class="weui-cell__hd"><img src="image/student.png" alt=""
-                                            style="width:20px;margin-right:5px;display:block"></div>
+            <div class="weui-cell__hd">
+                <i class="iconfont icon-yuanxi c1 f1" style="width:20px;margin-right: .5rem;display:block"></i>
+            </div>
             <div class="weui-cell__bd">
                 <p>院系</p>
             </div>
             <div class="weui-cell__ft">{{student.Faculty}}</div>
         </div>
         <div class="weui-cell">
-            <div class="weui-cell__hd"><img src="image/student.png" alt=""
-                                            style="width:20px;margin-right:5px;display:block"></div>
+            <div class="weui-cell__hd">
+                <i class="iconfont icon-zhuanyeshuyu c1 f1" style="width:20px;margin-right:.5rem;display:block"></i>
+            </div>
             <div class="weui-cell__bd">
                 <p>专业</p>
             </div>
             <div class="weui-cell__ft">{{student.Professional}}</div>
         </div>
         <div class="weui-cell">
-            <div class="weui-cell__hd"><img src="image/student.png" alt=""
-                                            style="width:20px;margin-right:5px;display:block"></div>
+            <div class="weui-cell__hd">
+                <i class="iconfont icon-dianhua c1 f1" style="width:20px;margin-right:.5rem;display:block"></i>
+
+            </div>
             <div class="weui-cell__bd">
                 <p>电话</p>
             </div>
@@ -69,7 +74,7 @@
     </div>
     <div class="weui-cells__title" style="background-color: #C6E2FF">宿舍信息</div>
     <div style="width: 100%;font-size: .6rem;text-align: center;background-color: #FFFFFF;padding-top: .3rem;padding-bottom: .3rem">
-        {{student.Area}}-{{student.Building}}{{student.Unit}}-{{student.RoomNum}}
+        {{student.Area+'-'+student.Building+student.Unit+'-'+student.RoomNum}}
     </div>
 
 </div>

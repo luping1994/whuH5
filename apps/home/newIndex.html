@@ -48,7 +48,7 @@
     <!--<div class="aui-tab-item">空调</div>-->
     <!--</div>-->
     <!--</header>-->
-    <div class="m-container swiper-container" style="margin-top: 2.2rem">
+    <div class="m-container swiper-container" style="">
         <section class="aui-refresh-content" id="zhaoming">
             <div class="aui-content aui-margin-b-15">
                 <ul class="aui-list aui-list-in">
@@ -57,7 +57,7 @@
                     </li>
                     <li class="aui-list-item" @click="jumpHis(item)" v-for="item in accountList">
                         <div class="aui-list-item-label-icon">
-                            <i class="aui-iconfont whu-icon-yuer"></i>
+                            <i class="" v-bind:class="item.icon_class"></i>
                         </div>
                         <div class="aui-list-item-inner aui-list-item-arrow">
                             <div class="aui-list-item-title">{{item.name}}</div>
@@ -73,7 +73,7 @@
                     </li>
                     <li class="aui-list-item">
                         <div class="aui-list-item-label-icon">
-                            <i class="aui-iconfont aui-icon-home"></i>
+                            <i class="iconfont icon-lighting f1 c1"></i>
                         </div>
                         <div class="aui-list-item-inner ">
                             <div class="aui-list-item-title">照明</div>
@@ -84,24 +84,24 @@
 
                     </li>
                     <li class="aui-list-item">
-                        <div  class="aui-list-item-label-icon">
-                            <i class="aui-iconfont aui-icon-home"></i>
+                        <div class="aui-list-item-label-icon">
+                            <i class="iconfont icon-kongdiao f1 c1"></i>
                         </div>
                         <div class="aui-list-item-inner ">
                             <div class="aui-list-item-title">空调</div>
-                            <img v-bind:src="yongdiandatas[0].value?'image/switch_on.svg':'image/switch_off.svg'"
+                            <img v-bind:src="yongdiandatas[1].value?'image/switch_on.svg':'image/switch_off.svg'"
                                  class="aui-list-item-right" onclick="switchKongtiao()"
                                  style="width: 2rem;height: 1.5rem;">
                         </div>
 
                     </li>
                     <li class="aui-list-item" onclick="openControlLogPage()">
-                        <div  class="aui-list-item-label-icon">
-                            <i class="aui-iconfont whu-student-icon"></i>
+                        <div class="aui-list-item-label-icon">
+                            <i class="iconfont icon-zhuangtai f1 c1"></i>
                         </div>
                         <div class="aui-list-item-inner aui-list-item-arrow">
-                            <div class="aui-list-item-title">状态描述</div>
-                            <div class="aui-list-item-right">{{yongdiandatas[1].value}}</div>
+                            <div class="aui-list-item-title">开关状态</div>
+                            <div class="aui-list-item-right">{{yongdiandatas[2].value}}</div>
                         </div>
                     </li>
                 </ul>
@@ -110,8 +110,8 @@
                         电量信息
                     </li>
                     <li class="aui-list-item" @click="jumpHis(item)" v-for="item in dianliangxinxi">
-                        <div  class="aui-list-item-label-icon">
-                            <i class="aui-iconfont " v-bind:class="item.icon_class"></i>
+                        <div class="aui-list-item-label-icon">
+                            <i class=" " v-bind:class="item.icon_class"></i>
                         </div>
                         <div class="aui-list-item-inner aui-list-item-arrow">
                             <div class="aui-list-item-title">{{item.name}}</div>
@@ -126,7 +126,7 @@
                     </li>
                     <li class="aui-list-item" @click="jumpHis(item)" v-for="item in students">
                         <div class="aui-list-item-label-icon">
-                            <i class="whu-student-icon aui-iconfont" ></i>
+                            <i class="iconfont icon-icon-test f1 c1"></i>
                         </div>
                         <div class="aui-list-item-inner aui-list-item-arrow">
                             <div class="aui-list-item-title">{{item.SName}}</div>

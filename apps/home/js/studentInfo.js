@@ -37,6 +37,10 @@ function getStudentDetail(id) {
                content.student.Faculty = json.info[0].Faculty;
                content.student.Professional = json.info[0].Professional;
                content.student.PhoneNum = json.info[0].PhoneNum;
+               content.student.Area = json.info[0].Area;
+               content.student.Building = json.info[0].Building;
+               content.student.Unit = json.info[0].Unit;
+               content.student.RoomNum = json.info[0].RoomNum;
            }else {
                var toast = new auiToast({});
                toast.fail({

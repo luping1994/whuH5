@@ -59,7 +59,7 @@
                             </li>
                             <li class="aui-list-item" @click="jumpHis(item)" v-for="item in accountList">
                                 <div class="aui-list-item-label-icon">
-                                    <i class="aui-iconfont whu-icon-yuer"></i>
+                                    <i class="" v-bind:class="item.icon_class"></i>
                                 </div>
                                 <div class="aui-list-item-inner aui-list-item-arrow">
                                     <div class="aui-list-item-title">{{item.name}}</div>
@@ -75,7 +75,7 @@
                             </li>
                             <li class="aui-list-item">
                                 <div class="aui-list-item-label-icon">
-                                    <i class="aui-iconfont aui-icon-home"></i>
+                                    <i class="iconfont icon-lighting f1 c1"></i>
                                 </div>
                                 <div class="aui-list-item-inner ">
                                     <div class="aui-list-item-title">开关状态</div>
@@ -86,11 +86,11 @@
                             </li>
                             <li class="aui-list-item" onclick="openControlLogPage()">
                                 <div class="aui-list-item-label-icon">
-                                    <i class="aui-iconfont aui-icon-home"></i>
+                                    <i class="iconfont icon-zhuangtai f1 c1"></i>
                                 </div>
                                 <div class="aui-list-item-inner aui-list-item-arrow">
                                     <div class="aui-list-item-title">状态描述</div>
-                                    <div class="aui-list-item-right">正常</div>
+                                    <div class="aui-list-item-right">{{yongdiandatas[1].value}}</div>
                                 </div>
                             </li>
                         </ul>
@@ -100,7 +100,7 @@
                             </li>
                             <li class="aui-list-item" @click="jumpHis(item)" v-for="item in dianliangxinxi">
                                 <div class="aui-list-item-label-icon">
-                                    <i class="aui-iconfont whu-icon-yuer"></i>
+                                    <i class="" v-bind:class="item.icon_class"></i>
                                 </div>
                                 <div class="aui-list-item-inner aui-list-item-arrow">
                                     <div class="aui-list-item-title">{{item.name}}</div>
@@ -115,7 +115,7 @@
                             </li>
                             <li class="aui-list-item" @click="jumpHis(item)" v-for="item in students">
                                 <div class="aui-list-item-label-icon">
-                                    <i class="whu-student-icon aui-iconfont" ></i>
+                                    <i class="iconfont icon-icon-test f1 c1" ></i>
                                 </div>
                                 <div class="aui-list-item-inner aui-list-item-arrow">
                                     <div class="aui-list-item-title">{{item.SName}}</div>
@@ -137,7 +137,7 @@
                             </li>
                             <li class="aui-list-item" @click="jumpHis(item)" v-for="item in accountList">
                                 <div class="aui-list-item-label-icon">
-                                    <i class="aui-iconfont whu-icon-yuer"></i>
+                                    <i class="" v-bind:class="item.icon_class"></i>
                                 </div>
                                 <div class="aui-list-item-inner aui-list-item-arrow">
                                     <div class="aui-list-item-title">{{item.name}}</div>
@@ -152,22 +152,22 @@
                             </li>
                             <li class="aui-list-item">
                                 <div class="aui-list-item-label-icon">
-                                    <i class="aui-iconfont aui-icon-home"></i>
+                                    <i class="iconfont icon-kongdiao f1 c1"></i>
                                 </div>
                                 <div class="aui-list-item-inner ">
                                     <div class="aui-list-item-title">开关状态</div>
-                                    <img v-bind:src="yongdiandatas[0].src" class="aui-list-item-right "
+                                    <img v-bind:src="yongdiandatas[0].value?'image/switch_on.svg':'image/switch_off.svg'" class="aui-list-item-right "
                                          onclick="switchKongtiao()"
                                          style="width: 2rem;height: 1.5rem;">
                                 </div>
                             </li>
                             <li class="aui-list-item" onclick="openControlLogPage()">
                                 <div class="aui-list-item-label-icon">
-                                    <i class="aui-iconfont aui-icon-home"></i>
+                                    <i class="iconfont icon-zhuangtai f1 c1"></i>
                                 </div>
                                 <div class="aui-list-item-inner aui-list-item-arrow">
                                     <div class="aui-list-item-title">状态描述</div>
-                                    <div class="aui-list-item-right">正常</div>
+                                    <div class="aui-list-item-right">{{yongdiandatas[1].value}}</div>
                                 </div>
                             </li>
                         </ul>
@@ -177,7 +177,7 @@
                             </li>
                             <li class="aui-list-item" @click="jumpHis(item)" v-for="item in dianliangxinxi">
                                 <div class="aui-list-item-label-icon">
-                                    <i class="aui-iconfont whu-icon-yuer"></i>
+                                    <i class="" v-bind:class="item.icon_class"></i>
                                 </div>
                                 <div class="aui-list-item-inner aui-list-item-arrow">
                                     <div class="aui-list-item-title">{{item.name}}</div>
@@ -192,7 +192,7 @@
                             </li>
                             <li class="aui-list-item" @click="jumpHis(item)" v-for="item in students">
                                 <div class="aui-list-item-label-icon">
-                                    <i class="whu-student-icon aui-iconfont" ></i>
+                                    <i class="iconfont icon-icon-test f1 c1" ></i>
                                 </div>
                                 <div class="aui-list-item-inner aui-list-item-arrow">
                                     <div class="aui-list-item-title">{{item.SName}}</div>

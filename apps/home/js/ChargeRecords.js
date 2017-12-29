@@ -2,12 +2,16 @@ var time_year = new Date().getFullYear();
 var time_month = new Date().getMonth() + 1;
 var StudentID = "";
 var AccountType = "照明";
-var currentIndex = 1;
+var currentIndex = -1;
 var token;
-var datas = [];
+
+var chongzhiDatas = [];
+var yongdianDatas = [];
+
 var toast;
-var isGetRecharge=false;
-var isGetCharge=false;
+var isGetRecharge = false;
+var isGetCharge = false;
+
 function loadPage() {
     TrunPage.getKeyValue("userId", function (data) {
         StudentID = data;
@@ -54,8 +58,8 @@ var time = new Vue({
     data: {
         year: new Date().getFullYear() + "年",
         month: new Date().getMonth() + 1 + "月",
-        reCharge:"0元",
-        chargeBack:"0元"
+        reCharge: "0元",
+        chargeBack: "0元"
     }
 });
 
@@ -63,9 +67,7 @@ var zifei = new Vue({
     el: '#zifeilist',
     data: {
         month: time.month,
-        zifeilists: [
-
-        ]
+        zifeilists: []
 
     }
 });
@@ -73,8 +75,8 @@ var zifei = new Vue({
 var tabbar = new Vue({
     el: "#bar",
     data: {
-        index0: false,
-        index1: true,
+        index0: true,
+        index1: false,
         index2: false
     },
     methods: {
@@ -82,21 +84,15 @@ var tabbar = new Vue({
             this.index0 = true;
             this.index1 = false;
             this.index2 = false;
-            switchTabDatas(0);
+            switchTabDatas(0,false);
 
         },
         tab2Click: function (event) {
             this.index0 = false;
             this.index1 = true;
             this.index2 = false;
-            switchTabDatas(1);
+            switchTabDatas(1,false);
 
-        },
-        tab3Click: function (event) {
-            this.index0 = false;
-            this.index1 = false;
-            this.index2 = true;
-            switchTabDatas(2);
         }
     }
 });
@@ -107,7 +103,7 @@ function getData() {
     var frq = 24;
     var startTime = time_year + "-" + time_month + "-" + "01";
     var endTime = time_year + "-" + time_month + "-" + getLastDay(time_year, time_month);
-    toast= new auiToast();
+    toast = new auiToast();
     toast.loading({
         title: "正在查询信息..",
         duration: 10000
@@ -118,35 +114,35 @@ function getData() {
         }, 5000)
     });
 
+    yongdianDatas = [];
+    chongzhiDatas = [];
     getChargeBack(frq, startTime, endTime);
-
 
 
 }
 
-function switchTabDatas(index) {
+function switchTabDatas(index,forceSwitch) {
+    if (!forceSwitch){
+        if (index == currentIndex) {
+            return
+        }
+    }
 
-    currentIndex = index;
     zifei.zifeilists = [];
-
     if (index == 0) {
-        for (var i = 0; i < datas.length; i++) {
-            if (datas[i].type == "chargeBack") {
-
-                zifei.zifeilists.push(datas[i]);
+        for (var i = 0; i < yongdianDatas.length; i++) {
+            if (yongdianDatas[i].type == "chargeBack") {
+                zifei.zifeilists.push(yongdianDatas[i]);
             }
         }
     } else if (index == 1) {
-        for (var i = 0; i < datas.length; i++) {
-            zifei.zifeilists.push(datas[i]);
-        }
-    } else if (index == 2) {
-        for (var i = 0; i < datas.length; i++) {
-            if (datas[i].type == "reCharge") {
-                zifei.zifeilists.push(datas[i]);
+        for (var i = 0; i < yongdianDatas.length; i++) {
+            if (yongdianDatas[i].type == "reCharge") {
+                zifei.zifeilists.push(yongdianDatas[i]);
             }
         }
     }
+    currentIndex = index;
 
 }
 
@@ -172,35 +168,37 @@ function getChargeBack(frq, startTime, endTime) {
             // console.log(json);
 
             if (json.code == 200) {
-                var totleCharge=0;
+                var totleCharge = 0;
                 for (var i = 0; i < json.info.length; i++) {
-                    datas.push({
+                    yongdianDatas.push({
                         id: 0,
                         type: "chargeBack",
                         msg: "宿舍用电" + json.info[i].Eletricity + "kW·h",
                         pay: "-" + json.info[i].Chargeback + "元",
                         date: json.info[i].GetTime
                     });
-                    totleCharge+=json.info[i].Chargeback;
+                    // zifei.zifeilists.push({
+                    //     id: 0,
+                    //     type: "chargeBack",
+                    //     msg: "宿舍用电" + json.info[i].Eletricity + "kW·h",
+                    //     pay: "-" + json.info[i].Chargeback + "元",
+                    //     date: json.info[i].GetTime
+                    // });
+                    totleCharge += json.info[i].Chargeback;
                 }
-                time.chargeBack=totleCharge+"元";
-
+                time.chargeBack = totleCharge.toFixed(2) + "元";
+                getRecharge(frq, startTime, endTime);
             } else {
-                console.log(json.message)
-            }
 
-            isGetCharge = true;
-            if(isGetCharge&&isGetRecharge){
-                toast.hide();
             }
-            getRecharge(frq, startTime, endTime);
-
 
         }
     });
 }
 
 function getRecharge(frq, startTime, endTime) {
+
+
     $.ajax({
         url: url + 'Inquiry_ReCharge',
         data: {
@@ -219,30 +217,36 @@ function getRecharge(frq, startTime, endTime) {
 
             // zhaoming.students.clean();
             // TrunPage.showToast("json2="+json.info[0].PreChargeback+"元");
-            console.log(json);
-            var totleCharge =0;
+            var totleCharge = 0;
             if (json.code == 200) {
                 for (var i = 0; i < json.info.length; i++) {
-                    datas.push({
+                    // zifei.zifeilists.push({
+                    //     id: 0,
+                    //     type: "reCharge",
+                    //     msg: json.info[i].SName + "充值",
+                    //     pay: "-" + json.info[i].Balance + "元",
+                    //     date: json.info[i].GetTime
+                    // });
+                    chongzhiDatas.push({
                         id: 0,
                         type: "reCharge",
                         msg: json.info[i].SName + "充值",
                         pay: "-" + json.info[i].Balance + "元",
                         date: json.info[i].GetTime
                     });
-                    totleCharge+=json.info[i].Balance;
+                    totleCharge += json.info[i].Balance;
 
                 }
-                time.chargeBack=totleCharge+"元";
+                time.reCharge = totleCharge.toFixed(2) + "元";
                 isGetRecharge = true;
-                if(isGetCharge&&isGetRecharge){
+                if (toast)
                     toast.hide();
-                }
             } else {
-                console.log(json.message)
+                // console.log(json.message)
             }
-
-            switchTabDatas(currentIndex);
+            switchTabDatas(0,true);
+            tabbar.index0=true;
+            tabbar.index1=false;
 
         }
     });
