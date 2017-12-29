@@ -1,67 +1,68 @@
 var time = "";
-var hisType ="";
-function loadPage() {
-    TrunPage.getKeyValue("hisType", function (data) {
-        hisType = data;
-        TrunPage.setTitleTxt(hisType+"历史记录");
-        // TrunPage.showToast("userId="+data);
-        getHisData(hisType)
-    });
+var name = "";
+var currentIndex=-1;
+var token;
 
+var StudentID;
+var Field;
+var AccountType;
+var title;
+var unit;
+
+function loadPage() {
+    TrunPage.getKeyValue("name", function (data) {
+        name = data;
+        TrunPage.setTitleTxt(name + "历史记录");
+
+    });
+    TrunPage.getKeyValue("Field", function (data) {
+        Field = data;
+    });
+    TrunPage.getKeyValue("userId", function (data) {
+        StudentID = data;
+    });
+    TrunPage.getKeyValue("AccountType", function (data) {
+        AccountType = data;
+    });
+    TrunPage.getKeyValue("token", function (data) {
+        token = data;
+    });
+    TrunPage.getKeyValue("unit", function (data) {
+        unit = data;
+    });
+    getData(1);
 }
 
 function getHisData(hisType) {
     myChart.setOption({
         title: {
-            text: "最近一周用电量",
-            textStyle:{
-                fontSize:'.6rem'
+            text: title,
+            textStyle: {
+                fontSize: '.6rem'
             },
-            subtext:'单位(kW·h)'
+            subtext: '单位(V)'
         },
         tooltip: {},
         legend: {
-            data: ['用电量']
+            data: [hisType]
         },
         xAxis: {
-            data: ["12日", "13日", "14日", "15日", "16日", "17日","18日","19日","20日","21日"]
+            data: ["12日", "13日", "14日", "15日", "16日", "17日", "18日", "19日", "20日", "21日"]
         },
         yAxis: {},
         series: [{
-            type:'bar',
+            type: 'line',
             name: hisType,
-            data: [5, 20, 36, 10, 10, 20,220,230,240,250]
+            data: [5, 20, 36, 10, 10, 20, 220, 230, 240, 250]
         }]
     });
 }
 
-function openDataPicker() {
-    // 示例2：
-    weui.datePicker({
-        start: 2015, // 从今天开始
-        end: new Date(),
-        defaultValue: new Date(),
-        onChange: function (result) {
-            // console.log(result);
-        },
-        onConfirm: function (result) {
-            console.log(result[0].label);
-            console.log(result[1].label);
-            console.log(result[2].label);
-            // $("#year").empty();
-            // $("#year").innerHTML = "result[0].label";
-            time.year = result[0].label;
-            time.month = result[1].label;
-        },
-        id: 'datePicker'
-    });
-
-}
 
 var zifei = new Vue({
     el: '#zifeilist',
     data: {
-        month: "12月",
+        itemHeader: name + "历史数据",
         lists: [
             {id: 0, type: "zifeijilv", name: '', value: "220V", date: "2017年12月27日"},
             {id: 1, type: "zifeijilv", name: '', value: "220V", date: "2017年12月27日"},
@@ -71,13 +72,7 @@ var zifei = new Vue({
     }
 });
 
-var time = new Vue({
-    el:"#datePickerDiv",
-    data:{
-        year:new Date().getFullYear()+"年",
-        month:new Date().getMonth()+1+"月"
-    }
-});
+
 var tabbar = new Vue({
     el: "#bar",
     data: {
@@ -87,6 +82,9 @@ var tabbar = new Vue({
     },
     methods: {
         tab1Click: function (event) {
+            if (gettingData){
+                return
+            }
             this.index0 = true;
             this.index1 = false;
             this.index2 = false;
@@ -94,56 +92,155 @@ var tabbar = new Vue({
 
         },
         tab2Click: function (event) {
+            if (gettingData){
+                return
+            }
             this.index0 = false;
             this.index1 = true;
             this.index2 = false;
+
             getData(1);
 
         },
         tab3Click: function (event) {
+            if (gettingData){
+                return
+            }
             this.index0 = false;
             this.index1 = false;
             this.index2 = true;
+
             getData(2);
 
         }
     }
 });
 
+var toast;
+var gettingData = false;
 function getData(index) {
-    // zifei.zifeilists=[];
-
-    var title = "本日"+hisType+"历史统计";
-    var unit="";
-    if(index==0){
-        title = "本日"+hisType+"历史统计";
-    }else if (index==1){
-        title = "最近一周"+hisType+"历史统计";
-
-    }else  {
-        title = "最近一月"+hisType+"历史统计";
-
+    if (index==currentIndex){
+        return;
     }
+    gettingData = true;
+    currentIndex=index;
+    // zifei.zifeilists=[];
+    toast = new auiToast();
+    toast.loading({
+        title: "正在获取数据..",
+        duration: 20000
+    }, function (ret) {
+        console.log(ret);
+        setTimeout(function () {
+            toast.hide();
+        }, 200000)
+    });
+    var frq = 24;
+    var today = new Date();
+    var startTime;
+    var endTime = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+
+    // var title = "本日" + hisType + "历史曲线";
+    // var unit = "";
+    if (index == 0) {
+        startTime = endTime + " 00:00:00";
+        endTime = endTime + " 23:59:59";
+        frq = 1;
+        title = "本日" + name + "历史曲线";
+    } else if (index == 1) {
+        var temp = new Date();
+        temp.setDate(today.getDate() - 7);
+        startTime = temp.getFullYear() + "-" + (temp.getMonth() + 1) + "-" + temp.getDate();
+        title = "最近一周" + name + "历史曲线";
+    } else if (index == 2) {
+        var temp = new Date();
+        temp.setDate(today.getDate() - 31);
+        startTime = temp.getFullYear() + "-" + (temp.getMonth() + 1) + "-" + temp.getDate();
+        title = "最近一月" + name + "历史曲线";
+    }
+    $.ajax({
+        url: url + 'Inquiry_HisData',
+        data: {
+            "StudentID": StudentID,
+            "AccountType": AccountType,
+            "StartTime": startTime,
+            "Freq": frq,
+            "EndTime": endTime,
+            "Field": Field
+        },
+        type: 'POST',
+        headers: {
+            'Authorization': "Bearer " + token
+        },
+        dataType: "json",
+        success: function (json) {
+
+            // zhaoming.students.clean();
+            // TrunPage.showToast("json2="+json.info[0].PreChargeback+"元");
+            console.log(json);
+            var totleCharge = 0;
+            if (json.code == 200) {
+                zifei.lists = [];
+                toast.hide();
+                var xData = [];
+                var yData = [];
+                var length = json.info.length;
+
+                for (var i = 0; i < json.info.length; i++) {
+                    yData.push(json.info[i].Value);
+                    if (index == 0) {
+                        xData.push(json.info[i].GetTime.substring(11, 13) + "时");
+
+                    } else {
+                        xData.push(json.info[i].GetTime.substring(5, 10));
+                    }
+
+                    var j = length - i - 1;
+
+                    zifei.lists.push({
+                        id: 2,
+                        type: "zifeijilv",
+                        name: '',
+                        value: json.info[j].Value+unit,
+                        date: json.info[j].GetTime
+                    });
+
+                }
+
+                setChartData(xData, yData);
+            } else {
+                console.log(json.message)
+            }
+            gettingData = false;
+        },
+        error:function (e) {
+            gettingData = false;
+        }
+    });
+
+}
+
+function setChartData(xData, yData) {
     myChart.setOption({
         title: {
             text: title,
-            textStyle:{
-                fontSize:'.6rem'
+            textStyle: {
+                fontSize: '.6rem'
             },
-            subtext:'单位(V)'
+            subtext: "单位("+unit+")"
         },
         tooltip: {},
         legend: {
             data: ['用电量']
         },
         xAxis: {
-            data: ["12日", "13日", "14日", "15日", "16日", "17日","18日","19日","20日","21日"]
+            data: xData
         },
         yAxis: {},
         series: [{
-            type:'bar',
-            name: hisType,
-            data: [5, 20, 36, 10, 10, 20,220,230,240,250]
+            type: 'bar',
+            name: '用电量',
+            data: yData
         }]
     });
 }

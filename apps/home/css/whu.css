@@ -1,4 +1,4 @@
-.whu-header{
+.whu-header {
     background-color: #C6E2FF;
     color: #212121;
     position: relative;
@@ -16,8 +16,12 @@
     -webkit-align-items: center;
     align-items: center;
 }
-.whu-icon-yuer:before{  content: "\e6eb";}
-.whu-charge-header{
+
+.whu-icon-yuer:before {
+    content: "\e6eb";
+}
+
+.whu-charge-header {
     text-align: center;
     color: #ffffff;
     position: relative;
@@ -34,6 +38,19 @@
     align-items: center;
 }
 
-.whu-year-arrow:before{
+.whu-year-arrow:before {
     content: url("../image/ic_arrow_down.png");
+}
+
+.whu-student-icon:before {
+    content: url("../image/student.svg");
+    align-self: center;
+    -webkit-align-self: center;
+    font-size: .6rem;
+}
+.whu-icon{
+    background-color: #ffb300;
+    width: .5rem;
+    height: .5rem;
+    text-align: center;
 }

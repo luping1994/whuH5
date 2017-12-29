@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>学生信息</title>
+    <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/loaders.min.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <script src="./mobileframework/widget/js/mobile.js"></script>
+    <link href="./mobileframework/mobile.css" rel="stylesheet">
+    <script type="text/javascript" src="../../plugin.apis/cordova.js"></script>
+    <script type="text/javascript" src="../../plugin.apis/webView.js"></script>
+    <script type="text/javascript" src="../../common/js/public.js"></script>
+
+    <script type="text/javascript" src="js/config.js"></script>
+
+    <script src="js/public.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+
+
+    <link href="aui/css/aui.css" rel="stylesheet">
+    <link href="css/whu.css" rel="stylesheet">
+    <link href="css/weui.css" rel="stylesheet">
+
+    <script type="text/javascript" src="js/weui.js"></script>
+    <script type="text/javascript" src="aui/script/aui-toast.js"></script>
+
+    <script type="text/javascript" src="aui/script/aui-tab.js"></script>
+
+</head>
+<body style="background-color: #C6E2FF">
+<div class="aui-content" id="content">
+    <div class="weui-cells__title" style="background-color: #C6E2FF">学生信息</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><img src="image/student.png" alt=""
+                                            style="width:20px;margin-right:5px;display:block"></div>
+            <div class="weui-cell__bd">
+                <p>学号</p>
+            </div>
+            <div class="weui-cell__ft">{{student.StudentID}}</div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><img src="image/student.png" alt=""
+                                            style="width:20px;margin-right:5px;display:block"></div>
+            <div class="weui-cell__bd">
+                <p>院系</p>
+            </div>
+            <div class="weui-cell__ft">{{student.Faculty}}</div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><img src="image/student.png" alt=""
+                                            style="width:20px;margin-right:5px;display:block"></div>
+            <div class="weui-cell__bd">
+                <p>专业</p>
+            </div>
+            <div class="weui-cell__ft">{{student.Professional}}</div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><img src="image/student.png" alt=""
+                                            style="width:20px;margin-right:5px;display:block"></div>
+            <div class="weui-cell__bd">
+                <p>电话</p>
+            </div>
+            <div class="weui-cell__ft">{{student.PhoneNum}}</div>
+        </div>
+    </div>
+    <div class="weui-cells__title" style="background-color: #C6E2FF">宿舍信息</div>
+    <div style="width: 100%;font-size: .6rem;text-align: center;background-color: #FFFFFF;padding-top: .3rem;padding-bottom: .3rem">
+        {{student.Area}}-{{student.Building}}{{student.Unit}}-{{student.RoomNum}}
+    </div>
+
+</div>
+
+</body>
+<script>
+    // 基于准备好的dom，初始化echarts实例
+
+</script>
+<script src="js/studentInfo.js"></script>
+
+</html>

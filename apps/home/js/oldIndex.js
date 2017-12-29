@@ -1,35 +1,45 @@
-var m_sign = "{\"birthday\":0,\"enterYear\":0,\"gender\":0,\"idsNo\":\"2017202080063\",\"nickName\":\"2017202080063\",\"sign\":{\"appKey\":\"6318286230\",\"check\":\"857710483f0af38fc847d1f7a88e16245825da3d\",\"nonce\":\"g33Z6kgB\",\"timestamp\":1513848361199,\"token\":\"174652e7d386559c734875e9a5054312b3dd13ff\"}}";
-// var m_sign = "";
+// var m_sign = "{\"birthday\":0,\"enterYear\":0,\"gender\":0,\"idsNo\":\"2017202080063\",\"nickName\":\"2017202080063\",\"sign\":{\"appKey\":\"6318286230\",\"check\":\"857710483f0af38fc847d1f7a88e16245825da3d\",\"nonce\":\"g33Z6kgB\",\"timestamp\":1513848361199,\"token\":\"174652e7d386559c734875e9a5054312b3dd13ff\"}}";
+var m_sign = "";
 var accountType;
 var userId;
 var token;
+var RoomId;
 
 function loadPage() {
     getData();
 }
 
 function getData() {
-    $.ajax({
-        url: url + 'Login',
-        data: {'Sign': m_sign},
-        type: 'POST',
-        dataType: "json",
-        success: function (json) {
-            // TrunPage.showToast("登录成功!");
 
-            //初始化容器样式
-            console.log(json.token.access_token);
-            token = json.token.access_token;
-            accountType = "照明";
-            userId = json.user.UserID;
+    TrunPage.getKeyValue("userId", function (data) {
+        userId = data;
 
-            getChannel(userId, accountType);
-            setInterval("getChannel(userId,accountType)", 5000);
-            //存储
-            TrunPage.setKeyValue("token", token);
-            TrunPage.setKeyValue("userId", userId);
-        }
     });
+    TrunPage.getKeyValue("token", function (data) {
+        token = data;
+    });
+
+    getChannel(userId, "照明");
+    setInterval("getChannel(userId,accountType)", 5000);
+    // $.ajax({
+    //     url: url + 'Login',
+    //     data: {'Sign': m_sign},
+    //     type: 'POST',
+    //     dataType: "json",
+    //     success: function (json) {
+    //         // TrunPage.showToast("登录成功!");
+    //
+    //         //初始化容器样式
+    //         console.log(json.token.access_token);
+    //         token = json.token.access_token;
+    //         accountType = "照明";
+    //         userId = json.user.UserID;
+    //
+    //         //存储
+    //         TrunPage.setKeyValue("token", token);
+    //         TrunPage.setKeyValue("userId", userId);
+    //     }
+    // });
     // TrunPage.setProgressBarVisibility(true);
     // TrunPage.getSignUser(function (data) {
     //
@@ -80,7 +90,12 @@ function getChannel(StudentID, AccountType) {
         dataType: "json",
         success: function (json) {
             // TrunPage.showToast("json2="+json.info[0].PreChargeback+"元");
-
+            if (RoomId==null){
+                RoomId = json.info[0].RoomID;
+                TrunPage.setKeyValue("RoomId",RoomId);
+                console.log(RoomId);
+                getStudents(RoomId);
+            }
             //填充数据
             zhaoming.accountList[0].value = json.info[0].PreChargeback + "元";
             zhaoming.accountList[1].value = json.info[0].PreSubsidy + "元";
@@ -125,7 +140,41 @@ function getChannel(StudentID, AccountType) {
     });
 }
 
+/**
+ *  {
+            "StudentID": "2017202080057",
+            "SName": "徐锋",
+            "Faculty": "动力与机械学院",
+            "Professional": "控制理论与控制工程",
+            "PhoneNum": "",
+            "YesorNo": "是",
+            "Permission": "无"
+        }
+ * @param RoomId
+ */
+function getStudents(RoomId) {
+    $.ajax({
+        url: url + 'Inquiry_Room_RoomID',
+        data: {"RoomID": RoomId},
+        type: 'POST',
+        headers: {
+            'Authorization': "Bearer " + token
+        },
+        dataType: "json",
+        success: function (json) {
+            // zhaoming.students.clean();
+            // TrunPage.showToast("json2="+json.info[0].PreChargeback+"元");
+            for(var i=0;i<json.info.length;i++){
+                zhaoming.students.push(json.info[i]);
+            }
+
+
+        }
+    });
+}
+
+
 function openControlLogPage() {
-    TrunPage.openWebView("home/ControlLog.html", 1, "资费记录");
+    TrunPage.openWebView("home/ControlLog.html", 1, "状态日志");
 
 }

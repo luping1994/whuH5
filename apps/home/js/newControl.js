@@ -36,9 +36,27 @@ var zhaoming = new Vue({
     el: '#zhaoming',
     data: {
         accountList: [
-            {id: 0, type: "accountInfo", name: '账户余额', value: "--元", iconclass: "whu-icon-yuer"},
-            {id: 1, type: "accountInfo", name: '剩余补贴', value: "--度", iconclass: "whu-icon-yuer"},
-            {id: 2, type: "accountInfo", name: '账户状态', value: "--", iconclass: "whu-icon-yuer"}
+            {
+                id: 0,
+                type: "accountInfo",
+                name: '账户余额',
+                value: "--元",
+                iconclass: "whu-icon-yuer"
+            },
+            {
+                id: 1,
+                type: "accountInfo",
+                name: '剩余补贴',
+                value: "--度",
+                iconclass: "whu-icon-yuer"
+            },
+            {
+                id: 2,
+                type: "accountInfo",
+                name: '账户状态',
+                value: "--",
+                iconclass: "whu-icon-yuer"
+            }
         ],
         yongdiandatas: [
             {
@@ -49,40 +67,69 @@ var zhaoming = new Vue({
                 src: "image/switch_off.svg",
                 iconclass: "whu-icon-yuer"
             },
-            {id: 1, type: "switchControl", name: '状态描述', value: "正常", iconclass: "whu-icon-yuer"},
+            {
+                id: 1,
+                type: "switchStatus",
+                name: '状态描述',
+                value: "正常",
+                iconclass: "whu-icon-yuer"
+            }
         ],
         sushedatas: [
             {id: 0, name: "信息学部-10舍东-101"}
         ],
         dianliangxinxi: [
-            {id: 0, type: "dianya", name: '电压', value: "--V", iconclass: "whu-icon-yuer"},
-            {id: 1, type: "dianliu", name: '电流', value: "--A", iconclass: "whu-icon-yuer"},
-            {id: 2, type: "gonglv", name: '功率', value: "--W", iconclass: "whu-icon-yuer"},
-            {id: 4, type: "gonglvyinshu", name: '功率因数', value: "--", iconclass: "whu-icon-yuer"},
-            {id: 5, type: "dayUse", name: '本日已用电量', value: "--kW·h", iconclass: "whu-icon-yuer"},
-            {id: 6, type: "monthUse", name: '本月已用电量', value: "--kW·h", iconclass: "whu-icon-yuer"},
-            {id: 7, type: "totalUse", name: '总用电量', value: "--kW·h", iconclass: "whu-icon-yuer"}
+            {id: 0, type: "U", name: '电压', value: "--V", icon_class: "whu-student-icon",unit:"V"},
+            {id: 1, type: "I", name: '电流', value: "--A", icon_class: "whu-icon-yuer",unit:"A"},
+            {id: 2, type: "Power", name: '功率', value: "--W", icon_class: "whu-icon-yuer",unit:"W"},
+            {id: 4, type: "PowerRate", name: '功率因数', value: "--", icon_class: "whu-icon-yuer",unit:""},
+            {id: 5, type: "EletricityValue", name: '本日已用电量', value: "--kW·h", icon_class: "whu-icon-yuer",unit:"kW·h"},
+            {id: 6, type: "EletricityValue", name: '本月已用电量', value: "--kW·h", icon_class: "whu-icon-yuer",unit:"kW·h"},
+            {id: 7, type: "EletricityValue", name: '总用电量', value: "--kW·h", icon_class: "whu-icon-yuer",unit:"kW·h"}
         ],
         students: [
-            // {id: 0, type: "student", name: '张三', value: "计算机学院", iconclass: "whu-icon-yuer"},
-            // {id: 1, type: "student", name: '李四', value: "计算机学院", iconclass: "whu-icon-yuer"},
-            // {id: 2, type: "student", name: '王老五', value: "计算机学院", iconclass: "whu-icon-yuer"}
+
         ]
     },
     methods: {
         jumpHis: function (e) {
-            console.log(e.type);
+
             switch (e.type) {
                 case "accountInfo":
+                    TrunPage.setKeyValue("AccountType","照明");
+                    TrunPage.setKeyValue("token",token);
+                    TrunPage.setKeyValue("userId",userId);
                     TrunPage.openWebView("home/ChargeRecords.html", 1, "资费记录");
                     // window.location.href='ChargeRecords.html';
                     break;
-                case "dianya":
-                case "dianliu":
-                case "gonglv":
-                case "gonglvyinshu":
+                case "U":
+                case "I":
+                case "Power":
+                case "PowerRate":
+                    TrunPage.setKeyValue("AccountType","照明");
+                    TrunPage.setKeyValue("token",token);
+                    TrunPage.setKeyValue("Field",e.type);
+                    TrunPage.setKeyValue("unit",e.unit);
+                    TrunPage.setKeyValue("name",e.name);
+                    TrunPage.setKeyValue("userId",userId+"");
                     TrunPage.openWebView("home/UIHistroy.html", 1, "历史数据");
                     // window.location.href='ChargeRecords.html';
+                    break;
+                case "EletricityValue":
+                    TrunPage.setKeyValue("AccountType","照明");
+                    TrunPage.setKeyValue("token",token);
+                    TrunPage.setKeyValue("Field",e.type);
+                    TrunPage.setKeyValue("unit",e.unit);
+                    TrunPage.setKeyValue("name","用电量");
+                    TrunPage.setKeyValue("userId",userId+"");
+                    TrunPage.openWebView("home/EleHistroy.html", 1, "历史数据");
+                    break;
+                default:
+                    TrunPage.setKeyValue("AccountType","照明");
+                    TrunPage.setKeyValue("token",token);
+                    TrunPage.setKeyValue("name",e.SName);
+                    TrunPage.setKeyValue("id",e.StudentID);
+                    TrunPage.openWebView("home/StudentInfo.html", 1, e.SName);
                     break;
 
             }

@@ -26,6 +26,7 @@
 
     <script type="text/javascript" src="js/weui.js"></script>
     <script type="text/javascript" src="js/echarts.js"></script>
+    <script type="text/javascript" src="aui/script/aui-toast.js"></script>
 
     <script type="text/javascript" src="aui/script/aui-tab.js"></script>
 
@@ -40,26 +41,6 @@
 <div class="aui-content">
 
     <header class="aui-bar aui-bar-nav " style="background-color: #50A0D2;position: fixed;padding-top: .3rem">
-        <div class="aui-row" style="display: none">
-            <div id="datePickerDiv" class="aui-col-xs-4 "
-                 onclick="openDataPicker()"
-                 style="border-right: dashed 2px #fff;display: inline-block;height: 4rem;text-align: center">
-                <div id="year" style="text-align:center;height: 40% " class="whu-charge-header">{{year}}</div>
-                <div id="month" style="color: #FFFFFF;height: 60%;">{{month}} <i
-                        class="aui-iconfont whu-year-arrow"></i>
-                </div>
-            </div>
-            <div class="aui-col-xs-4"
-                 style="border-right: dashed 2px #fff;background-color: #50A0D2;display: inline-block;height: 4rem">
-                <div id="ruzhang" class="whu-charge-header" style="height: 40%;text-align: center">本月入账</div>
-                <div style="color: #FFFFFF;height: 60%">0.00元</div>
-            </div>
-            <div class="aui-col-xs-4" style="background-color: #50A0D2;display: inline-block;height: 4rem">
-                <div class="whu-charge-header" style="height: 40%;text-align: center"> 本月出账</div>
-                <div id="chuzhang" style="color: #FFFFFF;height: 60%">0.00元</div>
-            </div>
-
-        </div>
 
         <div class="aui-bar aui-bar-btn" id="bar" style="width:80%;">
             <div class="aui-bar-btn-item" v-on:click="tab1Click()" v-bind:class="{'aui-active': index0 }"
@@ -80,7 +61,7 @@
     <div style="">
         <ul id="zifeilist" class="aui-list aui-list-in">
             <li class="whu-header">
-                {{month}}
+                {{itemHeader}}
             </li>
             <li class="aui-list-item" v-for="item in lists">
                 <div class="aui-list-item-inner">
