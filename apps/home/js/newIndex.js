@@ -1,4 +1,4 @@
-var m_sign = "{\"birthday\":0,\"enterYear\":0,\"gender\":0,\"idsNo\":\"2017202080063\",\"nickName\":\"2017202080063\",\"sign\":{\"appKey\":\"6318286230\",\"check\":\"857710483f0af38fc847d1f7a88e16245825da3d\",\"nonce\":\"g33Z6kgB\",\"timestamp\":1513848361199,\"token\":\"174652e7d386559c734875e9a5054312b3dd13ff\"}}";
+// var m_sign = "{\"birthday\":0,\"enterYear\":0,\"gender\":0,\"idsNo\":\"2017202080063\",\"nickName\":\"2017202080063\",\"sign\":{\"appKey\":\"6318286230\",\"check\":\"857710483f0af38fc847d1f7a88e16245825da3d\",\"nonce\":\"g33Z6kgB\",\"timestamp\":1513848361199,\"token\":\"174652e7d386559c734875e9a5054312b3dd13ff\"}}";
 // var m_sign = "";
 var accountType;
 var userId;
@@ -18,7 +18,7 @@ function getData() {
     });
     accountType = "照明";
     getChannel(userId, accountType);
-    setInterval("getChannel(userId,accountType)", 5000);
+    setInterval("getChannel(userId,accountType)", 2000);
 
     // TrunPage.setProgressBarVisibility(true);
     // TrunPage.getSignUser(function (data) {
@@ -62,7 +62,7 @@ function getChannel(StudentID, AccountType) {
     // TrunPage.showToast("开始请求数据");
     $.ajax({
         url: url + 'Inquiry_Channel',
-        data: {'StudentID': StudentID, "AccountType": AccountType},
+        data: {'StudentID': StudentID, "AccountType": "照明"},
         type: 'POST',
         headers: {
             'Authorization': "Bearer " + token
@@ -95,7 +95,7 @@ function getChannel(StudentID, AccountType) {
 
 
 
-            zhaoming.yongdiandatas[1].value = json.info[0].status==0?"正常" :json.info[0].status==1?"恶性负载":json.info[0].status==2?"锁定":json.info[0].status==3?"故障":"null";
+            zhaoming.yongdiandatas[1].value = json.info[0].Status==0?"正常" :json.info[0].Status==1?"恶性负载":json.info[0].Status==2?"锁定":json.info[0].Status==3?"故障":"null";
 
         }
     });

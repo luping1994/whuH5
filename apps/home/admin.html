@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>武汉大学公寓用电</title>
+    <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/loaders.min.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <script src="./mobileframework/widget/js/mobile.js"></script>
+    <link href="./mobileframework/mobile.css" rel="stylesheet">
+    <script type="text/javascript" src="../../plugin.apis/cordova.js"></script>
+    <script type="text/javascript" src="../../plugin.apis/webView.js"></script>
+    <script type="text/javascript" src="../../common/js/public.js"></script>
+    <script src="js/public.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+    <script src="js/oldIndex.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+
+
+    <link href="aui/css/aui.css" rel="stylesheet">
+    <link href="css/whu.css" rel="stylesheet">
+    <link href="css/weui.css" rel="stylesheet">
+
+    <link href="css/swiper.css" rel="stylesheet">
+    <script type="text/javascript" src="js/swiper.js"></script>
+
+
+    <script type="text/javascript" src="aui/script/aui-tab.js"></script>
+    <script type="text/javascript" src="aui/script/aui-pull-refresh.js"></script>
+    <script type="text/javascript" src="aui/script/aui-dialog.js"></script>
+    <script type="text/javascript" src="aui/script/aui-toast.js"></script>
+
+    <script type="text/javascript" src="js/select2.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/select2.css"/>
+    <style>
+        .whu-switch-off {
+            background: url("image/switch_off.svg");
+        }
+    </style>
+</head>
+
+<body>
+<div class="aui-content">
+    <header class="aui-bar aui-bar-nav header" style="position: fixed">
+        <div class="aui-tab" id="tab">
+            <div class="aui-tab-item">宿舍</div>
+            <div class="aui-tab-item">学生</div>
+            <div class="aui-tab-item">综合</div>
+        </div>
+    </header>
+
+    <div class="m-container swiper-container" style="margin-top: 2.2rem">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div style="width: 100%;text-align: center;height: 2rem">
+                    <select id="Area" style="width:30%;">
+                        <option value="one">医学部</option>
+                        <option value="two">樱园</option>
+                        <option value="three">工学部</option>
+                        <option value="three">信息学部</option>
+                    </select>
+                    <select id="BuildingAndUnit" style="width:30%; height: 100%">
+                        <option value="three">1舍</option>
+                        <option value="three">2舍</option>
+                        <option value="three">3舍</option>
+                        <option value="three">4舍</option>
+                        <option value="three">5舍</option>
+
+                    </select>
+                    <select id="Floor" style="width:30%;">
+                        <option value="three">1楼</option>
+                        <option value="three">2楼</option>
+                        <option value="three">3楼</option>
+                        <option value="three">4楼</option>
+                        <option value="three">5楼</option>
+                    </select>
+                </div>
+
+                <div id="rooms" class="aui-content">
+                    <ul class="aui-list aui-list-in">
+                        <li class="aui-list-item" v-for="item in roomLists">
+                            <div class="aui-list-item-label-icon">
+                                <i class="" v-bind:class="item.icon_class"></i>
+                            </div>
+                            <div class="aui-list-item-inner aui-list-item-arrow">
+                                <div class="aui-list-item-title">{{item.name}}</div>
+                                <div class="aui-list-item-right">{{item.zhaoming}}</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="swiper-slide">
+                学生
+            </div>
+            <div class="swiper-slide">
+                综合
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var swipper;
+    var tab = new auiTab({
+        element: document.getElementById("tab"),
+        index: 1,
+        repeatClick: false
+    }, function (ret) {
+
+        if (swipper) {
+            swipper.slideTo(ret.index - 1, 400, false);
+        }
+    });
+    swipper = new Swiper(".swiper-container", {
+        speed: 400,
+        spaceBetween: 10,
+        on: {
+            slideChangeTransitionEnd: function () {
+                activeIndex = this.activeIndex;
+                tab.setActive(activeIndex + 1);
+            }
+        }
+    });
+
+    var area = $("#Area,#BuildingAndUnit,#Floor");
+    area.select2();
+
+    var rooms = new Vue({
+        el: '#rooms',
+        data: {
+            roomLists: [
+                {id: 0, type: "room", name: '101', zhaoming: "--元", icon_class: "iconfont icon-yue c1 f1"},
+                {id: 1, type: "room", name: '101', zhaoming: "--度", icon_class: " iconfont c1 f1 icon-butie"},
+                {id: 2, type: "room", name: '101', zhaoming: "--", icon_class: "iconfont icon-zhuangtai c1 f1"}
+            ]
+        }
+    })
+</script>
+
+
+</body>
+
+</html>

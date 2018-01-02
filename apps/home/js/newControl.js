@@ -157,8 +157,7 @@ function switchZhaoming() {
         msg: msgs,
         buttons: ['取消', '确定']
     }, function (ret) {
-
-        if (ret == 2)
+        if (ret.buttonIndex == 2)
             zhaoming.yongdiandatas[0].value = !zhaoming.yongdiandatas[0].value;
     })
 }
@@ -172,7 +171,7 @@ function switchKongtiao() {
         msg: msgs,
         buttons: ['取消', '确定']
     }, function (ret) {
-        if (ret == 2)
+        if (ret.buttonIndex == 2)
             zhaoming.yongdiandatas[1].value = !zhaoming.yongdiandatas[1].value;
     })
 }

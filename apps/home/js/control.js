@@ -18,7 +18,7 @@ function bindTab() {
             swipper.slideTo(ret.index - 1, 400, false);
         }
 
-        console.log("位置" + ret.index + "," + ret.dom);
+        // console.log("位置" + ret.index + "," + ret.dom);
     });
 }
 
@@ -87,7 +87,7 @@ var zhaoming = new Vue({
                 id: 1,
                 type: "switchStatus",
                 name: '状态描述',
-                value: "正常",
+                value: "--",
                 icon_class: "whu-icon-yuer"
             }
         ],
@@ -280,28 +280,64 @@ function switchZhaoming() {
     var dialog = new auiDialog();
 
     var msgs = zhaoming.yongdiandatas[0].value == false ? "是否打开照明?" : "是否关闭照明";
+    var order = zhaoming.yongdiandatas[0].value == false ? "2" : "3";
     dialog.alert({
-        title: "提示",
+        title: "提示1",
         msg: msgs,
         buttons: ['取消', '确定']
     }, function (ret) {
-        if (ret == 2)
-            zhaoming.yongdiandatas[0].value = !zhaoming.yongdiandatas[0].value;
+        if (ret.buttonIndex == 2) {
+            sendOrder(order,"照明");
+        }
+
     })
 }
 
 function switchKongtiao() {
     var dialog = new auiDialog();
     var msgs = kongtiao.yongdiandatas[0].value == false ? "是否打开空调?" : "是否关闭空调";
+    var order = kongtiao.yongdiandatas[0].value == false ? "2" : "3";
 
     dialog.alert({
         title: "提示",
         msg: msgs,
         buttons: ['取消', '确定']
     }, function (ret) {
-        if (ret == 2)
-            kongtiao.yongdiandatas[0].value = !kongtiao.yongdiandatas[0].value;
+        if (ret.buttonIndex == 2) {
+           sendOrder(order,"空调");
+        }
     })
+}
+
+function sendOrder(order,accountType) {
+    $.ajax({
+        url: url + 'Insert_Order',
+        data: {
+            'StudentID': userId,
+            "AccountType": accountType,
+            "OrderID": order
+        },
+        type: 'POST',
+        headers: {
+            'Authorization': "Bearer " + token
+        },
+        dataType: "json",
+        success: function (json) {
+            if (json.code == 200) {
+                var toasts = new auiToast({});
+                toasts.success({
+                    title: "命令已发送",
+                    duration: 2000
+                });
+            }else {
+                var toasts = new auiToast({});
+                toasts.fail({
+                    title: json.message,
+                    duration: 2000
+                });
+            }
+        }
+    });
 }
 
 
