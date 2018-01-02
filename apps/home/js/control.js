@@ -315,7 +315,8 @@ function sendOrder(order,accountType) {
         data: {
             'StudentID': userId,
             "AccountType": accountType,
-            "OrderID": order
+            "OrderID": order,
+            "UserID": userId
         },
         type: 'POST',
         headers: {

@@ -14,10 +14,11 @@
     <link href="./mobileframework/mobile.css" rel="stylesheet">
     <script type="text/javascript" src="../../plugin.apis/cordova.js"></script>
     <script type="text/javascript" src="../../plugin.apis/webView.js"></script>
+    <script src="js/admin.js"/>
+
     <script type="text/javascript" src="../../common/js/public.js"></script>
     <script src="js/public.js"></script>
-    <script type="text/javascript" src="js/config.js"></script>
-    <script src="js/oldIndex.js"></script>
+    <!--<script type="text/javascript" src="js/config.js"></script>-->
     <script type="text/javascript" src="js/vue.js"></script>
 
 
@@ -36,71 +37,262 @@
 
     <script type="text/javascript" src="js/select2.js"></script>
     <link rel="stylesheet" type="text/css" href="css/select2.css"/>
-    <style>
-        .whu-switch-off {
-            background: url("image/switch_off.svg");
-        }
-    </style>
+
 </head>
 
 <body>
 <div class="aui-content">
     <header class="aui-bar aui-bar-nav header" style="position: fixed">
-        <div class="aui-tab" id="tab">
-            <div class="aui-tab-item">宿舍</div>
-            <div class="aui-tab-item">学生</div>
-            <div class="aui-tab-item">综合</div>
+        <div class="aui-bar aui-bar-btn" id="bar" style="width:80%;">
+            <div class="aui-bar-btn-item" v-on:click="tab1Click()" v-bind:class="{'aui-active': index0 }"
+                 style="width: 33%">宿舍
+            </div>
+            <div class="aui-bar-btn-item" v-on:click="tab2Click()" v-bind:class="{'aui-active': index1 }"
+                 style="width: 33%">学生
+            </div>
+            <div class="aui-bar-btn-item " v-on:click="tab3Click()" v-bind:class="{'aui-active': index2 }"
+                 style="width: 33%">综合
+            </div>
         </div>
     </header>
 
     <div class="m-container swiper-container" style="margin-top: 2.2rem">
         <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <div style="width: 100%;text-align: center;height: 2rem">
+            <div class="swiper-slide" id="roomPage">
+                <div style="width: 100%;text-align: center;height: 2.2rem">
                     <select id="Area" style="width:30%;">
-                        <option value="one">医学部</option>
-                        <option value="two">樱园</option>
-                        <option value="three">工学部</option>
-                        <option value="three">信息学部</option>
+
                     </select>
                     <select id="BuildingAndUnit" style="width:30%; height: 100%">
-                        <option value="three">1舍</option>
-                        <option value="three">2舍</option>
-                        <option value="three">3舍</option>
-                        <option value="three">4舍</option>
-                        <option value="three">5舍</option>
 
                     </select>
                     <select id="Floor" style="width:30%;">
-                        <option value="three">1楼</option>
-                        <option value="three">2楼</option>
-                        <option value="three">3楼</option>
-                        <option value="three">4楼</option>
-                        <option value="three">5楼</option>
+
                     </select>
                 </div>
 
                 <div id="rooms" class="aui-content">
                     <ul class="aui-list aui-list-in">
-                        <li class="aui-list-item" v-for="item in roomLists">
+                        <li class="aui-list-item  aui-list-item-arrow" v-for="item in roomLists">
                             <div class="aui-list-item-label-icon">
                                 <i class="" v-bind:class="item.icon_class"></i>
                             </div>
-                            <div class="aui-list-item-inner aui-list-item-arrow">
+                            <div class="aui-list-item-inner">
                                 <div class="aui-list-item-title">{{item.name}}</div>
-                                <div class="aui-list-item-right">{{item.zhaoming}}</div>
+                            </div>
+                            <div class="aui-list-item-inner">
+                                <div>
+                                    <div style="text-align: center;font-size: .4rem;color: #888888">
+                                        照明:正常
+                                    </div>
+                                    <img v-bind:src="item.zhaomingStatus?'image/switch_on.svg':'image/switch_off.svg'"
+                                         onclick=""
+                                         style="width: 2rem;height: 1rem;">
+                                </div>
+                            </div>
+                            <div class="aui-list-item-inner">
+                                <div>
+                                    <div style="text-align: center;font-size: .4rem;color: #888888">
+                                        照明:正常
+                                    </div>
+                                    <img v-bind:src="item.kongtiaoStatus?'image/switch_on.svg':'image/switch_off.svg'"
+                                         onclick=""
+                                         style="width: 2rem;height: 1rem;">
+                                </div>
                             </div>
                         </li>
                     </ul>
                 </div>
-
             </div>
 
-            <div class="swiper-slide">
-                学生
+            <div class="swiper-slide" id="studentPage">
+                <div style="width: 100%;text-align: center;height: 2.2rem">
+                    <select id="Area1" style="width:30%;">
+
+                    </select>
+                    <select id="BuildingAndUnit1" style="width:30%; height: 100%">
+
+                    </select>
+                    <select id="Floor1" style="width:30%;">
+
+                    </select>
+                </div>
+
+                <div id="students" class="aui-content">
+                    <ul class="aui-list aui-list-in">
+                        <li class="aui-list-item" v-for="item in students">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-icon-test f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner aui-list-item-arrow">
+                                <div class="aui-list-item-title">{{item.name}}</div>
+                                <div class="aui-list-item-right">{{item.zhuanye}}</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="swiper-slide">
-                综合
+                <div style="width: 100%;text-align: center;height: 2.2rem">
+                    <select id="Area2" style="width:30%;">
+
+                    </select>
+                    <select id="BuildingAndUnit2" style="width:30%; height: 100%">
+
+                    </select>
+                    <select id="Type2" style="width:30%;">
+
+                    </select>
+                </div>
+
+                <div class="aui-content">
+                    <ul class="aui-list aui-list-in">
+                        <li class="whu-header">
+                            工学部-1舍1单元-照明用电状态
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-icon-test f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner aui-list-item-arrow">
+                                <div class="aui-list-item-title">A相电压</div>
+                                <div class="aui-list-item-right">nullV</div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-icon-test f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner aui-list-item-arrow">
+                                <div class="aui-list-item-title">B相电压</div>
+                                <div class="aui-list-item-right">nullV</div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-icon-test f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner aui-list-item-arrow">
+                                <div class="aui-list-item-title">C相电压</div>
+                                <div class="aui-list-item-right">nullV</div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-icon-test f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner aui-list-item-arrow">
+                                <div class="aui-list-item-title">A相电流</div>
+                                <div class="aui-list-item-right">nullA</div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-icon-test f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner aui-list-item-arrow">
+                                <div class="aui-list-item-title">B相电流</div>
+                                <div class="aui-list-item-right">nullA</div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-icon-test f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner aui-list-item-arrow">
+                                <div class="aui-list-item-title">C相电流</div>
+                                <div class="aui-list-item-right">nullA</div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-icon-test f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner aui-list-item-arrow">
+                                <div class="aui-list-item-title">有功功率</div>
+                                <div class="aui-list-item-right">nullW</div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-icon-test f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner aui-list-item-arrow">
+                                <div class="aui-list-item-title">无功功率</div>
+                                <div class="aui-list-item-right">nullW</div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-icon-test f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner aui-list-item-arrow">
+                                <div class="aui-list-item-title">功率因数</div>
+                                <div class="aui-list-item-right">null</div>
+                            </div>
+                        </li>
+                        <li class="whu-header">
+                            工学部-1舍1单元-照明用电情况
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-68 f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner aui-list-item-arrow">
+                                <div class="aui-list-item-title">本日已用电量</div>
+                                <div class="aui-list-item-right">nullkW·h</div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-68 f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner aui-list-item-arrow">
+                                <div class="aui-list-item-title">本月已用电量</div>
+                                <div class="aui-list-item-right">nullkW·h</div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-68 f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner aui-list-item-arrow">
+                                <div class="aui-list-item-title">总用电量</div>
+                                <div class="aui-list-item-right">nullkW·h</div>
+                            </div>
+                        </li>
+                        <li class="whu-header">
+                            工学部-1舍1单元-补贴使用情况
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-butie f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner ">
+                                <div class="aui-list-item-title">本日已用补贴</div>
+                                <div class="aui-list-item-right">null元</div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-butie f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner ">
+                                <div class="aui-list-item-title">本月已用补贴</div>
+                                <div class="aui-list-item-right">null元</div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-butie f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner ">
+                                <div class="aui-list-item-title">总已用补贴</div>
+                                <div class="aui-list-item-right">null元</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -108,44 +300,151 @@
 
 
 <script>
-    var swipper;
-    var tab = new auiTab({
-        element: document.getElementById("tab"),
-        index: 1,
-        repeatClick: false
-    }, function (ret) {
-
-        if (swipper) {
-            swipper.slideTo(ret.index - 1, 400, false);
-        }
-    });
-    swipper = new Swiper(".swiper-container", {
+    var activeIndex;
+    var swipper = new Swiper(".swiper-container", {
         speed: 400,
         spaceBetween: 10,
         on: {
             slideChangeTransitionEnd: function () {
                 activeIndex = this.activeIndex;
-                tab.setActive(activeIndex + 1);
+                if (activeIndex == 0) {
+                    tabbar.index0 = true;
+                    tabbar.index1 = false;
+                    tabbar.index2 = false;
+                }
+                if (activeIndex == 1) {
+                    tabbar.index0 = false;
+                    tabbar.index1 = true;
+                    tabbar.index2 = false;
+                }
+                if (activeIndex == 2) {
+                    tabbar.index0 = false;
+                    tabbar.index1 = false;
+                    tabbar.index2 = true;
+                }
+                console.log(activeIndex);
+
             }
         }
     });
 
-    var area = $("#Area,#BuildingAndUnit,#Floor");
-    area.select2();
+    //    var area = $("#Area,#BuildingAndUnit,#Floor");
+    //    area.select2();
+    var tabbar = new Vue({
+        el: "#bar",
+        data: {
+            index0: true,
+            index1: false,
+            index2: false
+        },
+        methods: {
+            tab1Click: function (event) {
 
-    var rooms = new Vue({
-        el: '#rooms',
+                this.index0 = true;
+                this.index1 = false;
+                this.index2 = false;
+                swipper.slideTo(0, 400, false);
+            },
+            tab2Click: function (event) {
+
+                this.index0 = false;
+                this.index1 = true;
+                this.index2 = false;
+                swipper.slideTo(1, 400, false);
+
+            },
+            tab3Click: function (event) {
+
+                this.index0 = false;
+                this.index1 = false;
+                this.index2 = true;
+                swipper.slideTo(2, 400, false);
+
+            }
+        }
+    });
+    var roomPage = new Vue({
+        el: '#roomPage',
         data: {
             roomLists: [
-                {id: 0, type: "room", name: '101', zhaoming: "--元", icon_class: "iconfont icon-yue c1 f1"},
-                {id: 1, type: "room", name: '101', zhaoming: "--度", icon_class: " iconfont c1 f1 icon-butie"},
-                {id: 2, type: "room", name: '101', zhaoming: "--", icon_class: "iconfont icon-zhuangtai c1 f1"}
+                {
+                    id: 0,
+                    type: "room",
+                    name: '101',
+                    zhaoming: "",
+                    icon_class: "iconfont icon-fangzi c2 f1",
+                    zhaomingStatus: false,
+                    kongtiaoStatus: true
+                },
+                {
+                    id: 1,
+                    type: "room",
+                    name: '102',
+                    zhaoming: "",
+                    icon_class: "iconfont c2 f1 icon-fangzi",
+                    zhaomingStatus: true,
+                    kongtiaoStatus: true
+                },
+                {
+                    id: 2,
+                    type: "room",
+                    name: '103',
+                    zhaoming: "",
+                    icon_class: "iconfont icon-fangzi c2 f1",
+                    zhaomingStatus: false,
+                    kongtiaoStatus: true
+                }
             ]
+
         }
-    })
+    });
+    var stuPage = new Vue({
+        el: '#studentPage',
+        data: {
+
+            students: [
+                {
+                    id: 0,
+                    type: "stu",
+                    name: '张三',
+                    zhuanye: "测绘学院"
+                },
+                {
+                    id: 1,
+                    type: "stu",
+                    name: '李四',
+                    zhuanye: "测绘学院"
+
+                },
+                {
+                    id: 2,
+                    type: "stu",
+                    name: '王大剑',
+                    zhuanye: "测绘学院"
+
+                }
+            ]
+
+        }
+    });
+    var title = ['工学部', '1舍1单元', '6层'];
+    $.each(title, function (k, v) {
+        title[k] = '<option value="">' + v + '</option>';
+        console.log(title[k])
+    });
+
+    $('#Area,#Area1').append(title[0]);
+    $('#BuildingAndUnit,#BuildingAndUnit1').append(title[1]);
+    $('#Floor,#Floor1').append(title[2]);
+    $('#Area,#BuildingAndUnit,#Floor').select2();
+    $('#Area1,#BuildingAndUnit1,#Floor1').select2();
+
+    //    var loc	= new Location();
+
 </script>
 
-
+<script type="text/javascript" src="js/building.js"/>
+<script type="text/javascript" src="js/area1.js"/>
 </body>
 
 </html>
