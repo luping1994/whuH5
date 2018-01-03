@@ -4,6 +4,7 @@ var accountType;
 var userId;
 var token;
 var RoomId;
+var Role;
 
 function loadPage() {
     getData();
@@ -15,12 +16,30 @@ function getData() {
         userId = data;
 
     });
+
+    TrunPage.getKeyValue("Role", function (data) {
+        Role = data;
+
+    });
+    TrunPage.getKeyValue("RoomId", function (data) {
+        RoomId = data;
+        // alert(data);
+    });
+
     TrunPage.getKeyValue("token", function (data) {
         token = data;
     });
 
-    getChannel(userId, "照明");
-    setInterval("getChannel(userId,accountType)", 5000);
+
+    if (Role == "student") {
+        getChannelByStudentId(userId, "照明");
+        setInterval("getChannelByStudentId(userId,'')", 5000);
+    } else {
+        getChannelByRoomID(RoomId, "照明");
+        getStudents(RoomId);
+        setInterval("getChannelByRoomID(RoomId,'')", 2000);
+    }
+
     // $.ajax({
     //     url: url + 'Login',
     //     data: {'Sign': m_sign},
@@ -74,11 +93,13 @@ function getData() {
 
 }
 
-function getDetail() {
-    TrunPage.openWebView("demo/www/infoDetail.html", 1, "信息详情");
-}
 
-function getChannel(StudentID, AccountType) {
+/**
+ * 学生通过StudentID查找房间信息
+ * @param StudentID
+ * @param AccountType
+ */
+function getChannelByStudentId(StudentID, AccountType) {
     // TrunPage.showToast("开始请求数据");
     $.ajax({
         url: url + 'Inquiry_Channel',
@@ -90,7 +111,7 @@ function getChannel(StudentID, AccountType) {
         dataType: "json",
         success: function (json) {
             if (json.code == 200) {
-                if (RoomId == null) {
+                if (RoomId == null || RoomId == '') {
                     RoomId = json.info[0].RoomID;
                     TrunPage.setKeyValue("RoomId", RoomId);
                     console.log(RoomId);
@@ -101,8 +122,8 @@ function getChannel(StudentID, AccountType) {
                 zhaoming.accountList[1].value = json.info[0].PreSubsidy + "元";
                 zhaoming.accountList[2].value = json.info[0].AccountStatus + "";
 
-                zhaoming.yongdiandatas[0].value = json.info[0].state=="1"?true:false;
-                zhaoming.yongdiandatas[1].value = json.info[0].Status==0?"正常" :json.info[0].Status==1?"恶性负载":json.info[0].Status==2?"锁定":json.info[0].Status==3?"故障":"null";
+                zhaoming.yongdiandatas[0].value = json.info[0].state == "1" ? true : false;
+                zhaoming.yongdiandatas[1].value = json.info[0].Status == 0 ? "正常" : json.info[0].Status == 1 ? "恶性负载" : json.info[0].Status == 2 ? "锁定" : json.info[0].Status == 3 ? "故障" : "null";
 
                 zhaoming.dianliangxinxi[0].value = json.info[0].U + "V";
                 zhaoming.dianliangxinxi[1].value = json.info[0].I + "A";
@@ -131,7 +152,7 @@ function getChannel(StudentID, AccountType) {
         success: function (json) {
             // TrunPage.showToast("json2="+json.info[0].PreChargeback+"元");
 
-            if(json.code==200){
+            if (json.code == 200) {
                 //填充数据
                 kongtiao.accountList[0].value = json.info[0].PreChargeback + "元";
                 kongtiao.accountList[1].value = json.info[0].PreSubsidy + "元";
@@ -146,8 +167,83 @@ function getChannel(StudentID, AccountType) {
                 kongtiao.dianliangxinxi[5].value = json.info[0].ElecMonth + "kW·h";
                 kongtiao.dianliangxinxi[6].value = json.info[0].Eletricity + "kW·h";
 
-                kongtiao.yongdiandatas[0].value = json.info[0].State==1?true:false;
-                kongtiao.yongdiandatas[1].value = json.info[0].Status==0?"正常" :json.info[0].Status==1?"恶性负载":json.info[0].Status==2?"锁定":json.info[0].Status==3?"故障":"null";
+                kongtiao.yongdiandatas[0].value = json.info[0].State == 1 ? true : false;
+                kongtiao.yongdiandatas[1].value = json.info[0].Status == 0 ? "正常" : json.info[0].Status == 1 ? "恶性负载" : json.info[0].Status == 2 ? "锁定" : json.info[0].Status == 3 ? "故障" : "null";
+                // console.error("空调开关状态:"+kongtiao.yongdiandatas[0].value);
+                // console.error("空调开关状态:"+kongtiao.yongdiandatas[1].value);
+
+            }
+
+
+        }
+    });
+}
+
+function getChannelByRoomID(Roomid, AccountType) {
+    // TrunPage.showToast("开始请求数据");
+    $.ajax({
+        url: url + 'Inquiry_Channel_RoomID',
+        data: {'RoomID': Roomid, "AccountType": "照明"},
+        type: 'POST',
+        headers: {
+            'Authorization': "Bearer " + token
+        },
+        dataType: "json",
+        success: function (json) {
+            if (json.code == 200) {
+
+                //填充数据
+                zhaoming.accountList[0].value = json.info[0].PreChargeback + "元";
+                zhaoming.accountList[1].value = json.info[0].PreSubsidy + "元";
+                zhaoming.accountList[2].value = json.info[0].AccountStatus + "";
+
+                zhaoming.yongdiandatas[0].value = json.info[0].state == "1" ? true : false;
+                zhaoming.yongdiandatas[1].value = json.info[0].Status == 0 ? "正常" : json.info[0].Status == 1 ? "恶性负载" : json.info[0].Status == 2 ? "锁定" : json.info[0].Status == 3 ? "故障" : "null";
+
+                zhaoming.dianliangxinxi[0].value = json.info[0].U + "V";
+                zhaoming.dianliangxinxi[1].value = json.info[0].I + "A";
+                zhaoming.dianliangxinxi[2].value = json.info[0].Power + "W";
+                zhaoming.dianliangxinxi[3].value = json.info[0].PowerRate + "";
+                zhaoming.dianliangxinxi[4].value = json.info[0].ElecDay + "kW·h";
+                zhaoming.dianliangxinxi[5].value = json.info[0].ElecMonth + "kW·h";
+                zhaoming.dianliangxinxi[6].value = json.info[0].Eletricity + "kW·h";
+
+                // console.error("照明开关状态:"+zhaoming.yongdiandatas[0].value);
+                // console.error("照明状态："+zhaoming.yongdiandatas[1].value);
+            }
+            // TrunPage.showToast("json2="+json.info[0].PreChargeback+"元");
+
+
+        }
+    });
+    $.ajax({
+        url: url + 'Inquiry_Channel_RoomID',
+        data: {'RoomID': Roomid, "AccountType": "空调"},
+        type: 'POST',
+        headers: {
+            'Authorization': "Bearer " + token
+        },
+        dataType: "json",
+        success: function (json) {
+            // TrunPage.showToast("json2="+json.info[0].PreChargeback+"元");
+
+            if (json.code == 200) {
+                //填充数据
+                kongtiao.accountList[0].value = json.info[0].PreChargeback + "元";
+                kongtiao.accountList[1].value = json.info[0].PreSubsidy + "元";
+                kongtiao.accountList[2].value = json.info[0].AccountStatus + "";
+
+
+                kongtiao.dianliangxinxi[0].value = json.info[0].U + "V";
+                kongtiao.dianliangxinxi[1].value = json.info[0].I + "V";
+                kongtiao.dianliangxinxi[2].value = json.info[0].Power + "W";
+                kongtiao.dianliangxinxi[3].value = json.info[0].PowerRate + "";
+                kongtiao.dianliangxinxi[4].value = json.info[0].ElecDay + "kW·h";
+                kongtiao.dianliangxinxi[5].value = json.info[0].ElecMonth + "kW·h";
+                kongtiao.dianliangxinxi[6].value = json.info[0].Eletricity + "kW·h";
+
+                kongtiao.yongdiandatas[0].value = json.info[0].State == 1 ? true : false;
+                kongtiao.yongdiandatas[1].value = json.info[0].Status == 0 ? "正常" : json.info[0].Status == 1 ? "恶性负载" : json.info[0].Status == 2 ? "锁定" : json.info[0].Status == 3 ? "故障" : "null";
                 // console.error("空调开关状态:"+kongtiao.yongdiandatas[0].value);
                 // console.error("空调开关状态:"+kongtiao.yongdiandatas[1].value);
 
@@ -171,6 +267,7 @@ function getChannel(StudentID, AccountType) {
  * @param RoomId
  */
 function getStudents(RoomId) {
+    console.error("查找学生："+RoomId);
     $.ajax({
         url: url + 'Inquiry_Room_RoomID',
         data: {"RoomID": RoomId},
@@ -182,13 +279,12 @@ function getStudents(RoomId) {
         success: function (json) {
             // zhaoming.students.clean();
             // TrunPage.showToast("json2="+json.info[0].PreChargeback+"元");
-            if (json.code==200){
-                zhaoming.students=[];
+            if (json.code == 200) {
+                zhaoming.students = [];
                 for (var i = 0; i < json.info.length; i++) {
                     zhaoming.students.push(json.info[i]);
                 }
             }
-
 
 
         }

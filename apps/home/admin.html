@@ -53,98 +53,101 @@
                  style="width: 33%">综合
             </div>
         </div>
+        <div class="aui-row" id="menu" onclick="showPicker()">
+            <div id="datePickerDiv" class="aui-col-xs-4"
+                 style="border-right: dashed 2px #fff;display: inline-block;height: 2rem;text-align: center">
+
+                <div id="month" style="color: #FFFFFF;height: 60%;"> {{Area}}<i class="aui-iconfont whu-year-arrow"></i>
+                </div>
+            </div>
+            <div class="aui-col-xs-4"
+                 style="border-right: dashed 2px #fff;display: inline-block;height: 2rem">
+                <div style="color: #FFFFFF;height: 60%">{{Building}}<i class="aui-iconfont whu-year-arrow"></i></div>
+            </div>
+            <div class="aui-col-xs-4" style="display: inline-block;height: 2rem">
+                <div id="chuzhang" style="color: #FFFFFF;height: 60%">{{Floor}}<i
+                        class="aui-iconfont whu-year-arrow"></i></div>
+            </div>
+
+        </div>
+
+
     </header>
 
     <div class="m-container swiper-container" style="margin-top: 2.2rem">
         <div class="swiper-wrapper">
-            <div class="swiper-slide" id="roomPage">
-                <div style="width: 100%;text-align: center;height: 2.2rem;border: solid black 2px">
-                    <select id="Area" style="width:30%;font-size: 2rem;border: solid black 2px">
-
-                    </select>
-                    <select id="BuildingAndUnit" style="width:30%; height: 100%">
-
-                    </select>
-                    <select id="Floor" style="width:30%;">
-
-                    </select>
-                </div>
-
+            <div class="swiper-slide" id="roomPage" style="margin-top: 2.2rem">
+                <li class="whu-header">
+                    {{area}}
+                </li>
                 <div id="rooms" class="aui-content">
+
                     <ul class="aui-list aui-list-in">
-                        <li class="aui-list-item  aui-list-item-arrow" v-for="item in roomLists">
-                            <div class="aui-list-item-label-icon">
-                                <i class="" v-bind:class="item.icon_class"></i>
+                        <li class="aui-list-item aui-list-item-arrow" v-for="item in roomLists" @click="jumpRoomDetail(item)">
+                            <div class="aui-list-item-label-icon" >
+                                <i class="iconfont icon-fangzi c2 f1"></i>
                             </div>
-                            <div class="aui-list-item-inner">
-                                <div class="aui-list-item-title">{{item.name}}</div>
+                            <div class="aui-list-item-inner" >
+                                <div class="aui-list-item-title">{{item.RoomNum}}</div>
                             </div>
                             <div class="aui-list-item-inner">
                                 <div>
                                     <div style="text-align: center;font-size: .6rem;color: #888888">
-                                        照明:正常
+                                        照明:{{item.zmStatus==0?'正常':item.zmStatus==1?'恶性负载':item.zmStatus==2?'锁定':'故障'}}
+
                                     </div>
-                                    <img v-bind:src="item.zhaomingStatus?'image/switch_on.svg':'image/switch_off.svg'"
-                                         onclick=""
+                                    <img v-bind:src="item.zmState==1?'image/switch_on.svg':'image/switch_off.svg'"
+                                         @click="switchZhaoming1(item)"
                                          style="width: 2rem;height: 1rem;">
                                 </div>
                             </div>
                             <div class="aui-list-item-inner">
                                 <div>
                                     <div style="text-align: center;font-size: .6rem;color: #888888">
-                                        照明:正常
+                                        空调:{{item.ktStatus==0?'正常':item.ktStatus==1?'恶性负载':item.ktStatus==2?'锁定':'故障'}}
                                     </div>
-                                    <img v-bind:src="item.kongtiaoStatus?'image/switch_on.svg':'image/switch_off.svg'"
-                                         onclick=""
+                                    <img v-bind:src="item.ktState==1?'image/switch_on.svg':'image/switch_off.svg'"
+                                         @click="switchKongtiao1(item)"
                                          style="width: 2rem;height: 1rem;">
                                 </div>
                             </div>
+
                         </li>
                     </ul>
                 </div>
             </div>
 
-            <div class="swiper-slide" id="studentPage">
-                <div style="width: 100%;text-align: center;height: 2.2rem">
-                    <select id="Area1" style="width:30%;">
-
-                    </select>
-                    <select id="BuildingAndUnit1" style="width:30%; height: 100%">
-
-                    </select>
-                    <select id="Floor1" style="width:30%;">
-
-                    </select>
-                </div>
+            <div class="swiper-slide" id="studentPage" style="margin-top: 2.2rem">
 
                 <div id="students" class="aui-content">
                     <ul class="aui-list aui-list-in">
-                        <li class="aui-list-item" v-for="item in students">
+                        <li class="aui-list-item" v-for="item in students" @click="jumpStudetail(item)">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-icon-test f1 c1"></i>
+                                <i class="iconfont icon-xuesheng f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
-                                <div class="aui-list-item-title">{{item.name}}</div>
-                                <div class="aui-list-item-right">{{item.zhuanye}}</div>
+                                <div class="aui-list-item-title">{{item.SName}}
+                                    <div class="aui-list-item-text">
+                                        {{item.Area}}-{{item.Building}}{{item.Unit}}-{{item.RoomNum}}
+                                    </div>
+                                </div>
+                                <div class="aui-list-item-right">{{item.Faculty}}</div>
                             </div>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="swiper-slide" id="zonghePage">
-                <div style="width: 100%;text-align: center;height: 2.2rem" id="zongheMenu" onclick="showPicker()">
+            <div class="swiper-slide" id="zonghePage" style="margin-top: 2.2rem">
 
-
-                </div>
 
                 <div class="aui-content">
                     <ul class="aui-list aui-list-in">
                         <li class="whu-header">
-                            工学部-1舍1单元-照明用电状态
+                            {{area}}用电状态
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-icon-test f1 c1"></i>
+                                <i class="iconfont icon-dianya f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
                                 <div class="aui-list-item-title">A相电压</div>
@@ -153,7 +156,7 @@
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-icon-test f1 c1"></i>
+                                <i class="iconfont icon-dianya f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
                                 <div class="aui-list-item-title">B相电压</div>
@@ -162,7 +165,7 @@
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-icon-test f1 c1"></i>
+                                <i class="iconfont icon-dianya f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
                                 <div class="aui-list-item-title">C相电压</div>
@@ -171,7 +174,7 @@
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-icon-test f1 c1"></i>
+                                <i class="iconfont icon-50 f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
                                 <div class="aui-list-item-title">A相电流</div>
@@ -180,7 +183,7 @@
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-icon-test f1 c1"></i>
+                                <i class="iconfont icon-50 f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
                                 <div class="aui-list-item-title">B相电流</div>
@@ -189,7 +192,7 @@
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-icon-test f1 c1"></i>
+                                <i class="iconfont icon-50 f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
                                 <div class="aui-list-item-title">C相电流</div>
@@ -198,7 +201,7 @@
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-icon-test f1 c1"></i>
+                                <i class="iconfont icon-47 f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
                                 <div class="aui-list-item-title">有功功率</div>
@@ -207,7 +210,7 @@
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-icon-test f1 c1"></i>
+                                <i class="iconfont icon-47 f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
                                 <div class="aui-list-item-title">无功功率</div>
@@ -216,7 +219,7 @@
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-icon-test f1 c1"></i>
+                                <i class="iconfont icon-49 f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
                                 <div class="aui-list-item-title">功率因数</div>
@@ -224,11 +227,11 @@
                             </div>
                         </li>
                         <li class="whu-header">
-                            工学部-1舍1单元-照明用电情况
+                            {{area}}用电情况
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-68 f1 c1"></i>
+                                <i class="iconfont icon-68 f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
                                 <div class="aui-list-item-title">本日已用电量</div>
@@ -237,7 +240,7 @@
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-68 f1 c1"></i>
+                                <i class="iconfont icon-68 f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
                                 <div class="aui-list-item-title">本月已用电量</div>
@@ -246,7 +249,7 @@
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-68 f1 c1"></i>
+                                <i class="iconfont icon-68 f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
                                 <div class="aui-list-item-title">总用电量</div>
@@ -254,11 +257,11 @@
                             </div>
                         </li>
                         <li class="whu-header">
-                            工学部-1舍1单元-补贴使用情况
+                            {{area}}补贴使用情况
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-butie f1 c1"></i>
+                                <i class="iconfont icon-butie f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner ">
                                 <div class="aui-list-item-title">本日已用补贴</div>
@@ -267,7 +270,7 @@
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-butie f1 c1"></i>
+                                <i class="iconfont icon-butie f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner ">
                                 <div class="aui-list-item-title">本月已用补贴</div>
@@ -276,7 +279,7 @@
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-butie f1 c1"></i>
+                                <i class="iconfont icon-butie f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner ">
                                 <div class="aui-list-item-title">总已用补贴</div>
@@ -284,11 +287,11 @@
                             </div>
                         </li>
                         <li class="whu-header">
-                            工学部-1舍1单元-照明电费统计
+                            {{area}}电费统计
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-butie f1 c1"></i>
+                                <i class="iconfont icon-butie f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner ">
                                 <div class="aui-list-item-title">本日预存电费</div>
@@ -297,7 +300,7 @@
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-butie f1 c1"></i>
+                                <i class="iconfont icon-butie f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner ">
                                 <div class="aui-list-item-title">本月预存电费</div>
@@ -306,7 +309,7 @@
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-butie f1 c1"></i>
+                                <i class="iconfont icon-butie f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner ">
                                 <div class="aui-list-item-title">本年预存电费</div>
@@ -315,7 +318,7 @@
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-butie f1 c1"></i>
+                                <i class="iconfont icon-butie f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner ">
                                 <div class="aui-list-item-title">总预存电费</div>
@@ -324,7 +327,7 @@
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-butie f1 c1"></i>
+                                <i class="iconfont icon-butie f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner ">
                                 <div class="aui-list-item-title">本日消费电费</div>
@@ -333,7 +336,7 @@
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-butie f1 c1"></i>
+                                <i class="iconfont icon-butie f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner ">
                                 <div class="aui-list-item-title">本月消费电费</div>
@@ -342,7 +345,7 @@
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-butie f1 c1"></i>
+                                <i class="iconfont icon-butie f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner ">
                                 <div class="aui-list-item-title">本年消费电费</div>
@@ -351,7 +354,7 @@
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-butie f1 c1"></i>
+                                <i class="iconfont icon-butie f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner ">
                                 <div class="aui-list-item-title">总消费电费</div>
@@ -359,11 +362,11 @@
                             </div>
                         </li>
                         <li class="whu-header">
-                            工学部-1舍1单元-线损
+                            {{area}}-线损
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-68 f1 c1"></i>
+                                <i class="iconfont icon-68 f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner ">
                                 <div class="aui-list-item-title">本日线损</div>
@@ -372,7 +375,7 @@
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-68 f1 c1"></i>
+                                <i class="iconfont icon-68 f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner ">
                                 <div class="aui-list-item-title">本月线损</div>
@@ -382,7 +385,7 @@
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-68 f1 c1"></i>
+                                <i class="iconfont icon-68 f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner ">
                                 <div class="aui-list-item-title">总线损</div>
@@ -392,7 +395,7 @@
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-baifenbi f1 c1"></i>
+                                <i class="iconfont icon-baifenbi f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner ">
                                 <div class="aui-list-item-title">日损耗率</div>
@@ -401,7 +404,7 @@
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-baifenbi f1 c1"></i>
+                                <i class="iconfont icon-baifenbi f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner ">
                                 <div class="aui-list-item-title">月损耗率</div>
@@ -410,7 +413,7 @@
                         </li>
                         <li class="aui-list-item">
                             <div class="aui-list-item-label-icon">
-                                <i class="iconfont icon-baifenbi f1 c1"></i>
+                                <i class="iconfont icon-baifenbi f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner ">
                                 <div class="aui-list-item-title">总损耗率</div>
