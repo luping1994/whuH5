@@ -14,11 +14,10 @@
     <link href="./mobileframework/mobile.css" rel="stylesheet">
     <script type="text/javascript" src="../../plugin.apis/cordova.js"></script>
     <script type="text/javascript" src="../../plugin.apis/webView.js"></script>
-    <script src="js/admin.js"/>
 
     <script type="text/javascript" src="../../common/js/public.js"></script>
     <script src="js/public.js"></script>
-    <!--<script type="text/javascript" src="js/config.js"></script>-->
+    <script type="text/javascript" src="js/config.js"></script>
     <script type="text/javascript" src="js/vue.js"></script>
 
 
@@ -28,10 +27,10 @@
 
     <link href="css/swiper.css" rel="stylesheet">
     <script type="text/javascript" src="js/swiper.js"></script>
+    <script type="text/javascript" src="js/weui.js"></script>
 
 
     <script type="text/javascript" src="aui/script/aui-tab.js"></script>
-    <script type="text/javascript" src="aui/script/aui-pull-refresh.js"></script>
     <script type="text/javascript" src="aui/script/aui-dialog.js"></script>
     <script type="text/javascript" src="aui/script/aui-toast.js"></script>
 
@@ -59,8 +58,8 @@
     <div class="m-container swiper-container" style="margin-top: 2.2rem">
         <div class="swiper-wrapper">
             <div class="swiper-slide" id="roomPage">
-                <div style="width: 100%;text-align: center;height: 2.2rem">
-                    <select id="Area" style="width:30%;">
+                <div style="width: 100%;text-align: center;height: 2.2rem;border: solid black 2px">
+                    <select id="Area" style="width:30%;font-size: 2rem;border: solid black 2px">
 
                     </select>
                     <select id="BuildingAndUnit" style="width:30%; height: 100%">
@@ -82,7 +81,7 @@
                             </div>
                             <div class="aui-list-item-inner">
                                 <div>
-                                    <div style="text-align: center;font-size: .4rem;color: #888888">
+                                    <div style="text-align: center;font-size: .6rem;color: #888888">
                                         照明:正常
                                     </div>
                                     <img v-bind:src="item.zhaomingStatus?'image/switch_on.svg':'image/switch_off.svg'"
@@ -92,7 +91,7 @@
                             </div>
                             <div class="aui-list-item-inner">
                                 <div>
-                                    <div style="text-align: center;font-size: .4rem;color: #888888">
+                                    <div style="text-align: center;font-size: .6rem;color: #888888">
                                         照明:正常
                                     </div>
                                     <img v-bind:src="item.kongtiaoStatus?'image/switch_on.svg':'image/switch_off.svg'"
@@ -132,17 +131,10 @@
                     </ul>
                 </div>
             </div>
-            <div class="swiper-slide">
-                <div style="width: 100%;text-align: center;height: 2.2rem">
-                    <select id="Area2" style="width:30%;">
+            <div class="swiper-slide" id="zonghePage">
+                <div style="width: 100%;text-align: center;height: 2.2rem" id="zongheMenu" onclick="showPicker()">
 
-                    </select>
-                    <select id="BuildingAndUnit2" style="width:30%; height: 100%">
 
-                    </select>
-                    <select id="Type2" style="width:30%;">
-
-                    </select>
                 </div>
 
                 <div class="aui-content">
@@ -156,7 +148,7 @@
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
                                 <div class="aui-list-item-title">A相电压</div>
-                                <div class="aui-list-item-right">nullV</div>
+                                <div class="aui-list-item-right">{{zongheDatas.VolA}}V</div>
                             </div>
                         </li>
                         <li class="aui-list-item">
@@ -165,7 +157,7 @@
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
                                 <div class="aui-list-item-title">B相电压</div>
-                                <div class="aui-list-item-right">nullV</div>
+                                <div class="aui-list-item-right">{{zongheDatas.VolB}}V</div>
                             </div>
                         </li>
                         <li class="aui-list-item">
@@ -174,7 +166,7 @@
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
                                 <div class="aui-list-item-title">C相电压</div>
-                                <div class="aui-list-item-right">nullV</div>
+                                <div class="aui-list-item-right">{{zongheDatas.VolC}}V</div>
                             </div>
                         </li>
                         <li class="aui-list-item">
@@ -183,7 +175,7 @@
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
                                 <div class="aui-list-item-title">A相电流</div>
-                                <div class="aui-list-item-right">nullA</div>
+                                <div class="aui-list-item-right">{{zongheDatas.IA}}A</div>
                             </div>
                         </li>
                         <li class="aui-list-item">
@@ -192,7 +184,7 @@
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
                                 <div class="aui-list-item-title">B相电流</div>
-                                <div class="aui-list-item-right">nullA</div>
+                                <div class="aui-list-item-right">{{zongheDatas.IB}}A</div>
                             </div>
                         </li>
                         <li class="aui-list-item">
@@ -201,7 +193,7 @@
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
                                 <div class="aui-list-item-title">C相电流</div>
-                                <div class="aui-list-item-right">nullA</div>
+                                <div class="aui-list-item-right">{{zongheDatas.IC}}A</div>
                             </div>
                         </li>
                         <li class="aui-list-item">
@@ -210,7 +202,7 @@
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
                                 <div class="aui-list-item-title">有功功率</div>
-                                <div class="aui-list-item-right">nullW</div>
+                                <div class="aui-list-item-right">{{zongheDatas.ActivePower}}kW</div>
                             </div>
                         </li>
                         <li class="aui-list-item">
@@ -219,7 +211,7 @@
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
                                 <div class="aui-list-item-title">无功功率</div>
-                                <div class="aui-list-item-right">nullW</div>
+                                <div class="aui-list-item-right">{{zongheDatas.ReactivePower}}kW</div>
                             </div>
                         </li>
                         <li class="aui-list-item">
@@ -228,7 +220,7 @@
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
                                 <div class="aui-list-item-title">功率因数</div>
-                                <div class="aui-list-item-right">null</div>
+                                <div class="aui-list-item-right">{{zongheDatas.PowerRateC}}</div>
                             </div>
                         </li>
                         <li class="whu-header">
@@ -240,7 +232,7 @@
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
                                 <div class="aui-list-item-title">本日已用电量</div>
-                                <div class="aui-list-item-right">nullkW·h</div>
+                                <div class="aui-list-item-right">{{zongheDatas.ElecDay}}kW·h</div>
                             </div>
                         </li>
                         <li class="aui-list-item">
@@ -249,7 +241,7 @@
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
                                 <div class="aui-list-item-title">本月已用电量</div>
-                                <div class="aui-list-item-right">nullkW·h</div>
+                                <div class="aui-list-item-right">{{zongheDatas.ElecMonth}}kW·h</div>
                             </div>
                         </li>
                         <li class="aui-list-item">
@@ -258,7 +250,7 @@
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
                                 <div class="aui-list-item-title">总用电量</div>
-                                <div class="aui-list-item-right">nullkW·h</div>
+                                <div class="aui-list-item-right">{{zongheDatas.Electricity}}kW·h</div>
                             </div>
                         </li>
                         <li class="whu-header">
@@ -270,7 +262,7 @@
                             </div>
                             <div class="aui-list-item-inner ">
                                 <div class="aui-list-item-title">本日已用补贴</div>
-                                <div class="aui-list-item-right">null元</div>
+                                <div class="aui-list-item-right">{{zongheDatas.SubsidyDay}}元</div>
                             </div>
                         </li>
                         <li class="aui-list-item">
@@ -279,7 +271,7 @@
                             </div>
                             <div class="aui-list-item-inner ">
                                 <div class="aui-list-item-title">本月已用补贴</div>
-                                <div class="aui-list-item-right">null元</div>
+                                <div class="aui-list-item-right">{{zongheDatas.SubsidyMonth}}元</div>
                             </div>
                         </li>
                         <li class="aui-list-item">
@@ -288,7 +280,141 @@
                             </div>
                             <div class="aui-list-item-inner ">
                                 <div class="aui-list-item-title">总已用补贴</div>
-                                <div class="aui-list-item-right">null元</div>
+                                <div class="aui-list-item-right">{{zongheDatas.SubsidySum}}元</div>
+                            </div>
+                        </li>
+                        <li class="whu-header">
+                            工学部-1舍1单元-照明电费统计
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-butie f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner ">
+                                <div class="aui-list-item-title">本日预存电费</div>
+                                <div class="aui-list-item-right">{{zongheDatas.PreSaveDay}}元</div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-butie f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner ">
+                                <div class="aui-list-item-title">本月预存电费</div>
+                                <div class="aui-list-item-right">{{zongheDatas.PreSaveMonth}}元</div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-butie f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner ">
+                                <div class="aui-list-item-title">本年预存电费</div>
+                                <div class="aui-list-item-right">{{zongheDatas.PreSaveYear}}元</div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-butie f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner ">
+                                <div class="aui-list-item-title">总预存电费</div>
+                                <div class="aui-list-item-right">{{zongheDatas.PreSaveSum}}元</div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-butie f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner ">
+                                <div class="aui-list-item-title">本日消费电费</div>
+                                <div class="aui-list-item-right">{{zongheDatas.ChargeDay}}元</div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-butie f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner ">
+                                <div class="aui-list-item-title">本月消费电费</div>
+                                <div class="aui-list-item-right">{{zongheDatas.ChargeMonth}}元</div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-butie f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner ">
+                                <div class="aui-list-item-title">本年消费电费</div>
+                                <div class="aui-list-item-right">{{zongheDatas.ChargeYear}}元</div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-butie f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner ">
+                                <div class="aui-list-item-title">总消费电费</div>
+                                <div class="aui-list-item-right">{{zongheDatas.ChargeSum}}元</div>
+                            </div>
+                        </li>
+                        <li class="whu-header">
+                            工学部-1舍1单元-线损
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-68 f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner ">
+                                <div class="aui-list-item-title">本日线损</div>
+                                <div class="aui-list-item-right">{{zongheDatas.LossDay}}kW·h</div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-68 f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner ">
+                                <div class="aui-list-item-title">本月线损</div>
+                                <div class="aui-list-item-right">{{zongheDatas.LossMonth}}kW·h</div>
+                            </div>
+
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-68 f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner ">
+                                <div class="aui-list-item-title">总线损</div>
+                                <div class="aui-list-item-right">{{zongheDatas.LossSum}}kW·h</div>
+                            </div>
+
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-baifenbi f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner ">
+                                <div class="aui-list-item-title">日损耗率</div>
+                                <div class="aui-list-item-right">{{zongheDatas.LossRateDay}}%</div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-baifenbi f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner ">
+                                <div class="aui-list-item-title">月损耗率</div>
+                                <div class="aui-list-item-right">{{zongheDatas.LossRateMonth}}%</div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-label-icon">
+                                <i class="iconfont icon-baifenbi f1 c1"></i>
+                            </div>
+                            <div class="aui-list-item-inner ">
+                                <div class="aui-list-item-title">总损耗率</div>
+                                <div class="aui-list-item-right">{{zongheDatas.LossRateSum}}%</div>
                             </div>
                         </li>
                     </ul>
@@ -298,153 +424,13 @@
     </div>
 </div>
 
+<script type="text/javascript" src="js/building.js"></script>
+<script type="text/javascript" src="js/admin.js"></script>
 
-<script>
-    var activeIndex;
-    var swipper = new Swiper(".swiper-container", {
-        speed: 400,
-        spaceBetween: 10,
-        on: {
-            slideChangeTransitionEnd: function () {
-                activeIndex = this.activeIndex;
-                if (activeIndex == 0) {
-                    tabbar.index0 = true;
-                    tabbar.index1 = false;
-                    tabbar.index2 = false;
-                }
-                if (activeIndex == 1) {
-                    tabbar.index0 = false;
-                    tabbar.index1 = true;
-                    tabbar.index2 = false;
-                }
-                if (activeIndex == 2) {
-                    tabbar.index0 = false;
-                    tabbar.index1 = false;
-                    tabbar.index2 = true;
-                }
-                console.log(activeIndex);
-
-            }
-        }
-    });
-
-    //    var area = $("#Area,#BuildingAndUnit,#Floor");
-    //    area.select2();
-    var tabbar = new Vue({
-        el: "#bar",
-        data: {
-            index0: true,
-            index1: false,
-            index2: false
-        },
-        methods: {
-            tab1Click: function (event) {
-
-                this.index0 = true;
-                this.index1 = false;
-                this.index2 = false;
-                swipper.slideTo(0, 400, false);
-            },
-            tab2Click: function (event) {
-
-                this.index0 = false;
-                this.index1 = true;
-                this.index2 = false;
-                swipper.slideTo(1, 400, false);
-
-            },
-            tab3Click: function (event) {
-
-                this.index0 = false;
-                this.index1 = false;
-                this.index2 = true;
-                swipper.slideTo(2, 400, false);
-
-            }
-        }
-    });
-    var roomPage = new Vue({
-        el: '#roomPage',
-        data: {
-            roomLists: [
-                {
-                    id: 0,
-                    type: "room",
-                    name: '101',
-                    zhaoming: "",
-                    icon_class: "iconfont icon-fangzi c2 f1",
-                    zhaomingStatus: false,
-                    kongtiaoStatus: true
-                },
-                {
-                    id: 1,
-                    type: "room",
-                    name: '102',
-                    zhaoming: "",
-                    icon_class: "iconfont c2 f1 icon-fangzi",
-                    zhaomingStatus: true,
-                    kongtiaoStatus: true
-                },
-                {
-                    id: 2,
-                    type: "room",
-                    name: '103',
-                    zhaoming: "",
-                    icon_class: "iconfont icon-fangzi c2 f1",
-                    zhaomingStatus: false,
-                    kongtiaoStatus: true
-                }
-            ]
-
-        }
-    });
-    var stuPage = new Vue({
-        el: '#studentPage',
-        data: {
-
-            students: [
-                {
-                    id: 0,
-                    type: "stu",
-                    name: '张三',
-                    zhuanye: "测绘学院"
-                },
-                {
-                    id: 1,
-                    type: "stu",
-                    name: '李四',
-                    zhuanye: "测绘学院"
-
-                },
-                {
-                    id: 2,
-                    type: "stu",
-                    name: '王大剑',
-                    zhuanye: "测绘学院"
-
-                }
-            ]
-
-        }
-    });
-    var title = ['工学部', '1舍1单元', '6层'];
-    $.each(title, function (k, v) {
-        title[k] = '<option value="">' + v + '</option>';
-        console.log(title[k])
-    });
-
-    $('#Area,#Area1').append(title[0]);
-    $('#BuildingAndUnit,#BuildingAndUnit1').append(title[1]);
-    $('#Floor,#Floor1').append(title[2]);
-    $('#Area,#BuildingAndUnit,#Floor').select2();
-    $('#Area1,#BuildingAndUnit1,#Floor1').select2();
-
-    //    var loc	= new Location();
+<script type="text/javascript">
 
 </script>
 
-<script type="text/javascript" src="js/building.js"/>
-<script type="text/javascript" src="js/area1.js"/>
 </body>
 
 </html>
