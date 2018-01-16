@@ -108,7 +108,7 @@ var zhaoming = new Vue({
                     TrunPage.setKeyValue("AccountType", "照明");
                     TrunPage.setKeyValue("token", token);
                     TrunPage.setKeyValue("userId", userId);
-                    TrunPage.openWebView("home/ChargeRecords.html", 1, "资费记录");
+                    TrunPage.openWebView("gyng/ChargeRecords.html", 1, "资费记录");
                     // window.location.href='ChargeRecords.html';
                     break;
                 case "U":
@@ -121,7 +121,7 @@ var zhaoming = new Vue({
                     TrunPage.setKeyValue("unit", e.unit);
                     TrunPage.setKeyValue("name", e.name);
                     TrunPage.setKeyValue("userId", userId + "");
-                    TrunPage.openWebView("home/UIHistroy.html", 1, "历史数据");
+                    TrunPage.openWebView("gyng/UIHistroy.html", 1, "历史数据");
                     // window.location.href='ChargeRecords.html';
                     break;
                 case "EletricityValue":
@@ -131,14 +131,14 @@ var zhaoming = new Vue({
                     TrunPage.setKeyValue("unit", e.unit);
                     TrunPage.setKeyValue("name", "用电量");
                     TrunPage.setKeyValue("userId", userId + "");
-                    TrunPage.openWebView("home/EleHistroy.html", 1, "历史数据");
+                    TrunPage.openWebView("gyng/EleHistroy.html", 1, "历史数据");
                     break;
                 default:
                     TrunPage.setKeyValue("AccountType", "照明");
                     TrunPage.setKeyValue("token", token);
                     TrunPage.setKeyValue("name", e.SName);
                     TrunPage.setKeyValue("id", e.StudentID);
-                    TrunPage.openWebView("home/StudentInfo.html", 1, e.SName);
+                    TrunPage.openWebView("gyng/StudentInfo.html", 1, e.SName);
                     break;
 
             }

@@ -133,7 +133,7 @@ var zhaoming = new Vue({
                     TrunPage.setKeyValue("AccountType", "照明");
                     TrunPage.setKeyValue("token", token);
                     TrunPage.setKeyValue("userId", userId);
-                    TrunPage.openWebView("home/ChargeRecords.html", 1, "资费记录");
+                    TrunPage.openWebView("gyng/ChargeRecords.html", 1, "资费记录");
                     // window.location.href='ChargeRecords.html';
                     break;
                 case "U":
@@ -146,7 +146,7 @@ var zhaoming = new Vue({
                     TrunPage.setKeyValue("unit", e.unit);
                     TrunPage.setKeyValue("name", e.name);
                     TrunPage.setKeyValue("userId", userId + "");
-                    TrunPage.openWebView("home/UIHistroy.html", 1, "历史数据");
+                    TrunPage.openWebView("gyng/UIHistroy.html", 1, "历史数据");
                     // window.location.href='ChargeRecords.html';
                     break;
                 case "EletricityValue":
@@ -156,14 +156,14 @@ var zhaoming = new Vue({
                     TrunPage.setKeyValue("unit", e.unit);
                     TrunPage.setKeyValue("name", "用电量");
                     TrunPage.setKeyValue("userId", userId + "");
-                    TrunPage.openWebView("home/EleHistroy.html", 1, "历史数据");
+                    TrunPage.openWebView("gyng/EleHistroy.html", 1, "历史数据");
                     break;
                 default:
                     TrunPage.setKeyValue("AccountType", "照明");
                     TrunPage.setKeyValue("token", token);
                     TrunPage.setKeyValue("name", e.SName);
                     TrunPage.setKeyValue("id", e.StudentID);
-                    TrunPage.openWebView("home/StudentInfo.html", 1, e.SName);
+                    TrunPage.openWebView("gyng/StudentInfo.html", 1, e.SName);
                     break;
 
             }
@@ -238,7 +238,7 @@ var kongtiao = new Vue({
                     TrunPage.setKeyValue("AccountType", "空调");
                     TrunPage.setKeyValue("token", token);
                     TrunPage.setKeyValue("userId", userId);
-                    TrunPage.openWebView("home/ChargeRecords.html", 1, "资费记录");
+                    TrunPage.openWebView("gyng/ChargeRecords.html", 1, "资费记录");
                     // window.location.href='ChargeRecords.html';
                     break;
                 case "U":
@@ -251,7 +251,7 @@ var kongtiao = new Vue({
                     TrunPage.setKeyValue("unit", e.unit);
                     TrunPage.setKeyValue("name", e.name);
                     TrunPage.setKeyValue("userId", userId + "");
-                    TrunPage.openWebView("home/UIHistroy.html", 1, "历史数据");
+                    TrunPage.openWebView("gyng/UIHistroy.html", 1, "历史数据");
                     // window.location.href='ChargeRecords.html';
                     break;
                 case "EletricityValue":
@@ -261,14 +261,14 @@ var kongtiao = new Vue({
                     TrunPage.setKeyValue("unit", e.unit);
                     TrunPage.setKeyValue("name", "用电量");
                     TrunPage.setKeyValue("userId", userId + "");
-                    TrunPage.openWebView("home/EleHistroy.html", 1, "历史数据");
+                    TrunPage.openWebView("gyng/EleHistroy.html", 1, "历史数据");
                     break;
                 default:
                     TrunPage.setKeyValue("AccountType", "空调");
                     TrunPage.setKeyValue("token", token);
                     TrunPage.setKeyValue("name", e.SName);
                     TrunPage.setKeyValue("id", e.StudentID);
-                    TrunPage.openWebView("home/StudentInfo.html", 1, e.SName);
+                    TrunPage.openWebView("gyng/StudentInfo.html", 1, e.SName);
                     break;
 
             }
@@ -282,12 +282,12 @@ function switchZhaoming() {
     var msgs = zhaoming.yongdiandatas[0].value == false ? "是否打开照明?" : "是否关闭照明";
     var order = zhaoming.yongdiandatas[0].value == false ? "2" : "3";
     dialog.alert({
-        title: "提示1",
+        title: "提示",
         msg: msgs,
         buttons: ['取消', '确定']
     }, function (ret) {
         if (ret.buttonIndex == 2) {
-            sendOrder(order,"照明");
+            sendOrder(order, "照明");
         }
 
     })
@@ -304,12 +304,12 @@ function switchKongtiao() {
         buttons: ['取消', '确定']
     }, function (ret) {
         if (ret.buttonIndex == 2) {
-           sendOrder(order,"空调");
+            sendOrder(order, "空调");
         }
     })
 }
 
-function sendOrder(order,accountType) {
+function sendOrder(order, accountType) {
     $.ajax({
         url: url + 'Insert_Order',
         data: {
@@ -324,20 +324,30 @@ function sendOrder(order,accountType) {
         },
         dataType: "json",
         success: function (json) {
+            if (json == null) {
+                return
+            }
             if (json.code == 200) {
                 var toasts = new auiToast({});
                 toasts.success({
                     title: "命令已发送",
                     duration: 2000
                 });
-            }else {
-                var toasts = new auiToast({});
-                toasts.fail({
-                    title: json.message,
-                    duration: 2000
-                });
+            } else {
+                showErrorDialog();
             }
+        },
+        error: function () {
+            showErrorDialog("发送失败！");
         }
+    });
+}
+
+function showErrorDialog(msg) {
+    var toasts = new auiToast({});
+    toasts.fail({
+        title: msg,
+        duration: 2000
     });
 }
 

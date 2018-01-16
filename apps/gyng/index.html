@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>公寓能管</title>
+    <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/loaders.min.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <script src="./mobileframework/widget/js/mobile.js"></script>
+    <link href="./mobileframework/mobile.css" rel="stylesheet">
+    <script type="text/javascript" src="../../plugin.apis/cordova.js"></script>
+    <script type="text/javascript" src="../../plugin.apis/webView.js"></script>
+    <script type="text/javascript" src="../../common/js/public.js"></script>
+    <script src="js/public.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+    <script type="text/javascript" src="aui/script/aui-toast.js"></script>
+
+    <link href="aui/css/aui.css" rel="stylesheet">
+
+    <style>
+        body html {
+            height: 100%;
+        }
+
+        .wh-home-item {
+            height: 6.125rem;
+            color: white;
+            line-height: 6.125rem;
+            text-align: center;
+            background-color: #ffffff;
+            margin-left: .2rem;
+        }
+
+        .wh-home-item-padded {
+            height: 6.325rem;
+            padding-bottom: .1rem;
+            padding-right: .2rem;
+        }
+
+        .wh-home-item:active {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .wh-press:active {
+            background-color: rgba(0, 120, 215, 0.5);
+
+        }
+
+        .wh-home-header {
+            width: 100%;
+            height: 7rem;
+        }
+
+        body {
+            height: 100%;
+            width: 100%;
+            background-color: #ffffff;
+        }
+
+        footer {
+
+            position: absolute;
+            bottom: .5rem;
+            width: 100%;
+        }
+
+        .c-white {
+            color: white;
+        }
+
+        .item-wenzi {
+            position: absolute;
+        }
+
+        .whu-item-img {
+            position: absolute;
+        }
+
+        .f1 {
+            font-size: .8rem;
+        }
+
+        .content {
+            width: 500px;
+            height: 200px;
+            line-height: 200px; /*设置其文字内容垂直居中*/
+            border: 1px solid red;
+        }
+
+        .pox {
+            background: yellow;
+            width: 200px;
+            height: 70px;
+            display: inline-block; /*一定要将div设置为inline-block*/
+            vertical-align: middle; /*设置该元素在父元素中的位置*/
+            line-height: 70px;
+            border: 1px solid green;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="aui-content">
+
+    <div class="wh-home-header">
+        <img src="image/bg.jpg" style="width: 100%;height: 100%">
+    </div>
+
+    <section class="aui-grid" style="background-color: transparent;margin-top: .2rem" id="content">
+        <div class="aui-row wh-home-item-padded">
+            <div class="aui-col-xs-6 " style="padding: 0;height: 100%" id="dormitory">
+                <div class="wh-home-item " style="text-align: center;">
+                    <div style="padding-right: .2rem;width: 100%;height: 100%;" class="whu-item-img">
+                        <img src="image/sushe.png" style="width: 100%;height: 100%;">
+
+                    </div>
+                    <div style="position: relative;width: 100%;height: 100%;padding-right: .2rem;padding-left: .2rem;text-align: center;padding-top: 2rem">
+                        <p id="susheText" class="c-white f1" style="bottom: .2rem;text-align: center">我的宿舍</p>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-col-xs-6 " style="padding: 0;height: 100%">
+                <div style="padding-left: .2rem;padding-bottom:.1rem;height: 50%" id="jiaofei">
+                    <img src="image/jiaofei.png" style="width: 100%;height: 100%">
+
+                </div>
+
+                <div style="padding-left: .2rem;padding-top:.0rem;height: 50%;line-height: 50%;width: 100%" id="zhinan">
+                    <img src="image/zhinan.png" style="width: 100%;height: 100%">
+
+                </div>
+
+            </div>
+        </div>
+        <div class="aui-row wh-home-item-padded">
+            <div class="aui-col-xs-4 " style="padding: 0;height: 100%">
+                <div class="wh-home-item " style="text-align: center;">
+                    <div style="padding-right: .2rem;width: 100%;height: 100%;" class="whu-item-img">
+                        <img src="image/paihang_day.png" style="width: 100%;height: 100%;">
+
+                    </div>
+                    <div style="position: relative;width: 100%;height: 100%;padding-right: .2rem;padding-left: .2rem;text-align: center;padding-top: 2rem">
+                        <p class="c-white f1" style="bottom: .2rem;text-align: center">日用电排行</p>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-col-xs-4 " style="padding: 0;height: 100%">
+                <div class="wh-home-item " style="text-align: center;">
+                    <div style="padding-right: .2rem;width: 100%;height: 100%;" class="whu-item-img">
+                        <img src="image/paihang_month.png" style="width: 100%;height: 100%;">
+
+                    </div>
+                    <div style="position: relative;width: 100%;height: 100%;padding-right: .2rem;padding-left: .2rem;text-align: center;padding-top: 2rem">
+                        <p class="c-white f1" style="bottom: .2rem;text-align: center">月用电排行</p>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-col-xs-4 " style="padding: 0;height: 100%">
+                <div class="wh-home-item " style="text-align: center;">
+                    <div style="padding-right: .2rem;width: 100%;height: 100%;" class="whu-item-img">
+                        <img src="image/paihang_year.png" style="width: 100%;height: 100%;">
+
+                    </div>
+                    <div style="position: relative;width: 100%;height: 100%;padding-right: .2rem;padding-left: .2rem;text-align: center;padding-top: 2rem">
+                        <p class="c-white f1" style="bottom: .2rem;text-align: center">年用电排行</p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="aui-row wh-home-item-padded">
+            <div class="aui-col-xs-6 " style="padding: 0;height: 100%">
+                <div class="wh-home-item " style="text-align: center;">
+                    <div style="padding-right: .2rem;width: 100%;height: 100%;" class="whu-item-img">
+                        <img src="image/tips.png" style="width: 100%;height: 100%;">
+
+                    </div>
+                    <div style="position: relative;width: 100%;height: 100%;padding-right: .2rem;padding-left: .2rem;text-align: center;padding-top: 2rem">
+                        <p class="c-white f1" style="bottom: .2rem;text-align: center">节能小技巧</p>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-col-xs-6 " style="padding: 0;height: 100%" id="suntrans">
+                <div class="wh-home-item " style="text-align: center;">
+                    <div style="padding-right: .2rem;width: 100%;height: 100%;" class="whu-item-img">
+                        <img src="image/suntrans.png" style="width: 100%;height: 100%;">
+
+                    </div>
+                    <div style="position: relative;width: 100%;height: 100%;padding-right: .2rem;padding-left: .2rem;text-align: center;padding-top: 2rem">
+                        <p class="c-white f1" style="bottom: .2rem;text-align: center">关于我们</p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!--<div class=" wh-home-item-padded" id="dormitory">-->
+        <!--<div class="wh-home-item">-->
+        <!--宿舍管理-->
+        <!--</div>-->
+
+        <!--</div>-->
+
+        <!--<div class="aui-row wh-home-item-padded">-->
+        <!--<div class="aui-col-xs-4 " style="padding: 0">-->
+        <!--<div class="wh-home-item " style="text-align: center">-->
+        <!--昨日排行-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="aui-col-xs-4 " style="padding: 0">-->
+        <!--<div class="wh-home-item ">-->
+        <!--上月排行-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="aui-col-xs-4 " style="padding: 0">-->
+        <!--<div class="wh-home-item ">-->
+        <!--上周排行-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+    </section>
+
+</div>
+<script src="js/index.js"></script>
+
+<script>
+
+    $('#suntrans').click(function () {
+        TrunPage.toSysBrowser("http://www.suntrans.net");
+    });
+    $('#jiaofei').click(function () {
+        TrunPage.toSysBrowser("http://10.100.0.4:8001");
+
+    });
+    $('#zhinan').click(function () {
+        TrunPage.toSysBrowser("http://xsyd.whu.edu.cn/SystemExplanation.htm");
+
+    });
+
+    $('#dormitory').click(function (event) {
+        if (loginData == null || loginData == '') {
+            TrunPage.showToast('无法获取用户信息');
+            return;
+        }
+        TrunPage.setKeyValue("token", loginData.token.access_token);
+        TrunPage.setKeyValue("userId", loginData.user.UserID);
+        if (loginData.user.Role == 4) {
+            if (loginData.type == 1) {
+                TrunPage.setKeyValue("Role", "student");
+                // window.location.replace('oldIndex.html')
+                // window.location.herf = 'oldIndex.html';
+                TrunPage.openWebView('gyng/oldIndex.html', 1, '宿舍管理');
+
+            } else if (loginData.type == 2) {
+                TrunPage.setKeyValue("Role", "student");
+                // window.location.replace('newIndex.html');
+                TrunPage.openWebView('gyng/newIndex.html', 1, '宿舍管理');
+
+            }
+        } else if (loginData.user.Role == 1) {
+            TrunPage.setKeyValue("Role", "admin");
+            // window.location.replace = ('admin.html');
+            TrunPage.openWebView('gyng/admin.html', 1, '宿舍管理');
+        } else {
+            var toast = new auiToast({});
+            toast.fail({
+                title: "现在尚不支持学生以外其他用户登录",
+                duration: 2000
+            });
+        }
+    });
+</script>
+</body>
+</html>

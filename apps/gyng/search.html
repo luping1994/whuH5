@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>搜索</title>
+    <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/loaders.min.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <script src="./mobileframework/widget/js/mobile.js"></script>
+    <link href="./mobileframework/mobile.css" rel="stylesheet">
+    <script type="text/javascript" src="../../plugin.apis/cordova.js"></script>
+    <script type="text/javascript" src="../../plugin.apis/webView.js"></script>
+
+    <script type="text/javascript" src="../../common/js/public.js"></script>
+    <script src="js/public.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+
+
+    <link href="aui/css/aui.css" rel="stylesheet">
+    <link href="css/whu.css" rel="stylesheet">
+    <link href="css/weui.css" rel="stylesheet">
+
+    <link href="css/swiper.css" rel="stylesheet">
+    <script type="text/javascript" src="js/swiper.js"></script>
+    <script type="text/javascript" src="js/weui.js"></script>
+
+
+    <script type="text/javascript" src="aui/script/aui-tab.js"></script>
+    <script type="text/javascript" src="aui/script/aui-dialog.js"></script>
+    <script type="text/javascript" src="aui/script/aui-toast.js"></script>
+
+    <script type="text/javascript" src="js/select2.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/select2.css"/>
+
+</head>
+
+<body>
+<div class="aui-content">
+    <div class="aui-searchbar" id="search" style="position: fixed;z-index: 100">
+        <div class="aui-searchbar-input aui-border-radius">
+            <i class="aui-iconfont aui-icon-search"></i>
+            <form action="javascript:search();">
+                <input type="search" placeholder="请输入搜索内容" id="search-input">
+            </form>
+        </div>
+        <div style="background-color: #50A0D2;color: white;padding: .2rem;margin-right: .8rem;border-radius: .3rem"
+             onclick="searchInfo()">确定
+        </div>
+    </div>
+
+    <div id="result" class="aui-content" style="margin-top: 2.25rem">
+        <ul class="aui-list aui-list-in">
+            <li class="whu-header">
+                宿舍
+            </li>
+            <li class="aui-list-item" v-for="item in rooms" @click="jumpRoomDetail(item)">
+                <div class="aui-list-item-label-icon">
+                    <i class="iconfont icon-fangzi f1 c2"></i>
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title"> {{item.RoomNum}}
+                        <div class="aui-list-item-text">
+                            {{item.Area}}-{{item.Building}}{{item.Unit}}-{{item.Floor}}
+                        </div>
+                    </div>
+                    <div class="aui-list-item-right"></div>
+                </div>
+            </li>
+        </ul>
+        <ul class="aui-list aui-list-in">
+            <li class="whu-header">
+                学生
+            </li>
+            <li class="aui-list-item" v-for="item in students" @click="jumpStudetail(item)">
+                <div class="aui-list-item-label-icon">
+                    <i class="iconfont icon-xuesheng f1 c2"></i>
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title ">{{item.SName}}
+                        <div class="aui-list-item-text">
+                            {{item.Area}}-{{item.Building}}{{item.Unit}}-{{item.Floor}}楼{{item.RoomNum}}
+                        </div>
+                    </div>
+                    <div class="aui-list-item-right ">{{item.StudentID}}</div>
+
+                </div>
+
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript" src="js/search.js"></script>
+
+<script type="text/javascript">
+
+
+
+
+
+</script>
+
+</body>
+
+</html>

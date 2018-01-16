@@ -31,19 +31,16 @@ function getData() {
     accountType = "照明";
     if (Role == "student") {
         getChannel(userId, '');
-        setInterval("getChannel(userId,accountType)", 2000);
+        setInterval("getChannel(userId,accountType)",4000);
     } else {
         getChannelByRoomID(RoomId,"");
         getStudents(RoomId);
-        setInterval("getChannelByRoomID(RoomId,'')", 2000);
+        setInterval("getChannelByRoomID(RoomId,'')", 4000);
     }
 
 
 }
 
-function getDetail() {
-    TrunPage.openWebView("demo/www/infoDetail.html", 1, "信息详情");
-}
 
 /**
  * 学生通过StudentID查找宿舍信息
@@ -53,7 +50,7 @@ function getDetail() {
 function getChannel(StudentID, AccountType) {
     // TrunPage.showToast("开始请求数据");
     $.ajax({
-        url: url + 'Inquiry_Channel',
+        url: url + 'New_Inquiry_Ammeter',
         data: {'StudentID': StudentID, "AccountType": "照明"},
         type: 'POST',
         headers: {
@@ -63,7 +60,7 @@ function getChannel(StudentID, AccountType) {
         success: function (json) {
             // TrunPage.showToast("json2="+json.info[0].PreChargeback+"元");
 
-            if (RoomId == null) {
+            if (RoomId == null||RoomId=='') {
                 RoomId = json.info[0].RoomID;
                 TrunPage.setKeyValue("RoomId", RoomId);
 
@@ -95,7 +92,7 @@ function getChannel(StudentID, AccountType) {
 function getChannelByRoomID(Roomid_, AccountType) {
     // TrunPage.showToast("开始请求数据");
     $.ajax({
-        url: url + 'Inquiry_Channel_RoomID',
+        url: url + 'New_Inquiry_Ammeter_RoomID',
         data: {'RoomID': Roomid_, "AccountType": "照明"},
         type: 'POST',
         headers: {
@@ -167,6 +164,6 @@ function openControlLogPage() {
     TrunPage.setKeyValue("AccountType", "照明");
     TrunPage.setKeyValue("token", token);
     TrunPage.setKeyValue("userId", userId);
-    TrunPage.openWebView("home/ControlLog.html", 1, "状态日志");
+    TrunPage.openWebView("gyng/ControlLog.html", 1, "状态日志");
 
 }

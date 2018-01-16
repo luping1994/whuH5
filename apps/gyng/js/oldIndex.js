@@ -37,7 +37,7 @@ function getData() {
     } else {
         getChannelByRoomID(RoomId, "照明");
         getStudents(RoomId);
-        setInterval("getChannelByRoomID(RoomId,'')", 2000);
+        setInterval("getChannelByRoomID(RoomId,'')", 5000);
     }
 
     // $.ajax({
@@ -114,7 +114,7 @@ function getChannelByStudentId(StudentID, AccountType) {
                 if (RoomId == null || RoomId == '') {
                     RoomId = json.info[0].RoomID;
                     TrunPage.setKeyValue("RoomId", RoomId);
-                    console.log(RoomId);
+
                     getStudents(RoomId);
                 }
                 //填充数据
@@ -122,7 +122,8 @@ function getChannelByStudentId(StudentID, AccountType) {
                 zhaoming.accountList[1].value = json.info[0].PreSubsidy + "元";
                 zhaoming.accountList[2].value = json.info[0].AccountStatus + "";
 
-                zhaoming.yongdiandatas[0].value = json.info[0].state == "1" ? true : false;
+                zhaoming.yongdiandatas[0].value = json.info[0].State == 1 ? true : false;
+
                 zhaoming.yongdiandatas[1].value = json.info[0].Status == 0 ? "正常" : json.info[0].Status == 1 ? "恶性负载" : json.info[0].Status == 2 ? "锁定" : json.info[0].Status == 3 ? "故障" : "null";
 
                 zhaoming.dianliangxinxi[0].value = json.info[0].U + "V";
@@ -197,7 +198,7 @@ function getChannelByRoomID(Roomid, AccountType) {
                 zhaoming.accountList[1].value = json.info[0].PreSubsidy + "元";
                 zhaoming.accountList[2].value = json.info[0].AccountStatus + "";
 
-                zhaoming.yongdiandatas[0].value = json.info[0].state == "1" ? true : false;
+                zhaoming.yongdiandatas[0].value = json.info[0].State == 1 ? true : false;
                 zhaoming.yongdiandatas[1].value = json.info[0].Status == 0 ? "正常" : json.info[0].Status == 1 ? "恶性负载" : json.info[0].Status == 2 ? "锁定" : json.info[0].Status == 3 ? "故障" : "null";
 
                 zhaoming.dianliangxinxi[0].value = json.info[0].U + "V";
@@ -267,7 +268,6 @@ function getChannelByRoomID(Roomid, AccountType) {
  * @param RoomId
  */
 function getStudents(RoomId) {
-    console.error("查找学生："+RoomId);
     $.ajax({
         url: url + 'Inquiry_Room_RoomID',
         data: {"RoomID": RoomId},

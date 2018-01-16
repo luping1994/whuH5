@@ -37,43 +37,56 @@
     <script type="text/javascript" src="js/select2.js"></script>
     <link rel="stylesheet" type="text/css" href="css/select2.css"/>
 
+    <style>
+        body{
+            background-color: #C6E2FF;
+        }
+    </style>
 </head>
 
 <body>
 <div class="aui-content">
-    <header class="aui-bar aui-bar-nav header" style="position: fixed">
-        <div class="aui-bar aui-bar-btn" id="bar" style="width:80%;">
-            <div class="aui-bar-btn-item" v-on:click="tab1Click()" v-bind:class="{'aui-active': index0 }"
-                 style="width: 33%">宿舍
-            </div>
-            <div class="aui-bar-btn-item" v-on:click="tab2Click()" v-bind:class="{'aui-active': index1 }"
-                 style="width: 33%">学生
-            </div>
-            <div class="aui-bar-btn-item " v-on:click="tab3Click()" v-bind:class="{'aui-active': index2 }"
-                 style="width: 33%">综合
-            </div>
-        </div>
-        <div class="aui-row" id="menu" onclick="showPicker()">
-            <div id="datePickerDiv" class="aui-col-xs-4"
-                 style="border-right: dashed 2px #fff;display: inline-block;height: 2rem;text-align: center">
 
-                <div id="month" style="color: #FFFFFF;height: 60%;"> {{Area}}<i class="aui-iconfont whu-year-arrow"></i>
+    <header class="aui-bar aui-bar-nav header" style="position: fixed;background-color: #50A0D2;top: 0;left: 0;right: 0;">
+        <div class="aui-title">
+            <div class="aui-bar aui-bar-btn" id="bar" style="width:100%;">
+                <div class="aui-bar-btn-item" v-on:click="tab1Click()" v-bind:class="{'aui-active': index0 }"
+                     style="width: 33%">宿舍
                 </div>
-            </div>
-            <div class="aui-col-xs-4"
-                 style="border-right: dashed 2px #fff;display: inline-block;height: 2rem">
-                <div style="color: #FFFFFF;height: 60%">{{Building}}<i class="aui-iconfont whu-year-arrow"></i></div>
-            </div>
-            <div class="aui-col-xs-4" style="display: inline-block;height: 2rem">
-                <div id="chuzhang" style="color: #FFFFFF;height: 60%">{{Floor}}<i
-                        class="aui-iconfont whu-year-arrow"></i></div>
-            </div>
+                <div class="aui-bar-btn-item" v-on:click="tab2Click()" v-bind:class="{'aui-active': index1 }"
+                     style="width: 33%">学生
+                </div>
+                <div class="aui-bar-btn-item " v-on:click="tab3Click()" v-bind:class="{'aui-active': index2 }"
+                     style="width: 33%">综合
+                </div>
 
+            </div>
         </div>
 
+        <a class="aui-pull-right aui-btn" style="margin-right: .4rem" href="javaScript:gotoSearch()">
+            <span class="aui-iconfont aui-icon-search"></span>
+        </a>
 
     </header>
+    <div class="aui-row " id="menu" onclick="showPicker()"
+         style="margin-top: 2.2rem;background-color: #50A0D2;position: fixed;width: 100%;text-align: center;z-index: 100;height: 1.8rem">
+        <div id="datePickerDiv" class="aui-col-xs-4"
+             style="border-right: dashed 2px #fff;display: inline-block;height: 2rem;text-align: center;font-size: .8rem">
 
+            <div id="month" style="color: #FFFFFF;height: 60%;"> {{Area}}<i class="aui-iconfont whu-year-arrow"></i>
+            </div>
+        </div>
+        <div class="aui-col-xs-4"
+             style="border-right: dashed 2px #fff;display: inline-block;height: 2rem;font-size: .8rem">
+            <div style="color: #FFFFFF;height: 60%">{{Building}}<i class="aui-iconfont whu-year-arrow"></i></div>
+        </div>
+        <div class="aui-col-xs-4" style="display: inline-block;height: 2rem;font-size: .8rem;">
+            <div id="chuzhang" style="color: #FFFFFF;height: 60%">
+                {{Floor}}<i class="aui-iconfont whu-year-arrow"></i>
+            </div>
+        </div>
+
+    </div>
     <div class="m-container swiper-container" style="margin-top: 2.2rem">
         <div class="swiper-wrapper">
             <div class="swiper-slide" id="roomPage" style="margin-top: 2.2rem">
@@ -83,11 +96,12 @@
                 <div id="rooms" class="aui-content">
 
                     <ul class="aui-list aui-list-in">
-                        <li class="aui-list-item aui-list-item-arrow" v-for="item in roomLists" @click="jumpRoomDetail(item)">
-                            <div class="aui-list-item-label-icon" >
+                        <li class="aui-list-item aui-list-item-arrow" v-for="item in roomLists"
+                            @click="jumpRoomDetail(item,$event)">
+                            <div class="aui-list-item-label-icon">
                                 <i class="iconfont icon-fangzi c2 f1"></i>
                             </div>
-                            <div class="aui-list-item-inner" >
+                            <div class="aui-list-item-inner">
                                 <div class="aui-list-item-title">{{item.RoomNum}}</div>
                             </div>
                             <div class="aui-list-item-inner">
@@ -97,16 +111,17 @@
 
                                     </div>
                                     <img v-bind:src="item.zmState==1?'image/switch_on.svg':'image/switch_off.svg'"
-                                         @click="switchZhaoming1(item)"
+                                         id="zmSwitch"
                                          style="width: 2rem;height: 1rem;">
                                 </div>
                             </div>
-                            <div class="aui-list-item-inner">
+                            <div class="aui-list-item-inner" style="">
                                 <div>
                                     <div style="text-align: center;font-size: .6rem;color: #888888">
                                         空调:{{item.ktStatus==0?'正常':item.ktStatus==1?'恶性负载':item.ktStatus==2?'锁定':'故障'}}
                                     </div>
                                     <img v-bind:src="item.ktState==1?'image/switch_on.svg':'image/switch_off.svg'"
+                                         id="ktSwitch"
                                          @click="switchKongtiao1(item)"
                                          style="width: 2rem;height: 1rem;">
                                 </div>
@@ -145,7 +160,7 @@
                         <li class="whu-header">
                             {{area}}用电状态
                         </li>
-                        <li class="aui-list-item">
+                        <li class="aui-list-item" onclick="openUIHistory('VolA','A相电压','V','line')">
                             <div class="aui-list-item-label-icon">
                                 <i class="iconfont icon-dianya f1 c2"></i>
                             </div>
@@ -154,7 +169,7 @@
                                 <div class="aui-list-item-right">{{zongheDatas.VolA}}V</div>
                             </div>
                         </li>
-                        <li class="aui-list-item">
+                        <li class="aui-list-item" onclick="openUIHistory('VolB','B相电压','V','line')">
                             <div class="aui-list-item-label-icon">
                                 <i class="iconfont icon-dianya f1 c2"></i>
                             </div>
@@ -163,8 +178,8 @@
                                 <div class="aui-list-item-right">{{zongheDatas.VolB}}V</div>
                             </div>
                         </li>
-                        <li class="aui-list-item">
-                            <div class="aui-list-item-label-icon">
+                        <li class="aui-list-item" onclick="openUIHistory('VolC','C相电压','V','line')">
+                            <div class="aui-list-item-label-icon"  >
                                 <i class="iconfont icon-dianya f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
@@ -172,8 +187,8 @@
                                 <div class="aui-list-item-right">{{zongheDatas.VolC}}V</div>
                             </div>
                         </li>
-                        <li class="aui-list-item">
-                            <div class="aui-list-item-label-icon">
+                        <li class="aui-list-item" onclick="openUIHistory('IA','A相电流','A','line')">
+                            <div class="aui-list-item-label-icon" >
                                 <i class="iconfont icon-50 f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
@@ -181,8 +196,8 @@
                                 <div class="aui-list-item-right">{{zongheDatas.IA}}A</div>
                             </div>
                         </li>
-                        <li class="aui-list-item">
-                            <div class="aui-list-item-label-icon">
+                        <li class="aui-list-item" onclick="openUIHistory('IB','B相电流','A','line')">
+                            <div class="aui-list-item-label-icon" >
                                 <i class="iconfont icon-50 f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
@@ -190,7 +205,7 @@
                                 <div class="aui-list-item-right">{{zongheDatas.IB}}A</div>
                             </div>
                         </li>
-                        <li class="aui-list-item">
+                        <li class="aui-list-item" onclick="openUIHistory('IC','C相电流','A','line')">
                             <div class="aui-list-item-label-icon">
                                 <i class="iconfont icon-50 f1 c2"></i>
                             </div>
@@ -199,7 +214,7 @@
                                 <div class="aui-list-item-right">{{zongheDatas.IC}}A</div>
                             </div>
                         </li>
-                        <li class="aui-list-item">
+                        <li class="aui-list-item" onclick="openUIHistory('ActivePower','有功功率','W','line')">
                             <div class="aui-list-item-label-icon">
                                 <i class="iconfont icon-47 f1 c2"></i>
                             </div>
@@ -208,16 +223,16 @@
                                 <div class="aui-list-item-right">{{zongheDatas.ActivePower}}kW</div>
                             </div>
                         </li>
-                        <li class="aui-list-item">
+                        <li class="aui-list-item" onclick="openUIHistory('ReactivePower','无功功率','kvar','line')">
                             <div class="aui-list-item-label-icon">
                                 <i class="iconfont icon-47 f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
                                 <div class="aui-list-item-title">无功功率</div>
-                                <div class="aui-list-item-right">{{zongheDatas.ReactivePower}}kW</div>
+                                <div class="aui-list-item-right">{{zongheDatas.ReactivePower}}kvar</div>
                             </div>
                         </li>
-                        <li class="aui-list-item">
+                        <li class="aui-list-item" onclick="openUIHistory('PowerRateC','功率因数','','line')">
                             <div class="aui-list-item-label-icon">
                                 <i class="iconfont icon-49 f1 c2"></i>
                             </div>
@@ -229,7 +244,7 @@
                         <li class="whu-header">
                             {{area}}用电情况
                         </li>
-                        <li class="aui-list-item">
+                        <li class="aui-list-item" onclick="openUIHistory('ElecDay','用电量','kW·h','bar')">
                             <div class="aui-list-item-label-icon">
                                 <i class="iconfont icon-68 f1 c2"></i>
                             </div>
@@ -238,7 +253,7 @@
                                 <div class="aui-list-item-right">{{zongheDatas.ElecDay}}kW·h</div>
                             </div>
                         </li>
-                        <li class="aui-list-item">
+                        <li class="aui-list-item" onclick="openUIHistory('ElecMonth','用电量','kW·h','bar')">
                             <div class="aui-list-item-label-icon">
                                 <i class="iconfont icon-68 f1 c2"></i>
                             </div>
@@ -247,7 +262,7 @@
                                 <div class="aui-list-item-right">{{zongheDatas.ElecMonth}}kW·h</div>
                             </div>
                         </li>
-                        <li class="aui-list-item">
+                        <li class="aui-list-item" onclick="openUIHistory('Electricity','用电量','kW·h','bar')">
                             <div class="aui-list-item-label-icon">
                                 <i class="iconfont icon-68 f1 c2"></i>
                             </div>
@@ -431,6 +446,23 @@
 <script type="text/javascript" src="js/admin.js"></script>
 
 <script type="text/javascript">
+
+    function openUIHistory(Field,name,danwei,chartType) {
+
+        TrunPage.setKeyValue("AccountType", zAccountType);
+        TrunPage.setKeyValue("token", token);
+        TrunPage.setKeyValue("Field", Field);
+        TrunPage.setKeyValue("Area", area);
+        TrunPage.setKeyValue("Building", building);
+        TrunPage.setKeyValue("Unit", unit);
+        TrunPage.setKeyValue("unit",danwei);
+        TrunPage.setKeyValue("chartType",chartType);
+        TrunPage.setKeyValue("name", name);
+        TrunPage.setKeyValue("userId", userId + "");
+        TrunPage.openWebView("gyng/UI3Histroy.html", 1, "历史数据");
+    }
+
+
 
 </script>
 
