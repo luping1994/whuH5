@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>排行</title>
+
+    <link href="../aui/css/aui.css" rel="stylesheet"/>
+    <link href="../aui/css/aui-pull-refresh.css" rel="stylesheet"/>
+    <style>
+        .c1 {
+            background-color: #FF3B30;
+
+        }
+
+        .c2 {
+            background-color: #ffb25a;
+        }
+
+        .c3 {
+            background-color: #0e90d2;
+        }
+        .c-default{
+            background-color: #888888;
+
+        }
+    </style>
+</head>
+<body>
+<div class="aui-content">
+    <section class="aui-refresh-content">
+        <div class="aui-content" id="content">
+            <ul class="aui-list aui-list-in">
+                <li class="aui-list-item" v-for="item in rankings">
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-text">
+                            <div class="aui-list-item-title aui-font-size-14">医学部-3舍-301</div>
+                            <div class="aui-list-item-right">267kw·h</div>
+                        </div>
+                        <div class="aui-list-item-right">
+                            <div class="aui-label aui-label-info" v-bind:class="[item.rank==1? 'c1' :item.rank==2? 'c2' : item.rank==3? 'c3': 'c-default']">{{item.rank}}</div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+</div>
+
+<script src="../js/jquery.min.js"></script>
+<script src="../js/vue.js"></script>
+<script src="../aui/script/aui-pull-refresh.js"></script>
+
+<script>
+    var ranking = new Vue({
+        el: '#content',
+        data: {
+            rankings: [
+                {
+                    rank: 1
+                },
+                {
+                    rank: 2
+                },
+                {
+                    rank: 3
+                },
+                {
+                    rank: 4
+                }
+            ]
+        },
+        computed: {
+
+        }
+    });
+</script>
+</body>
+</html>

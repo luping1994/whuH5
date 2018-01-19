@@ -102,6 +102,7 @@
             border: 1px solid green;
             text-align: center;
         }
+
     </style>
 </head>
 <body>
@@ -113,33 +114,35 @@
     </div>
 
     <section class="aui-grid" style="background-color: transparent;margin-top: .2rem" id="content">
-        <div class="aui-row wh-home-item-padded">
-            <div class="aui-col-xs-6 " style="padding: 0;height: 100%" id="dormitory">
-                <div class="wh-home-item " style="text-align: center;">
-                    <div style="padding-right: .2rem;width: 100%;height: 100%;" class="whu-item-img">
-                        <img src="image/sushe.png" style="width: 100%;height: 100%;">
+            <div class="aui-row wh-home-item-padded">
+                <div class="aui-col-xs-6 " style="padding: 0;height: 100%" id="dormitory">
+                    <div class="wh-home-item " style="text-align: center;">
+                        <div style="padding-right: .2rem;width: 100%;height: 100%;" class="whu-item-img">
+                            <img src="image/sushe.png" style="width: 100%;height: 100%;">
+
+                        </div>
+                        <div style="position: relative;width: 100%;height: 100%;padding-right: .2rem;padding-left: .2rem;text-align: center;padding-top: 2rem">
+                            <p id="susheText" class="c-white f1" style="bottom: .2rem;text-align: center">我的宿舍</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-col-xs-6 " style="padding: 0;height: 100%">
+                    <div style="padding-left: .2rem;padding-bottom:.1rem;height: 50%" id="jiaofei">
+                        <img src="image/jiaofei.png" style="width: 100%;height: 100%">
 
                     </div>
-                    <div style="position: relative;width: 100%;height: 100%;padding-right: .2rem;padding-left: .2rem;text-align: center;padding-top: 2rem">
-                        <p id="susheText" class="c-white f1" style="bottom: .2rem;text-align: center">我的宿舍</p>
+
+                    <div style="padding-left: .2rem;padding-top:.0rem;height: 50%;line-height: 50%;width: 100%" id="zhinan">
+                        <img src="image/zhinan.png" style="width: 100%;height: 100%">
+
                     </div>
+
                 </div>
             </div>
-            <div class="aui-col-xs-6 " style="padding: 0;height: 100%">
-                <div style="padding-left: .2rem;padding-bottom:.1rem;height: 50%" id="jiaofei">
-                    <img src="image/jiaofei.png" style="width: 100%;height: 100%">
 
-                </div>
 
-                <div style="padding-left: .2rem;padding-top:.0rem;height: 50%;line-height: 50%;width: 100%" id="zhinan">
-                    <img src="image/zhinan.png" style="width: 100%;height: 100%">
-
-                </div>
-
-            </div>
-        </div>
         <div class="aui-row wh-home-item-padded">
-            <div class="aui-col-xs-4 " style="padding: 0;height: 100%">
+            <div class="aui-col-xs-4 " style="padding: 0;height: 100%" id="dayRank">
                 <div class="wh-home-item " style="text-align: center;">
                     <div style="padding-right: .2rem;width: 100%;height: 100%;" class="whu-item-img">
                         <img src="image/paihang_day.png" style="width: 100%;height: 100%;">
@@ -150,7 +153,18 @@
                     </div>
                 </div>
             </div>
-            <div class="aui-col-xs-4 " style="padding: 0;height: 100%">
+            <div class="aui-col-xs-4 " style="padding: 0;height: 100%" id="monthRank">
+                <div class="wh-home-item " style="text-align: center;">
+                    <div style="padding-right: .2rem;width: 100%;height: 100%;" class="whu-item-img">
+                        <img src="image/rank_week.png" style="width: 100%;height: 100%;">
+
+                    </div>
+                    <div style="position: relative;width: 100%;height: 100%;padding-right: .2rem;padding-left: .2rem;text-align: center;padding-top: 2rem">
+                        <p class="c-white f1" style="bottom: .2rem;text-align: center">周用电排行</p>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-col-xs-4 " style="padding: 0;height: 100%" id="yearRank">
                 <div class="wh-home-item " style="text-align: center;">
                     <div style="padding-right: .2rem;width: 100%;height: 100%;" class="whu-item-img">
                         <img src="image/paihang_month.png" style="width: 100%;height: 100%;">
@@ -158,17 +172,6 @@
                     </div>
                     <div style="position: relative;width: 100%;height: 100%;padding-right: .2rem;padding-left: .2rem;text-align: center;padding-top: 2rem">
                         <p class="c-white f1" style="bottom: .2rem;text-align: center">月用电排行</p>
-                    </div>
-                </div>
-            </div>
-            <div class="aui-col-xs-4 " style="padding: 0;height: 100%">
-                <div class="wh-home-item " style="text-align: center;">
-                    <div style="padding-right: .2rem;width: 100%;height: 100%;" class="whu-item-img">
-                        <img src="image/paihang_year.png" style="width: 100%;height: 100%;">
-
-                    </div>
-                    <div style="position: relative;width: 100%;height: 100%;padding-right: .2rem;padding-left: .2rem;text-align: center;padding-top: 2rem">
-                        <p class="c-white f1" style="bottom: .2rem;text-align: center">年用电排行</p>
                     </div>
                 </div>
             </div>
@@ -232,26 +235,39 @@
 <script src="js/index.js"></script>
 
 <script>
+    $('#dayRank').click(function () {
+        TrunPage.openWebView('gyng/html/ranking.html', 1, '日用电排行');
+
+    });
+    $('#monthRank').click(function () {
+        TrunPage.openWebView('gyng/html/ranking.html', 1, '月用电排行');
+
+    });
+    $('#yearRank').click(function () {
+        TrunPage.openWebView('gyng/html/ranking.html', 1, '年用电排行');
+
+    });
 
     $('#suntrans').click(function () {
         TrunPage.toSysBrowser("http://www.suntrans.net");
     });
     $('#jiaofei').click(function () {
-        TrunPage.toSysBrowser("http://10.100.0.4:8001");
+        TrunPage.toSysBrowser("http://10.100.0.33:8001");
 
     });
     $('#zhinan').click(function () {
         TrunPage.toSysBrowser("http://xsyd.whu.edu.cn/SystemExplanation.htm");
-
     });
 
     $('#dormitory').click(function (event) {
+
         if (loginData == null || loginData == '') {
             TrunPage.showToast('无法获取用户信息');
             return;
         }
         TrunPage.setKeyValue("token", loginData.token.access_token);
         TrunPage.setKeyValue("userId", loginData.user.UserID);
+        TrunPage.setKeyValue("RoomId", loginData.user.RoomID);
         if (loginData.user.Role == 4) {
             if (loginData.type == 1) {
                 TrunPage.setKeyValue("Role", "student");

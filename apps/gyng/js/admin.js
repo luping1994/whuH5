@@ -45,6 +45,9 @@ function init(_token) {
     swipper = new Swiper(".swiper-container", {
         speed: 400,
         spaceBetween: 10,
+        // observer:true,//修改swiper自己或子元素时，自动初始化swiper
+        // observeParents:true,//修改swiper的父元素时，自动初始化swiper
+        // autoHeight:true,
         on: {
             slideChangeTransitionEnd: function () {
                 activeIndex = this.activeIndex;
@@ -52,12 +55,13 @@ function init(_token) {
                     tabbar.index0 = true;
                     tabbar.index1 = false;
                     tabbar.index2 = false;
-
+                    scrollTo(0,0);
                     getRooms(area, building, unit, floor);
                     switchMenu(sushe);
 
                 }
                 if (activeIndex == 1) {
+                    scrollTo(0,0);
                     tabbar.index0 = false;
                     tabbar.index1 = true;
                     tabbar.index2 = false;
@@ -67,6 +71,7 @@ function init(_token) {
 
                 }
                 if (activeIndex == 2) {
+                    scrollTo(0,0);
                     tabbar.index0 = false;
                     tabbar.index1 = false;
                     tabbar.index2 = true;
@@ -78,6 +83,15 @@ function init(_token) {
             }
         }
     });
+    // var swipperV = new Swiper(".swiper-container-v",{
+    //     direction: 'vertical',
+    //     slidesPerView: 'auto',
+    //     freeMode: true,
+    //     scrollbar: {
+    //         el: '.swiper-scrollbar'
+    //     },
+    //     mousewheel: true
+    // });
 
     menu = new Vue({
         el: "#menu",
@@ -119,7 +133,6 @@ function init(_token) {
                 scrollTo(0, 0);
                 switchMenu(xueshen);
 
-
             },
             tab3Click: function (event) {
 
@@ -130,6 +143,7 @@ function init(_token) {
                 getThreephaseData(zhArea, zhBuilding, zhUnit, zAccountType);
                 scrollTo(0, 0);
                 switchMenu(zonghe);
+
             }
         }
     });
@@ -157,9 +171,9 @@ function init(_token) {
 
                     TrunPage.setKeyValue("Role", "admin");
                     if (t == 1) {
-                        TrunPage.openWebView("gyng/oldIndex.html", 1, e.RoomNum);
+                        TrunPage.openWebView("gyng/oldIndex.html", 1, roomPage.area + "层-" + e.RoomNum);
                     } else if (t == 2) {
-                        TrunPage.openWebView("gyng/newIndex.html", 1, e.RoomNum);
+                        TrunPage.openWebView("gyng/newIndex.html", 1, roomPage.area + "层-" + e.RoomNum);
                     }
                 }
 
@@ -455,7 +469,6 @@ function getThreephaseData(Area, Building, Unit, AccountType) {
         return
     }
     clearThreeData();
-    var toast = new auiToast();
     toast.loading({
         title: "加载数据中...",
         duration: 50000
@@ -510,6 +523,7 @@ function getThreephaseData(Area, Building, Unit, AccountType) {
  * @param Unit
  * @param Floor
  */
+var toast = new auiToast();
 function getRooms(Area, Building, Unit, Floor) {
     // console.log((Area + Building + Unit + Floor));
     // console.log(roomPage.area);
@@ -518,7 +532,9 @@ function getRooms(Area, Building, Unit, Floor) {
     }
     roomPage.roomLists = [];
 
-    var toast = new auiToast();
+    if(!toast){
+        toast = new auiToast();
+    }
     toast.loading({
         title: "加载数据中...",
         duration: 50000
@@ -542,22 +558,24 @@ function getRooms(Area, Building, Unit, Floor) {
         },
         dataType: "json",
         success: function (json) {
-
             // zhaoming.students.clean();
             // TrunPage.showToast("json2="+json.info[0].PreChargeback+"元");
             // console.log(json);
             if (json.code == 200) {
-                for (var i = 0; i < json.info.length; i++) {
-                    roomPage.roomLists.push(json.info[i]);
-                }
+
+                roomPage.roomLists = json.info;
                 roomPage.area = Area + Building + Unit + Floor;
             } else {
                 console.log(json.message)
             }
-            toast.hide();
+            if (toast)
+                toast.hide();
         },
         error: function (e) {
-            toast.hide();
+            if (toast)
+            {
+                toast.hide();
+            }
             new auiToast()
                 .fail({
                     title: "获取数据失败",
@@ -580,7 +598,9 @@ function getStudents(Area, Building, Unit, Floor) {
         return
     }
     stuPage.students = [];
-    var toast = new auiToast();
+    if(!toast){
+        toast = new auiToast();
+    }
     toast.loading({
         title: "加载数据中...",
         duration: 50000
@@ -612,9 +632,7 @@ function getStudents(Area, Building, Unit, Floor) {
             var totleCharge = 0;
             if (json.code == 200) {
                 stuPage.students = [];
-                for (var i = 0; i < json.info.length; i++) {
-                    stuPage.students.push(json.info[i]);
-                }
+                stuPage.students = json.info;
                 stuPage.area = Area + Building + Unit + Floor;
 
             } else {
@@ -667,7 +685,12 @@ function getMenuItem() {
                 zhUnit = items[0].Lists[0].Lists[0].Unit;
                 zhFloor = items[0].Lists[0].Lists[0].Lists[0];
                 // getRooms(items[0].Area, items[0].Lists[0].Building, items[0].Lists[0].Lists[0].Unit, items[0].Lists[0].Lists[0].Lists[0]);
+
                 getRooms(area, building, unit, floor);
+                setInterval('getRoomInterval(area, building, unit, floor)', 4000);
+                // getStudents(area, building, unit, floor);
+                // getThreephaseData(zhArea, zhBuilding, zhUnit, zAccountType);
+                // alert("getRoom");
             } else {
                 console.log(json.message)
             }
@@ -679,6 +702,47 @@ function getMenuItem() {
     });
 }
 
+function getRoomInterval(Area, Building, Unit, Floor) {
+    $.ajax({
+        url: url + 'Inquiry_Building_Detail',
+        data: {
+            "Area": Area,
+            "Building": Building,
+            "Unit": Unit,
+            "Floor": Floor
+        },
+        type: 'POST',
+        headers: {
+            'Authorization': "Bearer " + token
+        },
+        dataType: "json",
+        success: function (json) {
+            // zhaoming.students.clean();
+            // TrunPage.showToast("json2="+json.info[0].PreChargeback+"元");
+            // console.log(json);
+            roomPage.roomLists=[];
+            if (json.code == 200) {
+                roomPage.roomLists=json.info;
+                roomPage.area = Area + Building + Unit + Floor;
+            } else {
+                console.log(json.message)
+            }
+            if (toast)
+                toast.hide();
+        },
+        error: function (e) {
+            if (toast)
+            {
+                toast.hide();
+            }
+            new auiToast()
+                .fail({
+                    title: "获取数据失败",
+                    duration: 2000
+                });
+        }
+    });
+}
 
 /**
  * 控制照明
@@ -687,7 +751,14 @@ function getMenuItem() {
 function switchZhaoming(item) {
     console.log(item);
     var dialog = new auiDialog();
-
+    if (item.zmState == -1) {
+        var toasts = new auiToast({});
+        toasts.fail({
+            title: "设备故障无法发送命令",
+            duration: 2000
+        });
+        return
+    }
     var msgs = item.zmState == 0 ? "是否打开" + item.RoomNum + "照明?" : "是否关闭" + item.RoomNum + "照明";
     var order = item.zmState == 0 ? "2" : "3";
     dialog.alert({
@@ -707,6 +778,14 @@ function switchZhaoming(item) {
  * @param item
  */
 function switchKongtiao(item) {
+    if (item.zmState == -1) {
+        var toasts = new auiToast({});
+        toasts.fail({
+            title: "设备故障无法发送命令",
+            duration: 2000
+        });
+        return
+    }
     var dialog = new auiDialog();
     var msgs = item.ktState == 0 ? "是否打开" + item.RoomNum + "空调?" : "是否关闭" + item.RoomNum + "空调";
     var order = item.ktState == 0 ? "2" : "3";
@@ -746,9 +825,19 @@ function sendOrder(order, accountType, roomID) {
             if (json.code == 200) {
                 var toasts = new auiToast({});
                 toasts.success({
-                    title: "命令已发送",
+                    title: json.message,
                     duration: 2000
                 });
+                for (var i = 0; i < roomPage.roomLists.length; i++) {
+                    if (roomPage.roomLists[i].RoomID == roomID) {
+                        if (accountType == '照明') {
+                            roomPage.roomLists[i].zmState = order == 2 ? 1 : 0;
+                        }else {
+                            roomPage.roomLists[i].ktState = order == 2 ? 1 : 0;
+
+                        }
+                    }
+                }
             } else {
                 var toasts = new auiToast({});
                 toasts.fail({

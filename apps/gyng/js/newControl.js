@@ -9,7 +9,6 @@ var webView = new webView();
 
 function bindTab() {
 
-
 }
 
 function bindSwiper() {
@@ -35,6 +34,11 @@ function bindPullRefresh() {
 var zhaoming = new Vue({
     el: '#zhaoming',
     data: {
+        amInfo:{
+            AmmeterNo:'',
+            RoomID:'',
+            DeviceDec:''
+        },
         accountList: [
             {id: 0, type: "accountInfo", name: '账户余额', value: "--元", icon_class: "iconfont icon-yue c1 f1"},
             {id: 1, type: "accountInfo", name: '剩余补贴', value: "--度", icon_class: " iconfont c1 f1 icon-butie"},
@@ -108,6 +112,7 @@ var zhaoming = new Vue({
                     TrunPage.setKeyValue("AccountType", "照明");
                     TrunPage.setKeyValue("token", token);
                     TrunPage.setKeyValue("userId", userId);
+                    TrunPage.setKeyValue("RoomID", RoomId);
                     TrunPage.openWebView("gyng/ChargeRecords.html", 1, "资费记录");
                     // window.location.href='ChargeRecords.html';
                     break;
@@ -119,6 +124,7 @@ var zhaoming = new Vue({
                     TrunPage.setKeyValue("token", token);
                     TrunPage.setKeyValue("Field", e.type);
                     TrunPage.setKeyValue("unit", e.unit);
+                    TrunPage.setKeyValue("RoomID", RoomId);
                     TrunPage.setKeyValue("name", e.name);
                     TrunPage.setKeyValue("userId", userId + "");
                     TrunPage.openWebView("gyng/UIHistroy.html", 1, "历史数据");
@@ -128,12 +134,14 @@ var zhaoming = new Vue({
                     TrunPage.setKeyValue("AccountType", "照明");
                     TrunPage.setKeyValue("token", token);
                     TrunPage.setKeyValue("Field", e.type);
+                    TrunPage.setKeyValue("RoomID", RoomId);
                     TrunPage.setKeyValue("unit", e.unit);
                     TrunPage.setKeyValue("name", "用电量");
                     TrunPage.setKeyValue("userId", userId + "");
                     TrunPage.openWebView("gyng/EleHistroy.html", 1, "历史数据");
                     break;
                 default:
+                    TrunPage.setKeyValue("RoomID", RoomId);
                     TrunPage.setKeyValue("AccountType", "照明");
                     TrunPage.setKeyValue("token", token);
                     TrunPage.setKeyValue("name", e.SName);
@@ -152,19 +160,22 @@ function switchZhaoming() {
     var dialog = new auiDialog();
 
     var msgs = zhaoming.yongdiandatas[0].value == false ? "是否打开照明?" : "是否关闭照明";
+    var order = zhaoming.yongdiandatas[0].value == false ? "2" : "3";
+
     dialog.alert({
         title: "提示",
         msg: msgs,
         buttons: ['取消', '确定']
     }, function (ret) {
-        if (ret.buttonIndex == 2)
-            zhaoming.yongdiandatas[0].value = !zhaoming.yongdiandatas[0].value;
+            if (ret.buttonIndex == 2)
+                sendOrder(order,'照明');
     })
 }
 
 function switchKongtiao() {
     var dialog = new auiDialog();
     var msgs = zhaoming.yongdiandatas[1].value == false ? "是否打开空调?" : "是否关闭空调";
+    var order = zhaoming.yongdiandatas[1].value == false ? "2" : "3";
 
     dialog.alert({
         title: "提示",
@@ -172,8 +183,53 @@ function switchKongtiao() {
         buttons: ['取消', '确定']
     }, function (ret) {
         if (ret.buttonIndex == 2)
-            zhaoming.yongdiandatas[1].value = !zhaoming.yongdiandatas[1].value;
+            sendOrder(order,'空调');
     })
 }
 
 
+
+function sendOrder(order, accountType) {
+    $.ajax({
+        url: url + 'Insert_Order_RoomID',
+        data: {
+            'UserID': userId,
+            "AccountType": accountType,
+            "OrderID": order,
+            "RoomID": RoomId
+        },
+        type: 'POST',
+        headers: {
+            'Authorization': "Bearer " + token
+        },
+        dataType: "json",
+        success: function (json) {
+            if (json.code == 200) {
+                var toasts = new auiToast({});
+                toasts.success({
+                    title: json.message,
+                    duration: 2000
+                });
+                if(accountType=='照明'){
+                    zhaoming.yongdiandatas[0].value= order==2?true:false;
+                }else {
+                    zhaoming.yongdiandatas[1].value= order==2?true:false;
+
+                }
+            } else {
+                showErrorDialog("发送失败！");
+            }
+        },
+        error: function () {
+            showErrorDialog("发送失败！");
+        }
+    });
+}
+
+function showErrorDialog(msg) {
+    var toasts = new auiToast({});
+    toasts.fail({
+        title: msg,
+        duration: 2000
+    });
+}

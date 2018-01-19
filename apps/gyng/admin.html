@@ -38,18 +38,53 @@
     <link rel="stylesheet" type="text/css" href="css/select2.css"/>
 
     <style>
-        body{
+        body {
             background-color: #C6E2FF;
         }
+
+        html body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .swiper-slide {
+            height: 0px
+
+        }
+
+        .swiper-slide-active {
+            height: auto;
+        }
+
+        .header {
+            width: 100%;
+            position: fixed;
+        }
+
+        .main {
+            width: 100%;
+            height: auto;
+            position: absolute;
+            box-sizing: border-box; /*这里改变盒子模型为怪异盒模型，这样padding值不会增加main的高度*/
+        }
+
+        .contentMargin{
+            margin-top:4.5rem;
+        }
+
+
     </style>
 </head>
 
 <body>
-<div class="aui-content">
+<div class="aui-content full-screen" style="height: 100%">
 
-    <header class="aui-bar aui-bar-nav header" style="position: fixed;background-color: #50A0D2;top: 0;left: 0;right: 0;">
+    <header class="aui-bar aui-bar-nav header " id="header1"
+            style="position: fixed;background-color: #50A0D2;top: 0;left: 0;right: 0;height: 4.5rem">
         <div class="aui-title">
-            <div class="aui-bar aui-bar-btn" id="bar" style="width:100%;">
+            <div class="aui-bar aui-bar-btn  swiper-nav" id="bar" style="width:100%;">
                 <div class="aui-bar-btn-item" v-on:click="tab1Click()" v-bind:class="{'aui-active': index0 }"
                      style="width: 33%">宿舍
                 </div>
@@ -66,35 +101,37 @@
         <a class="aui-pull-right aui-btn" style="margin-right: .4rem" href="javaScript:gotoSearch()">
             <span class="aui-iconfont aui-icon-search"></span>
         </a>
+        <div class="aui-row header" id="menu" onclick="showPicker()"
+             style="top: 2.25rem;background-color: #50A0D2;position: fixed;width: 100%;text-align: center;z-index: 100;height: 1.8rem">
+            <div id="datePickerDiv" class="aui-col-xs-4"
+                 style="border-right: dashed 2px #fff;display: inline-block;height: 2rem;text-align: center;font-size: .8rem">
+
+                <div id="month" style="color: #FFFFFF;height: 60%;"> {{Area}}<i class="aui-iconfont whu-year-arrow"></i>
+                </div>
+            </div>
+            <div class="aui-col-xs-4"
+                 style="border-right: dashed 2px #fff;display: inline-block;height: 2rem;font-size: .8rem">
+                <div style="color: #FFFFFF;height: 60%">{{Building}}<i class="aui-iconfont whu-year-arrow"></i></div>
+            </div>
+            <div class="aui-col-xs-4" style="display: inline-block;height: 2rem;font-size: .8rem;">
+                <div id="chuzhang" style="color: #FFFFFF;height: 60%">
+                    {{Floor}}<i class="aui-iconfont whu-year-arrow"></i>
+                </div>
+            </div>
+
+        </div>
 
     </header>
-    <div class="aui-row " id="menu" onclick="showPicker()"
-         style="margin-top: 2.2rem;background-color: #50A0D2;position: fixed;width: 100%;text-align: center;z-index: 100;height: 1.8rem">
-        <div id="datePickerDiv" class="aui-col-xs-4"
-             style="border-right: dashed 2px #fff;display: inline-block;height: 2rem;text-align: center;font-size: .8rem">
 
-            <div id="month" style="color: #FFFFFF;height: 60%;"> {{Area}}<i class="aui-iconfont whu-year-arrow"></i>
-            </div>
-        </div>
-        <div class="aui-col-xs-4"
-             style="border-right: dashed 2px #fff;display: inline-block;height: 2rem;font-size: .8rem">
-            <div style="color: #FFFFFF;height: 60%">{{Building}}<i class="aui-iconfont whu-year-arrow"></i></div>
-        </div>
-        <div class="aui-col-xs-4" style="display: inline-block;height: 2rem;font-size: .8rem;">
-            <div id="chuzhang" style="color: #FFFFFF;height: 60%">
-                {{Floor}}<i class="aui-iconfont whu-year-arrow"></i>
-            </div>
-        </div>
-
-    </div>
-    <div class="m-container swiper-container" style="margin-top: 2.2rem">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide" id="roomPage" style="margin-top: 2.2rem">
-                <li class="whu-header">
+    <div class="m-container swiper-container  swiper-container-h contentMargin"
+         style="" id="spContent">
+        <div class="swiper-wrapper" id="swiperwapper" >
+            <div class="swiper-slide" id="roomPage" style="overflow-y: scroll; ">
+                <li class="whu-header" style="height: 1.2rem">
                     {{area}}
                 </li>
-                <div id="rooms" class="aui-content">
 
+                <div id="rooms" class="aui-content full-screen ">
                     <ul class="aui-list aui-list-in">
                         <li class="aui-list-item aui-list-item-arrow" v-for="item in roomLists"
                             @click="jumpRoomDetail(item,$event)">
@@ -130,10 +167,18 @@
                         </li>
                     </ul>
                 </div>
+
             </div>
 
-            <div class="swiper-slide" id="studentPage" style="margin-top: 2.2rem">
-
+            <div class="swiper-slide full-screen " id="studentPage"
+                 style="overflow-y: scroll;">
+                <!--<div class="swiper-container swiper-container-v" style="height: 19rem">-->
+                <!--<div class="swiper-wrapper">-->
+                <!---->
+                <!--</div>-->
+                <!--<div class="swiper-scrollbar swiper-pagination-v"></div>-->
+                <!--</div>-->
+                <!--<div class="swiper-slide">-->
                 <div id="students" class="aui-content">
                     <ul class="aui-list aui-list-in">
                         <li class="aui-list-item" v-for="item in students" @click="jumpStudetail(item)">
@@ -151,9 +196,11 @@
                         </li>
                     </ul>
                 </div>
+                <!--</div>-->
             </div>
-            <div class="swiper-slide" id="zonghePage" style="margin-top: 2.2rem">
 
+            <div class="swiper-slide full-screen  " id="zonghePage"
+                 style="overflow-y: scroll;">
 
                 <div class="aui-content">
                     <ul class="aui-list aui-list-in">
@@ -179,7 +226,7 @@
                             </div>
                         </li>
                         <li class="aui-list-item" onclick="openUIHistory('VolC','C相电压','V','line')">
-                            <div class="aui-list-item-label-icon"  >
+                            <div class="aui-list-item-label-icon">
                                 <i class="iconfont icon-dianya f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
@@ -188,7 +235,7 @@
                             </div>
                         </li>
                         <li class="aui-list-item" onclick="openUIHistory('IA','A相电流','A','line')">
-                            <div class="aui-list-item-label-icon" >
+                            <div class="aui-list-item-label-icon">
                                 <i class="iconfont icon-50 f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
@@ -197,7 +244,7 @@
                             </div>
                         </li>
                         <li class="aui-list-item" onclick="openUIHistory('IB','B相电流','A','line')">
-                            <div class="aui-list-item-label-icon" >
+                            <div class="aui-list-item-label-icon">
                                 <i class="iconfont icon-50 f1 c2"></i>
                             </div>
                             <div class="aui-list-item-inner aui-list-item-arrow">
@@ -447,23 +494,51 @@
 
 <script type="text/javascript">
 
-    function openUIHistory(Field,name,danwei,chartType) {
+    function openUIHistory(Field, name, danwei, chartType) {
 
         TrunPage.setKeyValue("AccountType", zAccountType);
         TrunPage.setKeyValue("token", token);
         TrunPage.setKeyValue("Field", Field);
         TrunPage.setKeyValue("Area", area);
         TrunPage.setKeyValue("Building", building);
-        TrunPage.setKeyValue("Unit", unit);
-        TrunPage.setKeyValue("unit",danwei);
-        TrunPage.setKeyValue("chartType",chartType);
+        TrunPage.setKeyValue("Unit", zhUnit);
+        TrunPage.setKeyValue("unit", danwei);
+        TrunPage.setKeyValue("chartType", chartType);
         TrunPage.setKeyValue("name", name);
         TrunPage.setKeyValue("userId", userId + "");
         TrunPage.openWebView("gyng/UI3Histroy.html", 1, "历史数据");
     }
 
+    //作者：凌陈亮www.lingchenliang.com（QQ：57404811）
+    autodivheight();
 
+    function autodivheight() { //函数：获取尺寸
+        //获取浏览器窗口高度
+        var winHeight = 0;
+        if (window.innerHeight)
+            winHeight = window.innerHeight;
+        else if ((document.body) && (document.body.clientHeight))
+            winHeight = document.body.clientHeight;
+        //通过深入Document内部对body进行检测，获取浏览器窗口高度
+        if (document.documentElement && document.documentElement.clientHeight)
+            winHeight = document.documentElement.clientHeight;
+        //DIV高度为浏览器窗口的高度
+        //document.getElementById("test").style.height= winHeight +"px";
+        //DIV高度为浏览器窗口高度的一半
+        // console.log(winHeight);
+        var headerHeight = $("#header1").height();
+        console.log(headerHeight);
+        var trueHeight = winHeight - headerHeight;
+        $("#spContent").height(trueHeight);
+        $("body").height(winHeight);
+        $("html").height(winHeight);
+        $("#roomPage").height(trueHeight);
+        $("#studentPage").height(trueHeight);
+        $("#zonghePage").height(trueHeight);
+        $("#swiperwapper").height(trueHeight);
+    }
 
+    window.onresize = autodivheight; //浏览器窗口发生变化时同时变化DIV高度
 </script>
 
 </body>

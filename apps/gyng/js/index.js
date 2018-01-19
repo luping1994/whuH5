@@ -11,50 +11,46 @@ var loginData;
 function loadPage() {
     // TrunPage.setBackClose();
     getData();
+    // getDataTest();
 }
 
 var toast;
 
+
+function getDataTest() {
+    $.ajax({
+        url: url + 'Login',
+        data: {'Sign': m_sign},
+        type: 'POST',
+        dataType: "json",
+        success: function (json) {
+            // TrunPage.showToast("登录成功!");
+
+            // toast.hide();
+            //初始化容器样式
+            // console.log(json.token.access_token);
+            if (json.code == 200) {
+                loginData = json;
+                token = json.token.access_token;
+
+                accountType = "照明";
+                userId = json.user.UserID;
+
+                TrunPage.setKeyValue("token", token);
+                TrunPage.setKeyValue("userId", userId);
+
+
+            } else {
+                console.log("身份认证失败");
+            }
+
+
+        }
+    });
+}
 function getData() {
-    // toast = new auiToast();
-    // toast.loading({
-    //     title: "获取数据中...请稍后",
-    //     duration: 2000
-    // }, function (ret) {
-    //     console.log(ret);
-    //     setTimeout(function () {
-    //         toast.hide();
-    //     }, 3000)
-    // });
-    // $.ajax({
-    //     url: url + 'Login',
-    //     data: {'Sign': m_sign},
-    //     type: 'POST',
-    //     dataType: "json",
-    //     success: function (json) {
-    //         // TrunPage.showToast("登录成功!");
-    //
-    //         // toast.hide();
-    //         //初始化容器样式
-    //         // console.log(json.token.access_token);
-    //         if (json.code == 200) {
-    //             loginData = json;
-    //             token = json.token.access_token;
-    //
-    //             accountType = "照明";
-    //             userId = json.user.UserID;
-    //
-    //             TrunPage.setKeyValue("token", token);
-    //             TrunPage.setKeyValue("userId", userId);
-    //
-    //
-    //         } else {
-    //             console.log("身份认证失败");
-    //         }
-    //
-    //
-    //     }
-    // });
+
+
     TrunPage.getSignUser(function (data) {
 
         m_sign = data;
@@ -70,7 +66,6 @@ function getData() {
             dataType: "json",
             success: function (json) {
                 // TrunPage.showToast("登录成功!");
-
                 // toast.hide();
                 //初始化容器样式
                 // console.log(json.token.access_token);

@@ -134,6 +134,8 @@ var zhaoming = new Vue({
                     TrunPage.setKeyValue("token", token);
                     TrunPage.setKeyValue("userId", userId);
                     TrunPage.openWebView("gyng/ChargeRecords.html", 1, "资费记录");
+                    TrunPage.setKeyValue("RoomID", RoomId);
+
                     // window.location.href='ChargeRecords.html';
                     break;
                 case "U":
@@ -148,6 +150,8 @@ var zhaoming = new Vue({
                     TrunPage.setKeyValue("userId", userId + "");
                     TrunPage.openWebView("gyng/UIHistroy.html", 1, "历史数据");
                     // window.location.href='ChargeRecords.html';
+                    TrunPage.setKeyValue("RoomID", RoomId);
+
                     break;
                 case "EletricityValue":
                     TrunPage.setKeyValue("AccountType", "照明");
@@ -157,8 +161,12 @@ var zhaoming = new Vue({
                     TrunPage.setKeyValue("name", "用电量");
                     TrunPage.setKeyValue("userId", userId + "");
                     TrunPage.openWebView("gyng/EleHistroy.html", 1, "历史数据");
+                    TrunPage.setKeyValue("RoomID", RoomId);
+
                     break;
                 default:
+                    TrunPage.setKeyValue("RoomID", RoomId);
+
                     TrunPage.setKeyValue("AccountType", "照明");
                     TrunPage.setKeyValue("token", token);
                     TrunPage.setKeyValue("name", e.SName);
@@ -238,6 +246,7 @@ var kongtiao = new Vue({
                     TrunPage.setKeyValue("AccountType", "空调");
                     TrunPage.setKeyValue("token", token);
                     TrunPage.setKeyValue("userId", userId);
+                    TrunPage.setKeyValue("RoomID", RoomId);
                     TrunPage.openWebView("gyng/ChargeRecords.html", 1, "资费记录");
                     // window.location.href='ChargeRecords.html';
                     break;
@@ -250,11 +259,13 @@ var kongtiao = new Vue({
                     TrunPage.setKeyValue("Field", e.type);
                     TrunPage.setKeyValue("unit", e.unit);
                     TrunPage.setKeyValue("name", e.name);
+                    TrunPage.setKeyValue("RoomID", RoomId);
                     TrunPage.setKeyValue("userId", userId + "");
                     TrunPage.openWebView("gyng/UIHistroy.html", 1, "历史数据");
                     // window.location.href='ChargeRecords.html';
                     break;
                 case "EletricityValue":
+                    TrunPage.setKeyValue("RoomID", RoomId);
                     TrunPage.setKeyValue("AccountType", "空调");
                     TrunPage.setKeyValue("token", token);
                     TrunPage.setKeyValue("Field", e.type);
@@ -264,6 +275,7 @@ var kongtiao = new Vue({
                     TrunPage.openWebView("gyng/EleHistroy.html", 1, "历史数据");
                     break;
                 default:
+                    TrunPage.setKeyValue("RoomID", RoomId);
                     TrunPage.setKeyValue("AccountType", "空调");
                     TrunPage.setKeyValue("token", token);
                     TrunPage.setKeyValue("name", e.SName);
@@ -311,12 +323,12 @@ function switchKongtiao() {
 
 function sendOrder(order, accountType) {
     $.ajax({
-        url: url + 'Insert_Order',
+        url: url + 'Insert_Order_RoomID',
         data: {
-            'StudentID': userId,
+            'UserID': userId,
             "AccountType": accountType,
             "OrderID": order,
-            "UserID": userId
+            "RoomID": RoomId
         },
         type: 'POST',
         headers: {
@@ -334,7 +346,7 @@ function sendOrder(order, accountType) {
                     duration: 2000
                 });
             } else {
-                showErrorDialog();
+                showErrorDialog("发送失败！");
             }
         },
         error: function () {

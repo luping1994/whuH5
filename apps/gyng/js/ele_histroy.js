@@ -8,6 +8,7 @@ var Field;
 var AccountType;
 var title;
 var unit;
+var RoomId;
 
 function loadPage() {
     TrunPage.getKeyValue("name", function (data) {
@@ -30,7 +31,10 @@ function loadPage() {
     TrunPage.getKeyValue("unit", function (data) {
         unit = data;
     });
-    getData(1);
+    TrunPage.getKeyValue("RoomID", function (data) {
+        RoomId = data;
+        getData(1);
+    });
 }
 
 function getHisData(hisType) {
@@ -159,9 +163,9 @@ function getData(index) {
         title = "最近一月" + name + "数据";
     }
     $.ajax({
-        url: url + 'Inquiry_HisData',
+        url: url + 'Inquiry_HisData_RoomID',
         data: {
-            "StudentID": StudentID,
+            "RoomID": RoomId,
             "AccountType": AccountType,
             "StartTime": startTime,
             "Freq": frq,

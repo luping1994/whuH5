@@ -17,7 +17,6 @@
     <script type="text/javascript" src="../../common/js/public.js"></script>
     <script src="js/public.js"></script>
     <script type="text/javascript" src="js/config.js"></script>
-    <script src="js/newIndex.js"></script>
     <script type="text/javascript" src="js/vue.js"></script>
 
 
@@ -73,6 +72,15 @@
                     </li>
                     <li class="aui-list-item">
                         <div class="aui-list-item-label-icon">
+                            <i class="iconfont c1 f1 icon-icon-ammeter"></i>
+                        </div>
+                        <div class="aui-list-item-inner ">
+                            <div class="aui-list-item-title">通信地址</div>
+                            <div class="aui-list-item-right">{{amInfo.DeviceDec}}</div>
+                        </div>
+                    </li>
+                    <li class="aui-list-item">
+                        <div class="aui-list-item-label-icon">
                             <i class="iconfont icon-lighting f1 c1"></i>
                         </div>
                         <div class="aui-list-item-inner ">
@@ -100,7 +108,7 @@
                             <i class="iconfont icon-zhuangtai f1 c1"></i>
                         </div>
                         <div class="aui-list-item-inner aui-list-item-arrow">
-                            <div class="aui-list-item-title">开关状态</div>
+                            <div class="aui-list-item-title">用电状态</div>
                             <div class="aui-list-item-right">{{yongdiandatas[2].value}}</div>
                         </div>
                     </li>
@@ -109,6 +117,24 @@
                 <ul class="aui-list aui-list-in">
                     <li class="whu-header">
                         电量信息
+                    </li>
+                    <li class="aui-list-item">
+                        <div class="aui-list-item-label-icon">
+                            <i class="iconfont c1 f1 icon-icon-ammeter"></i>
+                        </div>
+                        <div class="aui-list-item-inner ">
+                            <div class="aui-list-item-title">电表号</div>
+                            <div class="aui-list-item-right">{{amInfo.AmmeterNo}}</div>
+                        </div>
+                    </li>
+                    <li class="aui-list-item">
+                        <div class="aui-list-item-label-icon">
+                            <i class="iconfont c1 f1  icon-id"></i>
+                        </div>
+                        <div class="aui-list-item-inner ">
+                            <div class="aui-list-item-title">房间ID</div>
+                            <div class="aui-list-item-right">{{amInfo.RoomID}}</div>
+                        </div>
                     </li>
                     <li class="aui-list-item" @click="jumpHis(item)" v-for="item in dianliangxinxi">
                         <div class="aui-list-item-label-icon">
@@ -141,8 +167,9 @@
     </div>
 </div>
 
-
+<script src="js/newIndex.js"></script>
 <script type="text/javascript" src="js/newControl.js"></script>
+<script type="text/javascript" src="aui/script/aui-toast.js"></script>
 <script>
 
 

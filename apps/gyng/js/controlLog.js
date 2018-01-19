@@ -2,12 +2,12 @@ var time_year = new Date().getFullYear();
 var time_month = new Date().getMonth() + 1;
 var StudentID = "";
 var AccountType = "照明";
-var currentIndex = 1;
+var currentIndex = 0;
 var token;
 var datas = [];
+var RoomId;
 
-var isGetRecharge=false;
-var isGetCharge=false;
+
 function loadPage() {
     TrunPage.getKeyValue("userId", function (data) {
         StudentID = data;
@@ -21,8 +21,12 @@ function loadPage() {
         AccountType = data;
 
     });
+  TrunPage.getKeyValue("RoomID", function (data) {
+      RoomId = data;
+      getDataWarp()
+    });
 
-    getData()
+
 }
 
 function openDataPicker() {
@@ -60,11 +64,11 @@ var time = new Vue({
     }
 });
 
-var zifei = new Vue({
+var conLogs = new Vue({
     el: '#zifeilist',
     data: {
         month: time.month,
-        zifeilists: [
+        logDatas: [
 
         ]
 
@@ -101,14 +105,14 @@ var tabbar = new Vue({
         }
     }
 });
-
+var   toast= new auiToast();
 function getDataWarp() {
 
     datas = [];
     var frq = 24;
     var startTime = time_year + "-" + time_month + "-" + "01";
     var endTime = time_year + "-" + time_month + "-" + getLastDay(time_year, time_month);
-    var toast;  toast= new auiToast();
+
     toast.loading({
         title: "正在查询信息..",
         duration: 10000
@@ -153,9 +157,9 @@ function switchTabDatas(index) {
 
 function getData(frq, startTime, endTime) {
     $.ajax({
-        url: url + 'Inquiry_States',
+        url: url + 'Inquiry_States_RoomID',
         data: {
-            "StudentID": StudentID,
+            "RoomID": RoomId,
             "AccountType": AccountType,
             "StartTime": startTime,
             "EndTime": endTime
@@ -170,68 +174,28 @@ function getData(frq, startTime, endTime) {
             // zhaoming.students.clean();
             // TrunPage.showToast("json2="+json.info[0].PreChargeback+"元");
             // console.log(json);
-
+            conLogs.logDatas=[];
             if (json.code == 200) {
-                var totleCharge=0;
+                var duandianTimes=0;
+                var caozuoTimes=0;
                 for (var i = 0; i < json.info.length; i++) {
-                    datas.push({
+                    conLogs.logDatas.push({
                         id: 0,
-                        type: "chargeBack",
+                        type: json.info[i].Type,
                         msg:  json.info[i].Contents ,
-                        pay: "-" + json.info[i].Chargeback + "元",
                         date: json.info[i].GetTime
                     });
-                    totleCharge+=json.info[i].Chargeback;
+                    duandianTimes++;
+                    // if(json.info[i].type==""){
+                    //
+                    // }else {
+                    //     caozuoTimes++;
+                    // }
                 }
-                time.chargeBack=totleCharge+"元";
+                time.duandianTimes=duandianTimes+"次";
+                time.caozuoTimes=caozuoTimes+"次";
 
-            } else {
-                console.log(json.message)
-            }
-
-                toast.hide();
-            switchTabDatas(currentIndex);
-
-        }
-    });
-}
-
-function getRecharge(frq, startTime, endTime) {
-    $.ajax({
-        url: url + 'Inquiry_ReCharge',
-        data: {
-            "StudentID": StudentID,
-            "AccountType": AccountType,
-            "StartTime": startTime,
-            "Freq": frq,
-            "EndTime": endTime
-        },
-        type: 'POST',
-        headers: {
-            'Authorization': "Bearer " + token
-        },
-        dataType: "json",
-        success: function (json) {
-
-            // zhaoming.students.clean();
-            // TrunPage.showToast("json2="+json.info[0].PreChargeback+"元");
-            console.log(json);
-            var totleCharge =0;
-            if (json.code == 200) {
-                for (var i = 0; i < json.info.length; i++) {
-                    datas.push({
-                        id: 0,
-                        type: "reCharge",
-                        msg: json.info[i].SName + "充值",
-                        pay: "-" + json.info[i].Balance + "元",
-                        date: json.info[i].GetTime
-                    });
-                    totleCharge+=json.info[i].Balance;
-
-                }
-                time.chargeBack=totleCharge+"元";
-                isGetRecharge = true;
-                if(isGetCharge&&isGetRecharge){
+                if(toast){
                     toast.hide();
                 }
             } else {
@@ -243,6 +207,8 @@ function getRecharge(frq, startTime, endTime) {
         }
     });
 }
+
+
 
 function getLastDay(year, month) {
     var new_year = year;    //取当前地年份

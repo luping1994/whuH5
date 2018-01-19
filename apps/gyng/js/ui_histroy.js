@@ -1,6 +1,6 @@
 var time = "";
 var name = "";
-var currentIndex=-1 ;
+var currentIndex = -1;
 var token;
 
 var StudentID;
@@ -8,6 +8,7 @@ var Field;
 var AccountType;
 var title;
 var unit;
+var RoomId;
 
 function loadPage() {
     TrunPage.getKeyValue("name", function (data) {
@@ -30,10 +31,11 @@ function loadPage() {
     TrunPage.getKeyValue("unit", function (data) {
         unit = data;
     });
-    getData(1);
+    TrunPage.getKeyValue("RoomID", function (data) {
+        RoomId = data;
+        getData(1);
+    });
 }
-
-
 
 
 var zifei = new Vue({
@@ -59,7 +61,7 @@ var tabbar = new Vue({
     },
     methods: {
         tab1Click: function (event) {
-            if (gettingData){
+            if (gettingData) {
                 return
             }
             this.index0 = true;
@@ -69,7 +71,7 @@ var tabbar = new Vue({
 
         },
         tab2Click: function (event) {
-            if (gettingData){
+            if (gettingData) {
                 return
             }
             this.index0 = false;
@@ -80,7 +82,7 @@ var tabbar = new Vue({
             getData(1);
         },
         tab3Click: function (event) {
-            if (gettingData){
+            if (gettingData) {
                 return
             }
             this.index0 = false;
@@ -96,7 +98,7 @@ var toast;
 var gettingData = false;
 
 function getData(index) {
-    if (index==currentIndex){
+    if (index == currentIndex) {
         return;
     }
     gettingData = true;
@@ -136,9 +138,9 @@ function getData(index) {
         title = "最近一月" + name + "历史曲线";
     }
     $.ajax({
-        url: url + 'Inquiry_HisData',
+        url: url + 'Inquiry_HisData_RoomID',
         data: {
-            "StudentID": StudentID,
+            "RoomID": RoomId,
             "AccountType": AccountType,
             "StartTime": startTime,
             "Freq": frq,
@@ -178,7 +180,7 @@ function getData(index) {
                         id: 2,
                         type: "zifeijilv",
                         name: '',
-                        value: json.info[j].Value+unit,
+                        value: json.info[j].Value + unit,
                         date: json.info[j].GetTime
                     });
 
@@ -192,7 +194,7 @@ function getData(index) {
             }
             gettingData = false;
         },
-        error:function (e) {
+        error: function (e) {
             gettingData = false;
         }
     });
@@ -206,7 +208,7 @@ function setChartData(xData, yData) {
             textStyle: {
                 fontSize: '.6rem'
             },
-            subtext: "单位("+unit+")"
+            subtext: "单位(" + unit + ")"
         },
         tooltip: {},
         legend: {

@@ -11,12 +11,13 @@ var yongdianDatas = [];
 var toast;
 var isGetRecharge = false;
 var isGetCharge = false;
-
+var RoomId;
 function loadPage() {
     TrunPage.getKeyValue("userId", function (data) {
         StudentID = data;
 
     });
+
     TrunPage.getKeyValue("AccountType", function (data) {
         AccountType = data;
 
@@ -25,7 +26,13 @@ function loadPage() {
         token = data;
     });
 
-    getData()
+    TrunPage.getKeyValue("RoomID", function (data) {
+        RoomId = data;
+        getData()
+
+    });
+
+
 }
 
 function openDataPicker() {
@@ -84,14 +91,14 @@ var tabbar = new Vue({
             this.index0 = true;
             this.index1 = false;
             this.index2 = false;
-            switchTabDatas(0,false);
+            switchTabDatas(0, false);
 
         },
         tab2Click: function (event) {
             this.index0 = false;
             this.index1 = true;
             this.index2 = false;
-            switchTabDatas(1,false);
+            switchTabDatas(1, false);
 
         }
     }
@@ -121,8 +128,8 @@ function getData() {
 
 }
 
-function switchTabDatas(index,forceSwitch) {
-    if (!forceSwitch){
+function switchTabDatas(index, forceSwitch) {
+    if (!forceSwitch) {
         if (index == currentIndex) {
             return
         }
@@ -148,9 +155,9 @@ function switchTabDatas(index,forceSwitch) {
 
 function getChargeBack(frq, startTime, endTime) {
     $.ajax({
-        url: url + 'Inquiry_Chargeback',
+        url: url + 'Inquiry_Chargeback_RoomID',
         data: {
-            "StudentID": StudentID,
+            "RoomID": RoomId,
             "AccountType": AccountType,
             "StartTime": startTime,
             "Freq": frq,
@@ -200,9 +207,9 @@ function getRecharge(frq, startTime, endTime) {
 
 
     $.ajax({
-        url: url + 'Inquiry_ReCharge',
+        url: url + 'Inquiry_ReCharge_RoomID',
         data: {
-            "StudentID": StudentID,
+            "RoomID": RoomId,
             "AccountType": AccountType,
             "StartTime": startTime,
             "Freq": frq,
@@ -244,9 +251,9 @@ function getRecharge(frq, startTime, endTime) {
             } else {
                 // console.log(json.message)
             }
-            switchTabDatas(0,true);
-            tabbar.index0=true;
-            tabbar.index1=false;
+            switchTabDatas(0, true);
+            tabbar.index0 = true;
+            tabbar.index1 = false;
 
         }
     });

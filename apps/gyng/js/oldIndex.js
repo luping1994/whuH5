@@ -14,7 +14,6 @@ function getData() {
 
     TrunPage.getKeyValue("userId", function (data) {
         userId = data;
-
     });
 
     TrunPage.getKeyValue("Role", function (data) {

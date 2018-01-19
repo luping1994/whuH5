@@ -26,17 +26,16 @@ function getData() {
     TrunPage.getKeyValue("RoomId", function (data) {
         RoomId = data;
         // alert(data);
+        accountType = "照明";
+        if (RoomId == null || RoomId == "") {
+            getChannel(userId, '');
+            setInterval("getChannel(userId,accountType)", 4000);
+        } else {
+            getChannelByRoomID(RoomId, "");
+            getStudents(RoomId);
+            setInterval("getChannelState()", 4000);
+        }
     });
-
-    accountType = "照明";
-    if (Role == "student") {
-        getChannel(userId, '');
-        setInterval("getChannel(userId,accountType)",4000);
-    } else {
-        getChannelByRoomID(RoomId,"");
-        getStudents(RoomId);
-        setInterval("getChannelByRoomID(RoomId,'')", 4000);
-    }
 
 
 }
@@ -60,13 +59,15 @@ function getChannel(StudentID, AccountType) {
         success: function (json) {
             // TrunPage.showToast("json2="+json.info[0].PreChargeback+"元");
 
-            if (RoomId == null||RoomId=='') {
+            if (RoomId == null || RoomId == '') {
                 RoomId = json.info[0].RoomID;
                 TrunPage.setKeyValue("RoomId", RoomId);
-
                 getStudents(RoomId);
+
             }
 
+            zhaoming.amInfo.AmmeterNo = json.info[0].AmmeterNo;
+            zhaoming.amInfo.RoomID = json.info[0].RoomID;
             //填充数据
             zhaoming.accountList[0].value = json.info[0].PreChargeback + "元";
             zhaoming.accountList[1].value = json.info[0].PreSubsidy + "元";
@@ -102,7 +103,11 @@ function getChannelByRoomID(Roomid_, AccountType) {
         success: function (json) {
             // TrunPage.showToast("json2="+json.info[0].PreChargeback+"元");
 
-            if (json.code==200){
+            if (json.code == 200) {
+
+                zhaoming.amInfo.AmmeterNo = json.info[0].AmmeterNo;
+                zhaoming.amInfo.RoomID = json.info[0].RoomID;
+                zhaoming.amInfo.DeviceDec = json.info[0].DeviceDec;
                 //填充数据
                 zhaoming.accountList[0].value = json.info[0].PreChargeback + "元";
                 zhaoming.accountList[1].value = json.info[0].PreSubsidy + "元";
@@ -118,7 +123,8 @@ function getChannelByRoomID(Roomid_, AccountType) {
                 zhaoming.dianliangxinxi[6].value = json.info[0].Eletricity + "kW·h";
 
 
-                zhaoming.yongdiandatas[1].value = json.info[0].Status == 0 ? "正常" : json.info[0].Status == 1 ? "恶性负载" : json.info[0].Status == 2 ? "锁定" : json.info[0].Status == 3 ? "故障" : "null";
+                zhaoming.yongdiandatas[0].value = json.info[0].zm == "0" ? false : true;
+                zhaoming.yongdiandatas[1].value = json.info[0].kt == "0" ? false : true;
 
             }
 
@@ -160,7 +166,29 @@ function getStudents(RoomId) {
     });
 }
 
+function getChannelState() {
+    // /api/V1/New_Inquiry_Channel_Status
+    $.ajax({
+        url: url + 'New_Inquiry_Channel_Status',
+        data: {
+            "RoomID": RoomId,
+            "AccountType":"照明"
+        },
+        type: 'POST',
+        headers: {
+            'Authorization': "Bearer " + token
+        },
+        dataType: "json",
+        success: function (json) {
+
+            zhaoming.yongdiandatas[0].value = json.info.zm == "0" ? false : true;
+            zhaoming.yongdiandatas[1].value = json.info.kt == "0" ? false : true;
+        }
+    });
+}
+
 function openControlLogPage() {
+    TrunPage.setKeyValue("RoomID", RoomId);
     TrunPage.setKeyValue("AccountType", "照明");
     TrunPage.setKeyValue("token", token);
     TrunPage.setKeyValue("userId", userId);
